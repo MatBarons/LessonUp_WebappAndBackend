@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+
+
+    <servlet-mapping>
+        <servlet-name>ApiProvaServlet</servlet-name>
+        <url-pattern>/api/PROVA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApiCourse</servlet-name>
+        <url-pattern>/api/course</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApiUser</servlet-name>
+        <url-pattern>/api/user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApiLecture</servlet-name>
+        <url-pattern>/api/lecture</url-pattern>
+    </servlet-mapping>
+</web-app>
