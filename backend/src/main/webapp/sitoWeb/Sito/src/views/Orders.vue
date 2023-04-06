@@ -1,5 +1,5 @@
 <template>
-<h1>Prova2</h1>
+<h1>Orders</h1>
 </template>
 
 <script>
