@@ -41,7 +41,7 @@ export default {
       display: flex;
     }
   }
-  
+
   .sumOfLessons{
     width: 100vh;
     display: flex;
