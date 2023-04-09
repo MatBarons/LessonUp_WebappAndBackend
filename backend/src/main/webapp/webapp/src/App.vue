@@ -10,6 +10,7 @@ import Sidebar from "@/components/Sidebar.vue";
 
 <style lang="scss">
 html{
+
   body{
     width: 100%;
     background-color: white;
@@ -18,13 +19,12 @@ html{
       max-width: 100%;
       padding: 0;
       margin: 0;
+      @media(max-width: 768px){
+       justify-items: flex-start;
+      }
     }
   }
-  width: 100%;
-  height: 100%;
-  @media(max-width: 768px){
-    padding-left: 6rem;
-  }
+
 }
 
 :root{
