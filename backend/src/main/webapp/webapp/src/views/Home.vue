@@ -1,48 +1,28 @@
 <template>
   <main id="homepage">
-    <div class="right-side-homepage">
-      <h1>Prenota lezioni</h1>
+    <div class="left-side-homepage">
+      <h1>Prenota ora le tue prossime lezioni!</h1>
       <div class="sumOfLessons">
         <CardLesson/>
       </div>
     </div>
-    <div class="left-side-homepage">
-      <div class="calendar">
-        <Calendar :initial-page="{ month: 1, year: 2023 }"
-                  :color="selectedColor"
-                  :attributes="attrs"
-        />
-        <DatePicker v-model="date"/>
-      </div>
-      <div class="sumOfSubjects">
-        <CardSubject/>
+    <div class="right-side-homepage">
+      <CustomCalendar/>
+      <div class="sumOfSubjects" v-for="subject in subjects">
+        <CardSubject :name="subject"/>
       </div>
     </div>
   </main>
 </template>
 
 <script>
-import CardLesson from "@/components/CardLesson.vue";
-import CardSubject from "@/components/CardSubject.vue";
-import { Calendar, DatePicker } from 'v-calendar';
-import { ref } from 'vue';
+import CardLesson from "@/components/cards/CardLesson.vue";
+import CardSubject from "@/components/cards/CardSubject.vue";
+import CustomCalendar from "@/components/CustomCalendar.vue";
 
-const selectedColor = ref('blue');
-const attrs = ref([
-  {
-    key: 'test',
-    highlight: true,
-    dates: { start: new Date(2019, 3, 15), end: new Date(2025, 12, 31) },
-  }
-]);
 export default {
   name: "Home",
-  components: {CardSubject, CardLesson,Calendar,DatePicker},
-  data(){
-    return{
-      date: new Date()
-    }
-  }
+  components: {CustomCalendar, CardSubject, CardLesson},
 }
 </script>
 
@@ -52,35 +32,29 @@ export default {
   padding-left: 10px;
   display: flex;
   flex-direction: row;
+  width: 70%;
   @media(max-width: 1024px){
     padding-left: 3rem;
   }
-
-
-  .right-side-homepage{
-    display: flex;
-    flex-direction: column;
-    h1{
-      color: black;
-    }
-    .sumOfLessons{
-      width: 100vh;
-      display: flex;
-
-    }
-  }
-
   .left-side-homepage{
     display: flex;
     flex-direction: column;
-    calendar{
-      height: 50%;
-      color: black;
-      background-color: red;
+    h1{
+      color: green;
+      font-size: 50px;
     }
+    .sumOfLessons{
+     width: 80vh;
+    }
+  }
+  .right-side-homepage{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
     .sumOfSubjects{
-      width: 100vh;
+
       display: flex;
+      padding-top: 2rem;
     }
   }
 

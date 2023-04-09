@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header"></div>
     <div class="card-title">
-      <h2>Matematica</h2>
+      <h2>{{ name }}</h2>
     </div>
     <div class="card-footer">
       <p>the language of the universe</p>
@@ -14,7 +14,13 @@
 
 <script>
 export default {
-  name: "CardSubject"
+  name: "CardSubject",
+  props:{
+    name:{
+      type: String,
+      required: true //change to true
+    }
+  }
 }
 </script>
 
@@ -22,7 +28,7 @@ export default {
 
 .card{
   height: 8rem;
-  width: 10rem;
+  width: 13rem;
   background-color: lightgrey;
   border-radius: 0.5rem;
 

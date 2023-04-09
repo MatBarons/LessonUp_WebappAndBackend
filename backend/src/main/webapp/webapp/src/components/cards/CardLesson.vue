@@ -15,23 +15,23 @@
       </div> <!-- {{ lesson.time }} -->
     </div>
     <div class="card-footer">
-      <button class="btn" @click="addToCart"><i class="material-icons">add_shopping_cart</i> Aggiungi al carrello</button>
+      <button class="btn" @click="addToCart">
+        <i class="material-icons">add_shopping_cart</i>
+        Aggiungi al carrello
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 
-
 export default {
   name: 'CardLesson',
   props: {
-    /*
     lesson: {
       type: Object,
-      required: true
+      required: false
     }
-    */
   },
   methods: {
     addToCart() {
