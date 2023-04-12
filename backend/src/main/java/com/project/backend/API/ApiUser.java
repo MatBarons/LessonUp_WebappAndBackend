@@ -27,7 +27,6 @@ public class ApiUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("prova1");
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         //req.getHeader("email");
@@ -147,13 +146,11 @@ public class ApiUser extends HttpServlet {
                 }
                 break;
                 case "logMeIn":{
-                    System.out.println("prova2");
                     /*
                     if(!(APIManager.checkAuth(req.getHeader("email"),"admin") || APIManager.checkAuth(req.getHeader("email"),"student"))){
                         resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     }
                     */
-                    System.out.println("culoAlato");
                     if(daoU == null){
                         out.println("dao is null -- API User doGet");
                     }else{
@@ -161,6 +158,7 @@ public class ApiUser extends HttpServlet {
                         String password = req.getParameter("password");
                         User user = daoU.getUserData(email);
                         if(user.getPassword().equals(password)){
+                            //inserire caso admin
                             resp.setStatus(HttpServletResponse.SC_OK);
                         }else{
                             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

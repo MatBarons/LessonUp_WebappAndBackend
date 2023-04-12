@@ -1,5 +1,17 @@
-<script setup>
+<script>
 import Sidebar from "@/components/Sidebar.vue";
+
+export default{
+  name: 'App',
+  components:{Sidebar},
+  data(){
+    return{
+
+    }
+  },
+  beforeCreate() {
+  }
+}
 
 </script>
 

@@ -1,16 +1,7 @@
-class Lecture {
-    name;
-    surname;
-    email;
-    date;
-    time;
-    constructor(name,surname,email,date,time) {
-        this.name=name;
-        this.surname=surname;
-        this.email=email;
-        this.date=date;
-        this.time=time;
-    }
+import axios from "axios";
 
-    //Fare pull delle lezioni
+export async function getLecturesByDateAndSubject(subject,date){
+    return await axios.get('http://192.168.1.11:8080/backend/api/course?path=getAllLecturesBySubjectAndStatusAndDate&subject='+subject+'&status=free&date='+date)
 }
+
+

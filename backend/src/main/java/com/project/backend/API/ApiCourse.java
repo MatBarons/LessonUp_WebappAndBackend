@@ -44,7 +44,7 @@ public class ApiCourse extends HttpServlet {
                         for(Course c : list){
                             out.println("{");
                             out.println("\"name\"" + ":" + "\"" + c.getName() + "\"" + ",");
-                            out.println("\"isActive\"" + ":" + "\"" + c.isActive() + "\""); //forse va una virgola
+                            out.println("\"isActive\"" + ":" + "\"" + c.isActive() + "\"");
                             out.println("}");
                             if(i<list.size()-1){
                                 i++;

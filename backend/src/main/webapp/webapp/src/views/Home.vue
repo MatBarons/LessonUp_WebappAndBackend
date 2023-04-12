@@ -2,14 +2,14 @@
   <main id="homepage">
     <div class="left-side-homepage">
       <h1>Prenota ora le tue prossime lezioni!</h1>
-      <div class="sumOfLessons">
-        <CardLesson/>
+      <div class="sumOfLessons" v-for="lecture in lectures">
+        <CardLesson :lesson="lecture" />
       </div>
     </div>
     <div class="right-side-homepage">
       <CustomCalendar/>
-      <div class="sumOfSubjects" v-for="subject in subjects">
-        <CardSubject :name="subject"/>
+      <div class="sumOfSubjects" v-for="course in courses">
+        <CardSubject :name="course" @setSubject="setSelectedCourse"/>
       </div>
     </div>
   </main>
@@ -19,10 +19,42 @@
 import CardLesson from "@/components/cards/CardLesson.vue";
 import CardSubject from "@/components/cards/CardSubject.vue";
 import CustomCalendar from "@/components/CustomCalendar.vue";
+import {getActiveCourses} from "@/model/Subject"
+import {getLecturesByDateAndSubject} from "@/model/Lecture"
 
 export default {
   name: "Home",
   components: {CustomCalendar, CardSubject, CardLesson},
+  data(){
+    return{
+      courses: [],
+      lectures : [],
+      selectedCourse: "",
+      selectedDate: ""
+    }
+  },
+  beforeCreate() {
+    this.selectedDate = "19042023"
+    this.selectedCourse = "matematica"
+    this.getCourses()
+    this.getLectures(this.selectedCourse,this.selectedDate)
+  },
+
+  methods:{
+    getCourses(){
+      getActiveCourses().then(response => {
+        this.courses = response
+      })
+    },
+    getLectures(){
+      getLecturesByDateAndSubject().then(response => {
+        this.lectures = response
+      })
+    },
+    setSelectedCourse(course){
+      this.selectedCourse = course;
+    }
+  }
 }
 </script>
 

@@ -1,17 +1,17 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h3>Prof. Matteo Barone</h3> <!-- {{ lesson.professor }} -->
+      <h3>Prof. {{ lesson.professor }} </h3> <!-- {{ lesson.professor }} -->
     </div>
     <div class="card-body">
       <div class="container-subject">
-        <h4>Matematica</h4>
+        <h4>{{ lesson.subject }}</h4>
       </div> <!-- {{ lesson.subject }} -->
       <div class="container-date">
-        <h4>20/04/2023</h4>
+        <h4>{{ lesson.date }}</h4>
       </div> <!-- {{ lesson.date }} -->
       <div class="container-time">
-        <h4>16:00</h4>
+        <h4>{{ lesson.time }}</h4>
       </div> <!-- {{ lesson.time }} -->
     </div>
     <div class="card-footer">
@@ -121,12 +121,5 @@ h3{
     }
   }
 }
-
-
-
-
-
-
-
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <button class="card" @click="this.$emit('setSubject',this.name)">
     <div class="card-header"></div>
     <div class="card-title">
       <h2>{{ name }}</h2>
@@ -8,8 +8,7 @@
       <p>the language of the universe</p>
       <img src="subjImg" alt="subject image">
     </div>
-
-  </div>
+  </button>
 </template>
 
 <script>
@@ -20,6 +19,8 @@ export default {
       type: String,
       required: true //change to true
     }
+  },
+  methods:{
   }
 }
 </script>
