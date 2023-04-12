@@ -14,6 +14,7 @@
 <script>
 export default {
   name: "CardSubject",
+  emits:['setSubject'],
   props:{
     name:{
       type: String,

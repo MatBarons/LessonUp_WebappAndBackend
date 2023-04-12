@@ -3,11 +3,11 @@
     <div class="left-side-homepage">
       <h1>Prenota ora le tue prossime lezioni!</h1>
       <div class="sumOfLessons" v-for="lecture in lectures">
-        <CardLesson :lesson="lecture" />
+        <CardLesson :lesson="lecture" @bookLecture=""/>
       </div>
     </div>
     <div class="right-side-homepage">
-      <CustomCalendar/>
+      <CustomCalendar @setDate="setSelectedDate"/>
       <div class="sumOfSubjects" v-for="course in courses">
         <CardSubject :name="course" @setSubject="setSelectedCourse"/>
       </div>
@@ -33,13 +33,6 @@ export default {
       selectedDate: ""
     }
   },
-  beforeCreate() {
-    this.selectedDate = "19042023"
-    this.selectedCourse = "matematica"
-    this.getCourses()
-    this.getLectures(this.selectedCourse,this.selectedDate)
-  },
-
   methods:{
     getCourses(){
       getActiveCourses().then(response => {
@@ -47,14 +40,25 @@ export default {
       })
     },
     getLectures(){
-      getLecturesByDateAndSubject().then(response => {
+      getLecturesByDateAndSubject(this.selectedCourse,this.selectedDate).then(response => {
         this.lectures = response
       })
     },
     setSelectedCourse(course){
       this.selectedCourse = course;
+      this.getLectures()
+    },
+    setSelectedDate(date){
+      this.selectedDate = date;
+      this.getLectures()
     }
-  }
+  },
+  beforeCreate() {
+    this.selectedDate = "2023-04-19"
+    this.selectedCourse = "matematica"
+    this.getCourses()
+    this.getLectures(this.selectedCourse,this.selectedDate)
+  },
 }
 </script>
 

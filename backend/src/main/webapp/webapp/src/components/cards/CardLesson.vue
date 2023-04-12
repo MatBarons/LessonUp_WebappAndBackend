@@ -27,6 +27,7 @@
 
 export default {
   name: 'CardLesson',
+  emits: [],
   props: {
     lesson: {
       type: Object,
