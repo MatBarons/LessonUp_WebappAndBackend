@@ -52,10 +52,18 @@ public class ApiLecture extends HttpServlet {
                         int i=0;
                         ArrayList<Lecture> list = dao.getLecturesBySubjectAndStatusAndDate(subject,status,date);
                         Gson g = new GsonBuilder().setPrettyPrinting().create();
+                        Date comodo;
+                        try {
+                            comodo = format.parse(d);
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                        format.applyPattern("dd/MM/yyyy");
+                        d = format.format(comodo);
                         out.println("[");
                         for(Lecture l : list){
                             out.println("{");
-                            out.println("\"date\"" + ":" + "\"" + l.getDate() + "\"" + ",");
+                            out.println("\"date\"" + ":" + "\"" + d + "\"" + ",");
                             out.println("\"time\"" + ":" + "\"" + l.getTime()+ "\"" + ",");
                             out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
                             out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");

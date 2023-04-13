@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h3>Prof. {{ lesson.professor }} </h3> <!-- {{ lesson.professor }} -->
+      <h3>Prof. {{ lesson.name }} {{lesson.surname}} </h3> <!-- {{ lesson.professor }} -->
     </div>
     <div class="card-body">
       <div class="container-subject">
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 
 export default {
   name: 'CardLesson',
@@ -31,13 +32,21 @@ export default {
   props: {
     lesson: {
       type: Object,
-      required: false
+      required: true
     }
   },
   methods: {
     addToCart() {
       // Aggiungi la lezione al carrello
-    }
+    },
+    format_date(value){
+      if (value) {
+        return moment(String(value)).format('dd/MM/YYYY')
+      }
+    },
+  },
+  mounted() {
+    console.log(this.lesson.date);
   }
 }
 </script>
@@ -52,10 +61,9 @@ h3{
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  margin-bottom: 20px;
   background-color: lightgrey;
-  width: 15rem;
-  max-height: 15rem;
+  width: 13rem;
+  max-height: 13rem;
   //clip-path: polygon(0% 0%,100% 5%, 100% 100%,100% 100%, 0% 100%);
 
   @media (max-width: 1024px){
@@ -80,6 +88,7 @@ h3{
       border-radius: 5px;
 
       h4{
+        padding-left: 3.5rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -87,6 +96,7 @@ h3{
       }
     }
     .container-date{
+      padding-left: 3rem;
       color: black;
       display: flex;
       background-color: aquamarine;
@@ -94,6 +104,7 @@ h3{
       margin-top: 0.5rem;
     }
     .container-time{
+      padding-left: 3.5rem;
       color: black;
       display: flex;
       background-color: blueviolet;

@@ -1,5 +1,5 @@
 <template>
-  <DatePicker columns="2" color="teal" v-model="date" />
+  <DatePicker columns="2" color="teal" v-model="date" @click="getSelectedDate"/>
 </template>
 
 <script >
@@ -8,7 +8,7 @@ import {DatePicker} from "v-calendar";
 import 'v-calendar/style.css';
 export default defineComponent({
   components: {DatePicker},
-  emits: [],
+  emits: ['setDate'],
   data(){
     return{
       date: ""

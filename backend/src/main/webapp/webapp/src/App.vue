@@ -36,6 +36,7 @@ html{
       @media(max-width: 768px){
        justify-items: flex-start;
       }
+
     }
   }
 
