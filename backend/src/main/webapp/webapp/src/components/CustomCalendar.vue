@@ -1,5 +1,5 @@
 <template>
-  <DatePicker columns="2" color="teal" v-model="date" @/>
+  <DatePicker columns="2" color="teal" v-model="date" />
 </template>
 
 <script >

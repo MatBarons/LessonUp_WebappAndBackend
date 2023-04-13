@@ -61,13 +61,10 @@ public class ApiCourse extends HttpServlet {
                     if (dao == null) {
                         out.println("dao is null -- API Courses doGet");
                     }else{
-                        out.println("{");
-                        out.println("   \"courses\": ");
                         Gson g = new GsonBuilder().setPrettyPrinting().create();
                         String json = g.toJson(dao.getAllCoursesByActivity(isActive));
                         JsonElement je = JsonParser.parseString(json);
                         out.println(g.toJson(je));
-                        out.println("}");
                         out.flush();
                     }
                 }

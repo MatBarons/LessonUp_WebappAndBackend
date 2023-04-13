@@ -1,14 +1,14 @@
 <template>
   <main id="homepage">
     <div class="left-side-homepage">
-      <h1>Prenota ora le tue prossime lezioni!</h1>
+      <h2>Prenota ora le tue prossime lezioni!</h2>
       <div class="sumOfLessons" v-for="lecture in lectures">
         <CardLesson :lesson="lecture" @bookLecture=""/>
       </div>
     </div>
     <div class="right-side-homepage">
       <CustomCalendar @setDate="setSelectedDate"/>
-      <div class="sumOfSubjects" v-for="course in courses">
+      <div class="sumOfSubjects" v-for="course in courses" >
         <CardSubject :name="course" @setSubject="setSelectedCourse"/>
       </div>
     </div>
@@ -36,12 +36,12 @@ export default {
   methods:{
     getCourses(){
       getActiveCourses().then(response => {
-        this.courses = response
+        this.courses = JSON.parse(response.data)
       })
     },
     getLectures(){
       getLecturesByDateAndSubject(this.selectedCourse,this.selectedDate).then(response => {
-        this.lectures = response
+        //this.lectures = JSON.parse(response.data)
       })
     },
     setSelectedCourse(course){
@@ -53,7 +53,7 @@ export default {
       this.getLectures()
     }
   },
-  beforeCreate() {
+  mounted() {
     this.selectedDate = "2023-04-19"
     this.selectedCourse = "matematica"
     this.getCourses()
@@ -68,14 +68,14 @@ export default {
   padding-left: 10px;
   display: flex;
   flex-direction: row;
-  width: 70%;
+  width: 100%;
   @media(max-width: 1024px){
     padding-left: 3rem;
   }
   .left-side-homepage{
     display: flex;
     flex-direction: column;
-    h1{
+    h2{
       color: green;
       font-size: 50px;
     }

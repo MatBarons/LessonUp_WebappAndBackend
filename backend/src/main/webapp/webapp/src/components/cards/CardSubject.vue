@@ -80,9 +80,6 @@ export default {
 
     }
   }
-
-
 }
-
 
 </style>
