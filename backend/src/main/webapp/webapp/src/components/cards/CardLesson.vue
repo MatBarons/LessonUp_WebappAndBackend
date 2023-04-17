@@ -1,43 +1,66 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h3>Prof. {{ lesson.name }} {{lesson.surname}} </h3> <!-- {{ lesson.professor }} -->
+      <h3>Prof. {{ this.firstUpperCase(lesson.name) }} {{ this.firstUpperCase(lesson.surname)}}</h3>
     </div>
+    <hr>
     <div class="card-body">
       <div class="container-subject">
-        <h4>{{ lesson.subject }}</h4>
-      </div> <!-- {{ lesson.subject }} -->
+        <h4>{{ this.firstUpperCase(lesson.subject) }}</h4>
+      </div>
       <div class="container-date">
         <h4>{{ lesson.date }}</h4>
-      </div> <!-- {{ lesson.date }} -->
+      </div>
       <div class="container-time">
         <h4>{{ lesson.time }}</h4>
-      </div> <!-- {{ lesson.time }} -->
+      </div>
     </div>
+    <hr>
     <div class="card-footer">
-      <button class="btn" @click="addToCart">
-        <i class="material-icons">add_shopping_cart</i>
-        Aggiungi al carrello
-      </button>
+      <div v-if="this.context === 'Homepage'">
+        <BuyButton/>
+      </div>
+      <div v-else-if="this.context === 'Orders_ToBeConfirmed'">
+        <ConfirmButton/>
+      </div>
+      <div v-else-if="this.context === 'Cart'">
+        <RemoveButton/>
+      </div>
+      <div v-else-if="this.context=== ''">
+        <DeleteButton/>
+      </div>
+      <div v-else>
+        <AlreadyConfirmedButton/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
-
+import {capitalize} from "@/utils/Utils";
+import BuyButton from "@/components/cards/cardLessonBottomButton/BuyButton.vue";
+import RemoveButton from "@/components/cards/cardLessonBottomButton/RemoveButton.vue";
+import ConfirmButton from "@/components/cards/cardLessonBottomButton/ConfirmButton.vue";
+import AlreadyConfirmedButton from "@/components/cards/cardLessonBottomButton/AlreadyConfirmedButton.vue";
+import DeleteButton from "@/components/cards/cardLessonBottomButton/DeleteButton.vue";
 export default {
   name: 'CardLesson',
+  components: {DeleteButton, AlreadyConfirmedButton, ConfirmButton, RemoveButton, BuyButton},
   emits: [],
   props: {
     lesson: {
       type: Object,
       required: true
+    },
+    context:{
+      type: String,
+      required: true
     }
   },
   methods: {
-    addToCart() {
-      // Aggiungi la lezione al carrello
+    firstUpperCase(string){
+      return capitalize(string)
     },
     format_date(value){
       if (value) {
@@ -54,8 +77,8 @@ export default {
 <style lang="scss" scoped>
 h3{
   color: black;
+  font-weight: bolder;
 }
-
 .card {
   box-shadow: none;
   display: flex;
@@ -65,12 +88,6 @@ h3{
   width: 13rem;
   max-height: 13rem;
   //clip-path: polygon(0% 0%,100% 5%, 100% 100%,100% 100%, 0% 100%);
-
-  @media (max-width: 1024px){
-    max-width: 10rem;
-    max-height: 20rem;
-  }
-
   .card-header {
     padding: 10px;
     border-top-left-radius: 5px;
@@ -78,7 +95,11 @@ h3{
     text-align: center;
     background: linear-gradient(135deg, white 20px, transparent 20px);
   }
-
+  hr{
+    height: 1rem;
+    color: black;
+    background-color: black;
+  }
   .card-body {
     padding: 20px;
     .container-subject{
@@ -86,7 +107,6 @@ h3{
       display: flex;
       background-color: #007bff;
       border-radius: 5px;
-
       h4{
         padding-left: 3.5rem;
         display: flex;
@@ -119,18 +139,11 @@ h3{
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     text-align: center;
-    .btn {
-      background-color: cornflowerblue;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .btn:hover {
-      background-color: #0069d9;
-    }
+  }
+
+  @media (max-width: 1024px){
+    max-width: 10rem;
+    max-height: 20rem;
   }
 }
 

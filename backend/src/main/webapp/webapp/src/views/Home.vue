@@ -4,13 +4,13 @@
       <h2>Prenota ora le tue prossime lezioni!</h2>
       <div class="sumOfLessons">
         <div class="lesson" v-for="lecture in lectures">
-          <CardLesson :lesson="lecture"/>
+          <CardLesson context="Homepage" :lesson="lecture"/>
         </div>
       </div>
-
     </div>
     <div class="right-side-homepage">
-      <CustomCalendar @setDate="setSelectedDate"/>
+      <RadioButtons @setButton="setSelectedButton"/>
+      <CustomCalendar :chosen-button="selectedButton" @setDate="setSelectedDate"/>
       <div class="sumOfSubjects">
         <div class="subject" v-for="course in courses" >
           <CardSubject :name="course" @setSubject="setSelectedCourse"/>
@@ -23,21 +23,28 @@
 <script>
 import CardLesson from "@/components/cards/CardLesson.vue";
 import CardSubject from "@/components/cards/CardSubject.vue";
-import CustomCalendar from "@/components/CustomCalendar.vue";
+import CustomCalendar from "@/components/homepage_Components/CustomCalendar.vue";
+import RadioButtons from "@/components/homepage_Components/RadioButtons.vue";
 import moment from "moment/moment"
 import {getActiveCourses} from "@/model/Subject"
 import {getLecturesByDateAndSubject} from "@/model/Lecture"
+import {getLecturesByStudentAndStatus} from "@/model/Lecture"
+
 
 export default {
   name: "Home",
-  components: {CustomCalendar, CardSubject, CardLesson},
+  components: {RadioButtons, CustomCalendar, CardSubject, CardLesson},
   data(){
     return{
       courses: [],
       lectures : [],
       selectedCourse: "",
-      selectedDate: ""
+      selectedDate: new Date(),
+      selectedButton: "free"
     }
+  },
+  setup(){
+
   },
   methods:{
     format_date(value){
@@ -45,29 +52,38 @@ export default {
         return moment(String(value)).format('yyyy-MM-DD')
       }
     },
+    setSelectedButton(value){
+      this.selectedButton = value;
+    },
     getCourses(){
       getActiveCourses().then(response => {
         this.courses = response.data
       })
     },
     getLectures(){
-      getLecturesByDateAndSubject(this.selectedCourse,this.selectedDate).then(response => {
-        this.lectures = response.data
-      })
+      if(this.selectedButton === "free"){
+        getLecturesByDateAndSubject(this.selectedCourse,this.selectedDate).then(response => {
+          this.lectures = response.data
+        })
+      }else{
+        getLecturesByStudentAndStatus(,this.selectedButton).then(response =>{
+          this.lectures = response.data
+        })
+      }
+
     },
     setSelectedCourse(course){
       this.selectedCourse = course;
       this.getLectures()
     },
     setSelectedDate(date){
-      console.log("SUPER PROVA");
       date = this.format_date(date)
       this.selectedDate = date;
       this.getLectures()
     }
   },
   mounted() {
-    this.selectedDate = "2023-04-19"
+    this.selectedDate = new Date()
     this.selectedCourse = "francese"
     this.getCourses()
     this.getLectures()
@@ -85,25 +101,27 @@ export default {
     padding-left: 3rem;
   }
   .left-side-homepage{
-    width: 110vh;
+    width: 50vw;
     display: flex;
     flex-direction: column;
     h2{
-      color: black;
-      font-size: 50px;
+      color: var(--md-sys-color-background);
+      font-size: 3.2rem;
+      padding-left: 5rem;
+      padding-bottom: 10px;
     }
     .sumOfLessons{
       display: flex;
       flex-wrap: wrap;
       .lesson{
-        flex-basis:25%;
+        flex-basis:33.333333%;
         padding-bottom: 5rem;
         padding-right: 1rem;
       }
     }
   }
   .right-side-homepage{
-    width: 65vh;
+    width: 35vw;
     display: flex;
     flex-direction: column;
     .sumOfSubjects{
@@ -115,9 +133,6 @@ export default {
       }
     }
   }
-
-
 }
-
 
 </style>

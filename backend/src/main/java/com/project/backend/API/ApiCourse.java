@@ -27,6 +27,7 @@ public class ApiCourse extends HttpServlet {
     }
      */
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         PrintWriter out = resp.getWriter();

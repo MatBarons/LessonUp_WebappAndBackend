@@ -1,11 +1,9 @@
 <template>
-  <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
+  <aside>
     <div class="logo">
       <img :src="logoURL" alt="logo" />
     </div>
-
     <h3>Menu</h3>
-
     <div class="menu">
       <router-link to="/" class="button">
         <span class="material-icons">home</span>
@@ -24,18 +22,15 @@
         <span class="text">You</span>
       </router-link>
     </div>
-
-    <div class="flex"></div>
-
-    <div class="menu-toggle-wrap">
-      <button class="menu-toggle" @click="ToggleMenu">
-        <span class="material-icons">keyboard_double_arrow_right</span>
-      </button>
-    </div>
   </aside>
 </template>
 
-<script setup>
+<script>
+export default {
+  name: 'Sidebar'
+}
+/*
+
 import { ref } from 'vue'
 //import logoURL from '../assets/logo.png'
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
@@ -43,6 +38,7 @@ const ToggleMenu = () => {
   is_expanded.value = !is_expanded.value
   localStorage.setItem("is_expanded", is_expanded.value)
 }
+ */
 </script>
 
 <style lang="scss" scoped>
@@ -51,45 +47,15 @@ aside {
   flex-direction: column;
   background-color: var(--dark);
   color: var(--light);
-  width: calc(2rem + 32px);
+  width: 12vw;
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
-  transition: 0.2s ease-in-out;
-  .flex {
-    flex: 1 1 0%;
-  }
   .logo {
-    margin-bottom: 1rem;
+    margin: 1rem;
     img {
       width: 2rem;
     }
-  }
-  .menu-toggle-wrap {
-    display: inline-flex;
-    margin-bottom: 1rem;
-    position: relative;
-    top: 0;
-    transition: 0.2s ease-in-out;
-    .menu-toggle {
-      transition: 0.2s ease-in-out;
-      .material-icons {
-        font-size: 2rem;
-        color: var(--light);
-        transition: 0.2s ease-out;
-      }
-
-      &:hover {
-        .material-icons {
-          color: var(--primary);
-          transform: translateX(0.5rem);
-        }
-      }
-    }
-  }
-  h3, .button .text {
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
   }
   h3 {
     color: var(--grey);
@@ -101,22 +67,20 @@ aside {
   .menu {
     margin: 0 -1rem;
     router-link{
-      margin-top: 2rem;
+
     }
     .button {
       display: flex;
       align-items: center;
       text-decoration: none;
-      transition: 0.2s ease-in-out;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 1rem 2rem;
       .material-icons {
         font-size: 2rem;
         color: var(--light);
-        transition: 0.2s ease-in-out;
       }
       .text {
         color: var(--light);
-        transition: 0.2s ease-in-out;
+        padding-left: 1rem;
       }
       &:hover {
         background-color: var(--dark-alt);
@@ -135,31 +99,9 @@ aside {
   }
   .footer {
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
     p {
       font-size: 0.875rem;
       color: var(--grey);
-    }
-  }
-  &.is-expanded {
-    width: var(--sidebar-width);
-    .menu-toggle-wrap {
-      top: -3rem;
-
-      .menu-toggle {
-        transform: rotate(180deg);
-      }
-    }
-    h3, .button .text {
-      opacity: 1;
-    }
-    .button {
-      .material-icons {
-        margin-right: 1rem;
-      }
-    }
-    .footer {
-      opacity: 0;
     }
   }
   @media (max-width: 1024px) {

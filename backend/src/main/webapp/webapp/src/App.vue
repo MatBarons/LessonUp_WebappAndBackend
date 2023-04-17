@@ -1,15 +1,16 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
-
+import colors from "@/css_colors_webapp/colors.module.css"
 export default{
   name: 'App',
   components:{Sidebar},
   data(){
     return{
-
     }
   },
   beforeCreate() {
+  },
+  beforeUpdate() {
   },
   mounted() {
   }
@@ -24,10 +25,9 @@ export default{
 
 <style lang="scss">
 html{
-
   body{
+    background-color: var(--md-sys-color-background);
     width: 100%;
-    background-color: white;
     #app{
       width: 100%;
       max-width: 100%;
