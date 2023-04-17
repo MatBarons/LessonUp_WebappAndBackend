@@ -108,6 +108,51 @@ public class ApiLecture extends HttpServlet {
                         out.flush();
                     }
                 }
+                case "getAllLecturesByStudentAndStatusAndDateAndSubject":{
+                    String student = req.getParameter("student");
+                    String status = req.getParameter("status");
+                    String subject = req.getParameter("subject");
+                    String d = req.getParameter("date");
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = null;
+                    try {
+                        date = format.parse(d);
+                    } catch (ParseException e) {
+                        System.out.println("wrong date format, please use yyyy-MM-dd");
+                        throw new RuntimeException(e);
+                    }
+                    if(dao == null){
+                        out.println("dao is null -- API Lecture doGet");
+                    }else{
+                        int i=0;
+                        Date comodo;
+                        try {
+                            comodo = format.parse(d);
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                        format.applyPattern("dd/MM/yyyy");
+                        d = format.format(comodo);
+                        ArrayList<Lecture> list = dao.getLecturesByStudentAndStatusAndDateAndSubject(student,status,date,subject);
+                        out.println("[");
+                        for(Lecture l : list){
+                            out.println("{");
+                            out.println("\"date\"" + ":" + "\"" + d + "\"" + ",");
+                            out.println("\"time\"" + ":" + "\"" + l.getTime()+ "\"" + ",");
+                            out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
+                            out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");
+                            out.println("\"email\"" + ":" + "\"" + l.getProfessor() + "\""+ ",");
+                            out.println("\"subject\"" + ":" + "\"" + subject + "\"");
+                            out.println("}");
+                            if(i<list.size()-1){
+                                i++;
+                                out.println(",");
+                            }
+                        }
+                        out.println("]");
+                        out.flush();
+                    }
+                }
                 break;
             }
         }

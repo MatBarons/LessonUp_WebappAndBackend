@@ -26,9 +26,8 @@ import CardSubject from "@/components/cards/CardSubject.vue";
 import CustomCalendar from "@/components/homepage_Components/CustomCalendar.vue";
 import RadioButtons from "@/components/homepage_Components/RadioButtons.vue";
 import moment from "moment/moment"
-import {getActiveCourses} from "@/model/Subject"
-import {getLecturesByDateAndSubject} from "@/model/Lecture"
-import {getLecturesByStudentAndStatus} from "@/model/Lecture"
+import {getActiveCourses} from "@/apiCalls/Subject"
+import {getLecturesByDateAndSubject, getLecturesByStudentAndStatusAndDateAndSubject} from "@/apiCalls/Lecture"
 
 
 export default {
@@ -52,9 +51,6 @@ export default {
         return moment(String(value)).format('yyyy-MM-DD')
       }
     },
-    setSelectedButton(value){
-      this.selectedButton = value;
-    },
     getCourses(){
       getActiveCourses().then(response => {
         this.courses = response.data
@@ -66,11 +62,10 @@ export default {
           this.lectures = response.data
         })
       }else{
-        getLecturesByStudentAndStatus(,this.selectedButton).then(response =>{
+        getLecturesByStudentAndStatusAndDateAndSubject(INSERISCI LO STUDENTE BESTIA,this.selectedButton,this.selectedDate,this.selectedCourse).then(response =>{
           this.lectures = response.data
         })
       }
-
     },
     setSelectedCourse(course){
       this.selectedCourse = course;
@@ -80,14 +75,18 @@ export default {
       date = this.format_date(date)
       this.selectedDate = date;
       this.getLectures()
-    }
+    },
+    setSelectedButton(value){
+      this.selectedButton = value;
+      this.getLectures()
+    },
   },
-  mounted() {
-    this.selectedDate = new Date()
-    this.selectedCourse = "francese"
-    this.getCourses()
-    this.getLectures()
-  },
+    mounted() {
+      this.selectedDate = new Date()
+      this.selectedCourse = "francese"
+      this.getCourses()
+      this.getLectures()
+    },
 }
 </script>
 

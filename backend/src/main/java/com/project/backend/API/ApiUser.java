@@ -158,8 +158,8 @@ public class ApiUser extends HttpServlet {
                         String password = req.getParameter("password");
                         User user = daoU.getUserData(email);
                         if(user.getPassword().equals(password)){
-                            //inserire caso admin
                             resp.setStatus(HttpServletResponse.SC_OK);
+                            //resp.setHeader();
                         }else{
                             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                         }

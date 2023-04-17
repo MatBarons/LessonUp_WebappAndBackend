@@ -20,6 +20,7 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
     public static final String changeStatus = "UPDATE Lecture SET status=? WHERE date=? AND time=? AND professor=? AND subject=?;";
     public static final String getLecturesBySubjectAndStatusAndDate = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.subject=? AND l.status=? AND l.date=?;";
     public static final String getLecturesByStudentAndStatus = "SELECT l.date,l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=?;";
+    public static final String getLecturesByStudentAndStatusAndDateAndSubject = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=? AND l.date=? AND l.subject=?;";
 
     public DaoLecture() {
         super();
@@ -119,6 +120,26 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
                 String profSurname = rs.getString("surname");
                 String email = rs.getString("professor");
                 String subject = rs.getString("subject");
+                lectures.add(new Lecture(date, time, profName,profSurname,email,subject));
+            }
+        }catch (SQLException e){
+            System.out.println("Exception caused by CachedRowSet");
+        }catch (DaoExceptions e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return lectures;
+    }
+
+    public ArrayList<Lecture> getLecturesByStudentAndStatusAndDateAndSubject(String student,String status,Date date,String subject){
+        ArrayList<Lecture> lectures = new ArrayList<>();
+        try {
+            CachedRowSet rs = launchQuery(getLecturesByStudentAndStatusAndDateAndSubject, student, status,date,subject);
+            while (rs.next()) {
+                Time time = rs.getTime("time");
+                String profName = rs.getString("name");
+                String profSurname = rs.getString("surname");
+                String email = rs.getString("professor");
                 lectures.add(new Lecture(date, time, profName,profSurname,email,subject));
             }
         }catch (SQLException e){
