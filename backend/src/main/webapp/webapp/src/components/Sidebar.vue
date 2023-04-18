@@ -5,17 +5,13 @@
     </div>
     <h3>Menu</h3>
     <div class="menu">
-      <router-link to="/" class="button">
+      <router-link to="/home" class="button">
         <span class="material-icons">home</span>
         <span class="text">Home</span>
       </router-link>
       <router-link to="/cart" class="button">
         <span class="material-icons">shopping_cart</span>
         <span class="text">Cart</span>
-      </router-link>
-      <router-link to="/orders" class="button">
-        <span class="material-icons">list</span>
-        <span class="text">Past Orders</span>
       </router-link>
       <router-link to="/profile" class="button">
         <span class="material-icons">person</span>

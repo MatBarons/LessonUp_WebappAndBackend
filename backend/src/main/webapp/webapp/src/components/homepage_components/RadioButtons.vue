@@ -1,12 +1,12 @@
 <template>
   <div class="selectType">
-    <input type="radio" id="free" name="chosenType" value="free" checked @click="setSelectedButton"/>
+    <input type="radio" id="free" name="chosenType" value="free" v-model="valueButton" checked/>
     <label for="free">Libera</label>
-    <input type="radio" id="booked" name="chosenType" value="booked"  @click="setSelectedButton"/>
+    <input type="radio" id="booked" name="chosenType" value="booked" v-model="valueButton"/>
     <label for="booked">Prenotata</label>
-    <input type="radio" id="completed" name="chosenType" value="completed" @click="setSelectedButton"/>
+    <input type="radio" id="completed" name="chosenType" value="completed" v-model="valueButton"/>
     <label for="completed">Completata</label>
-    <input type="radio" id="ended" name="chosenType" value="ended" @click="setSelectedButton"/>
+    <input type="radio" id="ended" name="chosenType" value="ended" v-model="valueButton"/>
     <label for="ended">Confermata</label>
   </div>
 </template>
@@ -15,11 +15,16 @@
 import * as $ from "jquery";
 export default {
   name: "RadioButtons",
+  data(){
+    return{
+        valueButton: ""
+    }
+  },
   emits: ['setButton'],
   methods:{
     setSelectedButton(){
-      console.log("sbora" + $(".selectType input[name=chosenType]:checked").val())
-      this.$emit('setButton',$(".selectType input[name=chosenType]:checked").val())
+      console.log("Emissione setSelectedButton da RadioButtons" + this.valueButton)
+      this.$emit('setButton',this.valueButton)
     }
   }
 }

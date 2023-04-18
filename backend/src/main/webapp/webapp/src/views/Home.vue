@@ -23,12 +23,14 @@
 <script>
 import CardLesson from "@/components/cards/CardLesson.vue";
 import CardSubject from "@/components/cards/CardSubject.vue";
-import CustomCalendar from "@/components/homepage_Components/CustomCalendar.vue";
-import RadioButtons from "@/components/homepage_Components/RadioButtons.vue";
+import CustomCalendar from "@/components/homepage_components/CustomCalendar.vue";
+import RadioButtons from "@/components/homepage_components/RadioButtons.vue";
+
 import moment from "moment/moment"
+
 import {getActiveCourses} from "@/apiCalls/Subject"
 import {getLecturesByDateAndSubject, getLecturesByStudentAndStatusAndDateAndSubject} from "@/apiCalls/Lecture"
-
+import {store} from "@/apiCalls/User"
 
 export default {
   name: "Home",
@@ -41,9 +43,6 @@ export default {
       selectedDate: new Date(),
       selectedButton: "free"
     }
-  },
-  setup(){
-
   },
   methods:{
     format_date(value){
@@ -62,7 +61,7 @@ export default {
           this.lectures = response.data
         })
       }else{
-        getLecturesByStudentAndStatusAndDateAndSubject(INSERISCI LO STUDENTE BESTIA,this.selectedButton,this.selectedDate,this.selectedCourse).then(response =>{
+        getLecturesByStudentAndStatusAndDateAndSubject(store.email,this.selectedButton,this.selectedDate,this.selectedCourse).then(response =>{
           this.lectures = response.data
         })
       }
@@ -81,12 +80,12 @@ export default {
       this.getLectures()
     },
   },
-    mounted() {
-      this.selectedDate = new Date()
-      this.selectedCourse = "francese"
-      this.getCourses()
-      this.getLectures()
-    },
+  beforeMount() {
+    this.selectedDate = Date.now()
+    this.selectedCourse = "francese"
+    this.getCourses()
+    this.getLectures()
+  }
 }
 </script>
 
