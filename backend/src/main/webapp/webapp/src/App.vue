@@ -20,22 +20,12 @@ export default{
   mounted() {
   },
   methods:{
-    isLogged(){
-      console.log("SUCA" + store.email)
-      return store.email !== ""
-
-    }
   }
 }
 </script>
 
 <template>
-  <div v-if="this.store.email !== null ">
-    <router-link to="\"/>
-  </div>
-  <div v-else>
-    <router-view to="\login"/>
-  </div>
+  <router-view to="/login"/>
 </template>
 
 <style lang="scss">

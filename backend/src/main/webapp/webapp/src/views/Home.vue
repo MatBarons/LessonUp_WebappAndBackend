@@ -41,7 +41,7 @@ export default {
       lectures : [],
       selectedCourse: "",
       selectedDate: new Date(),
-      selectedButton: "free"
+      selectedButton: ""
     }
   },
   methods:{

@@ -7,18 +7,18 @@
       <img src="src" alt="logo">
     </div>
     <div class="right-side-login">
+      <div class="response-login">
+        <h3>Loggati ora per prenotare una lezione</h3>
+      </div>
       <form @submit.prevent>
-        <label for="username"><b>Email</b></label>
-        <input v-model="email" required>
-        <label for="password"><b>Password</b></label>
-        <input v-model="password" required>
-        <button type="submit" class="btn-login" @click="login"></button>
+        <label for="username">Email</label>
+        <input v-model="email" name="username" placeholder="Inserisci la tua email" required>
+        <label for="password">Password</label>
+        <input v-model="password" name="password" placeholder="Inserisci la tua password" required>
+        <button type="submit" class="btn-login" @click="login">Login</button>
       </form>
       <a href="url">Non hai un account? Registrati!</a>
-      <div class="response-login">
-        <i class="material-icons">{{ icon }}</i>
-        <h3>{{ response }}</h3>
-      </div>
+      <div class="response-error">{{response}}</div>
     </div>
   </div>
 </main>
@@ -31,33 +31,24 @@ export default {
   name: "Login",
   data(){
     return{
-      email: "Inserisci la tua email",
-      password: "Inserisci la tua password",
-
+      email: "",
+      password: "",
       store,
-
-      response: "Loggati ora per prenotare una lezione!",
-      icon: "",
-      colorResponse: "grey"
+      response: ""
     }
   },
   methods:{
-    Login(){
+    login(){
       let statusCode;
       logMeIn(this.email,this.password).then(response => {
-        statusCode = response.statusCode()
-      });
-      if(statusCode === 200){
+        console.log("bene")
         store.setEmail(this.email);
-        this.icon = "done"
-        this.response = "Dati corretti"
-        this.colorResponse = "green"
-        router.push('/')
-      }else{
-        this.icon = "remove"
-        this.response = "Username o password errati"
-        this.colorResponse = "red"
-      }
+        router.push('layout');
+      }).catch(reason => {
+        console.log("male")
+        this.response="Credenziali errate"
+      })
+
     },
   }
 }
@@ -67,41 +58,74 @@ export default {
   #login{
     width: 100vw;
     height: 100vh;
-    align-content: center; //metti al centro la div
+    padding-top: 15rem;
+    padding-left: 23rem;
     .main-part{
-      width: 75vw;
-      height: 60vh;
+      width: 60vw;
+      height: 50vh;
+      display: flex;
+      border: 2px solid black;
       .left-side-login{
-        width: 60%;
+        width: 40%;
         height: 100%;
         background-color: forestgreen;
         h1{
-          color: black;
+          padding-top: 7rem;
+          margin-left: 3rem;
+          color: white;
+          font-weight: bold;
+          font-size: xx-large;
+          padding-bottom: 0.5rem;
         }
         h3{
-          color: black;
+          margin-left: 3rem;
+          color: white;
+          font-weight: bold;
         }
       }
       .right-side-login{
-        width: 40%;
+        width: 60%;
         height: 100%;
+        padding-left: 10rem;
+        padding-top: 3rem;
+        .response-login{
+          padding-bottom: 1rem;
+          color: v-bind(colorResponse)
+        }
         form{
+          width: 100%;
+          display: flex;
+          flex-direction: column;
           label{
             height: 15px;
+            padding-bottom: 2rem;
           }
           input{
-            border-radius: 0.5rem;
+            font-size: 20px;
+            height: 3rem;
+            width: 15rem;
+            padding-bottom: 2rem;
+            &::placeholder{
+              top: 1rem;
+              right: 1rem;
+            }
           }
           .btn-login{
-            color: black;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            width: 30%;
+            color: white;
             background-color: blue;
+            margin-top: 2rem;
+            margin-left: 3rem;
+            margin-bottom: 2rem;
           }
         }
         a{
           color: blue;
         }
-        .response-login{
-          color: v-bind(colorResponse)
+        .response-error{
+          color: red;
         }
       }
     }

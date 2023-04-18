@@ -10,6 +10,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'Login',
+      component: () => import("@/views/Login.vue"),
+    },
+    {
+      path: '/layout',
       name: 'Layout',
       component: () => import("@/views/Layout.vue"),
       children:[
@@ -30,13 +35,6 @@ const router = createRouter({
         },
       ]
     },
-    {
-      path: '/login',
-      name: 'Login',
-      component: () => import("@/views/Login.vue")
-    },
-
-
   ]
 })
 
