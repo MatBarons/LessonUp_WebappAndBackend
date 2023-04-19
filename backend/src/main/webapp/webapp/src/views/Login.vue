@@ -4,7 +4,7 @@
     <div class="left-side-login">
       <h1>Lesson Up</h1>
       <h3>Prenota oggi le tue prossime lezioni!</h3>
-      <img src="src" alt="logo">
+      <!--<img src="../assets/images/logo.png" alt="logo"> -->
     </div>
     <div class="right-side-login">
       <div class="response-login">
@@ -55,6 +55,7 @@ export default {
 
 <style lang="scss" scoped>
   #login{
+    background: linear-gradient(90deg,green,#d1d8cc );
     width: 100vw;
     height: 100vh;
     padding-top: 15rem;
@@ -63,11 +64,14 @@ export default {
       width: 60vw;
       height: 50vh;
       display: flex;
-      border: 2px solid black;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) ;
+      border-radius: 1rem;
+      overflow: hidden;
       .left-side-login{
         width: 40%;
         height: 100%;
-        background-color: forestgreen;
+        background-image: url("../assets/images/2_sfondo.jpg") ;
+        background-size: cover;
         h1{
           padding-top: 7rem;
           margin-left: 3rem;
@@ -81,12 +85,19 @@ export default {
           color: white;
           font-weight: bold;
         }
+        img{
+          margin-left: 15rem;
+          margin-top: 5rem;
+          width: 40%;
+          height: 40%;
+        }
       }
       .right-side-login{
         width: 60%;
         height: 100%;
         padding-left: 10rem;
         padding-top: 3rem;
+        background: white;
         .response-login{
           padding-bottom: 1rem;
           color: v-bind(colorResponse)
@@ -111,7 +122,7 @@ export default {
             padding-bottom: 1rem;
             width: 30%;
             color: white;
-            background-color: blue;
+            background-color: #00a817;
             margin-top: 2rem;
             margin-left: 3rem;
             margin-bottom: 2rem;

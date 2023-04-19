@@ -76,8 +76,11 @@ export default {
       this.getLectures()
     },
     setSelectedButton(value){
-      this.selectedButton = value;
-      this.getLectures()
+      if(value !== this.selectedButton){
+        this.selectedButton = value;
+        this.getLectures()
+      }
+
     },
   },
   created() {
