@@ -40,8 +40,8 @@ export default {
       courses: [],
       lectures : [],
       selectedCourse: "",
-      selectedDate: new Date(),
-      selectedButton: ""
+      selectedDate: "",
+      selectedButton: "free"
     }
   },
   methods:{
@@ -80,8 +80,8 @@ export default {
       this.getLectures()
     },
   },
-  beforeMount() {
-    this.selectedDate = Date.now()
+  created() {
+    this.selectedDate = this.format_date(new Date(Date.now()))
     this.selectedCourse = "francese"
     this.getCourses()
     this.getLectures()
@@ -132,5 +132,4 @@ export default {
     }
   }
 }
-
 </style>

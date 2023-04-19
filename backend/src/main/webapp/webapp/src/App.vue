@@ -17,6 +17,8 @@ export default{
   },
   beforeUpdate() {
   },
+  created() {
+  },
   mounted() {
   },
   methods:{

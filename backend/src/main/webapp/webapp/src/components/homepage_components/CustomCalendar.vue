@@ -1,5 +1,5 @@
 <template>
-  <DatePicker :min-date="minDate" :max-date="maxDate" columns="2" color="teal" :disabled-dates="disabledDates" v-model="date" @click="getSelectedDate"/>
+  <DatePicker :min-date="minDate" :max-date="maxDate" columns=2 color="teal" :disabled-dates="disabledDates" v-model="date" @click="getSelectedDate"/>
 </template>
 
 <script >
@@ -18,7 +18,7 @@ export default defineComponent({
 
   data(){
     return{
-      date: new Date(),
+      date: Date.now(),
       minDate: new Date(2020, 1,1),
       maxDate: new Date(2023, 12, 31),
       disabledDates: [],
@@ -32,14 +32,13 @@ export default defineComponent({
     updateDisabledDates(){
       let date = new Date();
       if(this.chosenButton === "free" || this.chosenButton === "booked"){
-
         this.disabledDates = [this.minDate,new Date(date.getFullYear(),date.getMonth(),date.getDay()-1)]
       }else{
         this.disabledDates = [new Date(date.getFullYear(),date.getMonth(),date.getDay()+1),this.maxDate]
       }
     }
   },
-  beforeUpdate() {
+  beforeMount() {
     this.updateDisabledDates()
   }
 })

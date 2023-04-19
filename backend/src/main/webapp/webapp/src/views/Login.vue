@@ -39,10 +39,9 @@ export default {
   },
   methods:{
     login(){
-      let statusCode;
       logMeIn(this.email,this.password).then(response => {
-        console.log("bene")
         store.setEmail(this.email);
+        console.log(store.email)
         router.push('layout');
       }).catch(reason => {
         console.log("male")
@@ -104,10 +103,7 @@ export default {
             font-size: 20px;
             height: 3rem;
             width: 15rem;
-            padding-bottom: 2rem;
             &::placeholder{
-              top: 1rem;
-              right: 1rem;
             }
           }
           .btn-login{
