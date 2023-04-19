@@ -19,8 +19,8 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  background-color: cornflowerblue;
-  color: #fff;
+  background-color: #ffcc00;
+  color: black;
   border: none;
   border-radius: 3px;
   padding: 10px 20px;
@@ -33,7 +33,7 @@ export default {
     padding-top: 0.3rem;
   }
   &:hover{
-    background-color: #0069d9;
+    background-color: lighten(#ffcc00,50);
   }
 }
 </style>

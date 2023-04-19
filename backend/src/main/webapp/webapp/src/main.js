@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './assets/main.css'
 import { setupCalendar } from 'v-calendar';
+import './css_colors_webapp/colors.module.css'
 // Use calendar defaults (optional)
 
 

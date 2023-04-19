@@ -76,7 +76,7 @@ export default {
 
 <style lang="scss" scoped>
 h3{
-  color: black;
+  color: white;
   font-weight: bolder;
 }
 .card {
@@ -84,7 +84,7 @@ h3{
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  background-color: lightgrey;
+  background-color: #009b4d;
   width: 13rem;
   max-height: 13rem;
   //clip-path: polygon(0% 0%,100% 5%, 100% 100%,100% 100%, 0% 100%);
@@ -93,21 +93,22 @@ h3{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     text-align: center;
-    background: linear-gradient(135deg, white 20px, transparent 20px);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.06) 20px, transparent 20px);
   }
   hr{
     height: 1rem;
-    color: black;
-    background-color: black;
+    color: #002201FF;
+    background-color: #002201FF;
   }
   .card-body {
     padding: 20px;
     .container-subject{
       color: black;
       display: flex;
-      background-color: #007bff;
+      background-color: #ffcc00;
       border-radius: 5px;
       h4{
+        font-weight: bold;
         padding-left: 3.5rem;
         display: flex;
         flex-direction: column;
@@ -119,22 +120,36 @@ h3{
       padding-left: 3rem;
       color: black;
       display: flex;
-      background-color: aquamarine;
+      background-color: #ffcc00;
       border-radius: 5px;
       margin-top: 0.5rem;
+      h4{
+        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
     .container-time{
       padding-left: 3.5rem;
       color: black;
       display: flex;
-      background-color: blueviolet;
+      background-color: #ffcc00;
       border-radius: 5px;
       margin-top: 0.5rem;
+      h4{
+        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
   }
   .card-footer {
-    background-color: lightgrey;
+    background: #009b4d;
     padding: 10px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;

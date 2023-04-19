@@ -1,5 +1,5 @@
 <template>
-  <DatePicker :min-date="minDate" :max-date="maxDate" columns=2 color="teal" :disabled-dates="disabledDates" v-model="date" @click="getSelectedDate"/>
+  <DatePicker :min-date="minDate" :max-date="maxDate" columns=2 color="green" :disabled-dates="disabledDates" v-model="date" @click="getSelectedDate"/>
 </template>
 
 <script >

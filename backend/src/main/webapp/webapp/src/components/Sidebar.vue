@@ -1,7 +1,7 @@
 <template>
-  <aside>
+  <aside class="primary">
     <div class="logo">
-      <img :src="logoURL" alt="logo" />
+      <img src="../assets/images/logo.png" alt="logo" />
     </div>
     <h3>Menu</h3>
     <div class="menu">
@@ -41,29 +41,32 @@ const ToggleMenu = () => {
 aside {
   display: flex;
   flex-direction: column;
-  background-color: var(--dark);
-  color: var(--light);
+  color: white;
   width: 12vw;
+  background: #009b4d;
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
+  box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.15);
   .logo {
-    margin: 1rem;
+    margin: 2rem;
     img {
-      width: 2rem;
+      width: 100%;
+      height: 100%;
     }
   }
   h3 {
-    color: var(--grey);
+    color: #FFFFFFFF;
+    font-weight: bold;
     font-size: 0.875rem;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
-    margin-top: 3rem;
+    margin-top: 2rem;
   }
   .menu {
     margin: 0 -1rem;
-    router-link{
 
+    router-link{
     }
     .button {
       display: flex;
@@ -72,23 +75,24 @@ aside {
       padding: 0.5rem 1rem 2rem;
       .material-icons {
         font-size: 2rem;
-        color: var(--light);
+        color: white;
       }
       .text {
-        color: var(--light);
+        color: white;
+        font-size: 1rem;
         padding-left: 1rem;
       }
       &:hover {
         background-color: var(--dark-alt);
         .material-icons, .text {
-          color: var(--primary);
+          color: #FFFFFFFF;
         }
       }
       &.router-link-exact-active {
         background-color: var(--dark-alt);
-        border-right: 5px solid var(--primary);
+        border-right: 5px solid #ffcc00;
         .material-icons, .text {
-          color: var(--primary);
+          color: #ffcc00 ;
         }
       }
     }

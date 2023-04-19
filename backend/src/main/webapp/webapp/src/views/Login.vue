@@ -14,7 +14,7 @@
         <label for="username">Email</label>
         <input v-model="email" name="username" placeholder="Inserisci la tua email" required>
         <label for="password">Password</label>
-        <input v-model="password" name="password" placeholder="Inserisci la tua password" required>
+        <input type="password" v-model="password" name="password" placeholder="Inserisci la tua password" required>
         <button type="submit" class="btn-login" @click="login">Login</button>
       </form>
       <a href="url">Non hai un account? Registrati!</a>

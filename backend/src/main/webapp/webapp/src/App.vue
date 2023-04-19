@@ -1,6 +1,6 @@
 <script>
 import {store} from "@/apiCalls/User"
-import colors from "@/css_colors_webapp/colors.module.css"
+
 import Layout from "@/views/Layout.vue";
 import Login from "@/views/Login.vue";
 export default{
@@ -33,7 +33,7 @@ export default{
 <style lang="scss">
 html{
   body{
-    background-color: var(--md-sys-color-background);
+    background-color: #faf5e9;//rgba(0, 0, 0, 0.06);
     width: 100%;
     #app{
       width: 100%;
@@ -45,17 +45,8 @@ html{
       }
     }
   }
-
 }
-:root{
-  --primary: #4CE346;
-  --grey: #64748b;
-  --dark: #1e293b;
-  --light: #f1f4f9;
-  --sidebar-width: 300px;
 
-
-}
 
 *,*::after,*::before{
   margin:0;
