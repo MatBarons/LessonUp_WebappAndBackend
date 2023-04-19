@@ -126,6 +126,7 @@ export default {
     display: flex;
     flex-direction: column;
     .sumOfSubjects{
+      width: 90.5%;
       display: flex;
       flex-wrap: wrap;
       .subject{

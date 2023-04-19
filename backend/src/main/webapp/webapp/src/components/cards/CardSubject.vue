@@ -105,6 +105,9 @@ $background-color: v-bind(backgroundColor);
   &:hover {
     background-color: white;
     color: v-bind(backgroundColor);
+    .divider-line{
+      background: v-bind(backgroundColor);
+    }
     .card-title > h2{
       color: $background-color;
     }
