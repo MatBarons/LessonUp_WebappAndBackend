@@ -31,6 +31,7 @@ public class ApiLecture extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
+
         if(req.getParameter("path")!= null){
             switch (req.getParameter("path")){
                 case "getAllLecturesBySubjectAndStatusAndDate":{
@@ -83,31 +84,41 @@ public class ApiLecture extends HttpServlet {
                 case "getAllLecturesByStudentAndStatus":{
                     String student = req.getParameter("student");
                     String status = req.getParameter("status");
+                    Gson g = new GsonBuilder().setPrettyPrinting().create();
                     if(dao == null){
                         out.println("dao is null -- API Lecture doGet");
                     }else{
-                        int i=0;
-                        ArrayList<Lecture> list = dao.getLecturesByStudentAndStatus(student,status);
-                        Gson g = new GsonBuilder().setPrettyPrinting().create();
-                        out.println("[");
-                        for(Lecture l : list){
-                            out.println("{");
-                            out.println("\"date\"" + ":" + "\"" + l.getDate() + "\"" + ",");
-                            out.println("\"time\"" + ":" + "\"" + l.getTime()+ "\"" + ",");
-                            out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
-                            out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");
-                            out.println("\"email\"" + ":" + "\"" + l.getProfessor() + "\""+ ",");
-                            out.println("\"subject\"" + ":" + "\"" + l.getSubject() + "\"");
-                            out.println("}");
-                            if(i<list.size()-1){
-                                i++;
-                                out.println(",");
+                        try{
+                            int i=0;
+                            ArrayList<Lecture> list = dao.getLecturesByStudentAndStatus(student,status);
+                            out.println(g.toJson(list));
+                            /*
+                            out.println("[");
+                            for(Lecture l : list){
+                                out.println("{");
+                                out.println("\"date\"" + ":" + "\"" + l.getDate() + "\"" + ",");
+                                out.println("\"time\"" + ":" + "\"" + l.getTime()+ "\"" + ",");
+                                out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
+                                out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");
+                                out.println("\"email\"" + ":" + "\"" + l.getProfessor() + "\""+ ",");
+                                out.println("\"subject\"" + ":" + "\"" + l.getSubject() + "\"");
+                                out.println("}");
+                                if(i<list.size()-1){
+                                    i++;
+                                    out.println(",");
+                                }
                             }
+                            out.println("]");
+                            out.flush();
+                             */
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
-                        out.println("]");
-                        out.flush();
+
+
                     }
                 }
+                break;
                 case "getAllLecturesByStudentAndStatusAndDateAndSubject":{
                     String student = req.getParameter("student");
                     String status = req.getParameter("status");
