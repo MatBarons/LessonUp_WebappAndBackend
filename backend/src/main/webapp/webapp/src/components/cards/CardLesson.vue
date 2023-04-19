@@ -17,20 +17,20 @@
     </div>
     <hr>
     <div class="card-footer">
-      <div v-if="this.context === 'Homepage'">
+      <div v-if="this.context === 'free'">
         <BuyButton/>
       </div>
-      <div v-else-if="this.context === 'Orders_ToBeConfirmed'">
-        <ConfirmButton/>
-      </div>
-      <div v-else-if="this.context === 'Cart'">
+      <div v-else-if="this.context === 'booked'">
         <RemoveButton/>
       </div>
-      <div v-else-if="this.context=== ''">
-        <DeleteButton/>
+      <div v-else-if="this.context === 'completed'">
+        <ConfirmButton/>
+      </div>
+      <div v-else-if="this.context=== 'ended'">
+        <AlreadyConfirmedButton/>
       </div>
       <div v-else>
-        <AlreadyConfirmedButton/>
+        <DeleteButton/>
       </div>
     </div>
   </div>

@@ -4,18 +4,19 @@
       <h2>Prenota ora le tue prossime lezioni!</h2>
       <div class="sumOfLessons">
         <div class="lesson" v-for="lecture in lectures">
-          <CardLesson context="Homepage" :lesson="lecture"/>
+          <CardLesson :context="selectedButton" :lesson="lecture"/>
         </div>
       </div>
     </div>
     <div class="right-side-homepage">
       <RadioButtons @setButton="setSelectedButton"/>
       <CustomCalendar :chosen-button="selectedButton" @setDate="setSelectedDate"/>
-      <div class="sumOfSubjects">
+      <div class="sumOfSubjects" v-if="this.selectedButton === 'free'">
         <div class="subject" v-for="course in courses" >
           <CardSubject :name="course" @setSubject="setSelectedCourse"/>
         </div>
       </div>
+      <div v-else>Non ne hai bisogno</div>
     </div>
   </main>
 </template>
@@ -29,7 +30,7 @@ import RadioButtons from "@/components/homepage_components/RadioButtons.vue";
 import moment from "moment/moment"
 
 import {getActiveCourses} from "@/apiCalls/Subject"
-import {getLecturesByDateAndSubject, getLecturesByStudentAndStatusAndDateAndSubject} from "@/apiCalls/Lecture"
+import {getLecturesByDateAndSubject, getLecturesByStudentAndStatus} from "@/apiCalls/Lecture"
 import {store} from "@/apiCalls/User"
 
 export default {
@@ -61,7 +62,7 @@ export default {
           this.lectures = response.data
         })
       }else{
-        getLecturesByStudentAndStatusAndDateAndSubject(store.email,this.selectedButton,this.selectedDate,this.selectedCourse).then(response =>{
+        getLecturesByStudentAndStatus(store.email,this.selectedButton).then(response =>{
           this.lectures = response.data
         })
       }
@@ -80,7 +81,6 @@ export default {
         this.selectedButton = value;
         this.getLectures()
       }
-
     },
   },
   created() {

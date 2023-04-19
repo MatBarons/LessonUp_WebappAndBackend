@@ -19,7 +19,8 @@
     "v-calendar": "^3.0.3",
     "vue": "^3.2.47",
     "vue-inline-calendar": "^1.0.0",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "webpack-hot-middleware": "^2.25.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

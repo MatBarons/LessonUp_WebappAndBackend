@@ -85,18 +85,18 @@ public class ApiLecture extends HttpServlet {
                     String student = req.getParameter("student");
                     String status = req.getParameter("status");
                     Gson g = new GsonBuilder().setPrettyPrinting().create();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     if(dao == null){
                         out.println("dao is null -- API Lecture doGet");
                     }else{
                         try{
                             int i=0;
                             ArrayList<Lecture> list = dao.getLecturesByStudentAndStatus(student,status);
-                            out.println(g.toJson(list));
-                            /*
+                            //out.println(g.toJson(list));
                             out.println("[");
                             for(Lecture l : list){
                                 out.println("{");
-                                out.println("\"date\"" + ":" + "\"" + l.getDate() + "\"" + ",");
+                                out.println("\"date\"" + ":" + "\"" + sdf.format( l.getDate()) + "\"" + ",");
                                 out.println("\"time\"" + ":" + "\"" + l.getTime()+ "\"" + ",");
                                 out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
                                 out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");
@@ -110,7 +110,6 @@ public class ApiLecture extends HttpServlet {
                             }
                             out.println("]");
                             out.flush();
-                             */
                         }catch (Exception e){
                             e.printStackTrace();
                         }

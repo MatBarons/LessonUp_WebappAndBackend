@@ -18,7 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  background-color: red;
+  background-color: white;
   color: #fff;
   border: none;
   border-radius: 3px;
