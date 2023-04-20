@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-header">
       <h3>Prof. {{ this.firstUpperCase(lesson.name) }} {{ this.firstUpperCase(lesson.surname)}}</h3>
+
     </div>
     <hr>
     <div class="card-body">
@@ -21,10 +22,10 @@
         <BuyButton/>
       </div>
       <div v-else-if="this.context === 'booked'">
-        <RemoveButton/>
+        <RemoveButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
       </div>
       <div v-else-if="this.context === 'completed'">
-        <ConfirmButton/>
+        <ConfirmButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
       </div>
       <div v-else-if="this.context=== 'ended'">
         <AlreadyConfirmedButton/>
@@ -89,6 +90,8 @@ h3{
   max-height: 13rem;
   //clip-path: polygon(0% 0%,100% 5%, 100% 100%,100% 100%, 0% 100%);
   .card-header {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -143,7 +146,7 @@ h3{
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+        padding-left: 0.7rem;
       }
     }
 

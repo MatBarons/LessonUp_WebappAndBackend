@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Lecture{
     private Date date;
-    private Time time;
+    private LocalTime time;
     private String student;
     private String professor;
     private String profName;
@@ -14,7 +14,7 @@ public class Lecture{
     private String subject;
     private String status;
 
-    public Lecture(Date date,Time time,String profName,String profSurname, String professor,String subject){
+    public Lecture(Date date,LocalTime time,String profName,String profSurname, String professor,String subject){
         this.date = date;
         this.time = time;
         this.profName = profName;
@@ -22,6 +22,14 @@ public class Lecture{
         this.professor = professor;
         this.subject = subject;
     }
+
+    public Lecture(Date date,LocalTime time,String professor,String subject){
+        this.date = date;
+        this.time = time;
+        this.professor = professor;
+        this.subject = subject;
+    }
+
 
 
 
@@ -57,11 +65,11 @@ public class Lecture{
         this.date = date;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -88,4 +96,6 @@ public class Lecture{
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 }

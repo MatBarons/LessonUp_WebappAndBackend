@@ -13,8 +13,11 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -65,7 +68,7 @@ public class ApiLecture extends HttpServlet {
                         for(Lecture l : list){
                             out.println("{");
                             out.println("\"date\"" + ":" + "\"" + d + "\"" + ",");
-                            out.println("\"time\"" + ":" + "\"" + l.getTime()+ "\"" + ",");
+                            out.println("\"time\"" + ":" + "\"" + l.getTime().toString().substring(0,5)+ "\"" + ",");
                             out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
                             out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");
                             out.println("\"email\"" + ":" + "\"" + l.getProfessor()+ "\"" + ",");
@@ -97,7 +100,7 @@ public class ApiLecture extends HttpServlet {
                             for(Lecture l : list){
                                 out.println("{");
                                 out.println("\"date\"" + ":" + "\"" + sdf.format( l.getDate()) + "\"" + ",");
-                                out.println("\"time\"" + ":" + "\"" + l.getTime()+ "\"" + ",");
+                                out.println("\"time\"" + ":" + "\"" + l.getTime().toString().substring(0,5)+ "\"" + ",");
                                 out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
                                 out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");
                                 out.println("\"email\"" + ":" + "\"" + l.getProfessor() + "\""+ ",");
@@ -175,33 +178,41 @@ public class ApiLecture extends HttpServlet {
         resp.setContentType("application/json");
         JsonObject jsonResponse = new JsonObject();
         if(req.getParameter("path")!= null){
-            Lecture lecture = gson.fromJson(req.getReader(), Lecture.class);
-            if(dao == null){
-                out.println("dao is null -- API Lecture doPost -- inserLecture");
-            }else{
-                try {
-                    dao.insertLecture(lecture);
-                    jsonResponse.addProperty("message", "Lecture registered successfully");
-                    resp.setStatus(HttpServletResponse.SC_OK);
-                } catch (LectureAlreadyExist e) {
-                    jsonResponse.addProperty("error", "Failed to register lecture, it already exist");
-                    resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                }
-            }
-        }
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        PrintWriter out = resp.getWriter();
-        Gson gson = new Gson();
-        resp.setContentType("application/json");
-        JsonObject jsonResponse = new JsonObject();
-        if(req.getParameter("path") != null){
             switch (req.getParameter("path")){
+                case "addLecture": {
+                    Lecture lecture = gson.fromJson(req.getReader(), Lecture.class);
+                    if(dao == null){
+                        out.println("dao is null -- API Lecture doPost -- insertLecture");
+                    }else{
+                        try {
+                            dao.insertLecture(lecture);
+                            jsonResponse.addProperty("message", "Lecture registered successfully");
+                            resp.setStatus(HttpServletResponse.SC_OK);
+                        } catch (LectureAlreadyExist e) {
+                            jsonResponse.addProperty("error", "Failed to register lecture, it already exist");
+                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        }
+                    }
+                }
+                break;
                 case "changeStatus" : {
-                    Lecture lecture = gson.fromJson(req.getReader(),Lecture.class);
                     String status = req.getParameter("status");
+                    String professor = req.getParameter("professor");
+                    String subject = req.getParameter("subject");
+                    String d = req.getParameter("date");
+                    String t = req.getParameter("time");
+                    Time time = new Time(Integer.parseInt(t.substring(0,2)),Integer.parseInt(t.substring(3,5)),Integer.parseInt(t.substring(6,8)));
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = null;
+                    System.out.println(d);
+                    try {
+                        date = format.parse(d);
+                    } catch (ParseException e) {
+                        System.out.println("wrong date format, please use yyyy-MM-dd");
+                        throw new RuntimeException(e);
+                    }
+
+                    Lecture lecture = new Lecture(date,time.toLocalTime(),professor,subject);
                     if(dao == null){
                         out.println("dao is null -- API Lecture goPut");
                     }else{
@@ -217,9 +228,24 @@ public class ApiLecture extends HttpServlet {
                 }
                 break;
                 case "changeStatusAndStudent" : {
-                    Lecture lecture = gson.fromJson(req.getReader(), Lecture.class);
-                    String student = req.getParameter("student");
                     String status = req.getParameter("status");
+                    String professor = req.getParameter("professor");
+                    String subject = req.getParameter("subject");
+                    String d = req.getParameter("date");
+                    String t = req.getParameter("time");
+                    Time time = new Time(Integer.parseInt(t.substring(0,2)),Integer.parseInt(t.substring(3,5)),Integer.parseInt(t.substring(6,8)));
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = null;
+                    System.out.println(d);
+                    try {
+                        date = format.parse(d);
+                    } catch (ParseException e) {
+                        System.out.println("wrong date format, please use yyyy-MM-dd");
+                        throw new RuntimeException(e);
+                    }
+
+                    Lecture lecture = new Lecture(date,time.toLocalTime(),professor,subject);
+                    String student = req.getParameter("student");
                     if(dao==null){
                         out.println("dao is null -- API Lecture goPut");
                     }else{
@@ -234,6 +260,19 @@ public class ApiLecture extends HttpServlet {
                     }
                 }
                 break;
+            }
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        PrintWriter out = resp.getWriter();
+        Gson gson = new Gson();
+        resp.setContentType("application/json");
+        JsonObject jsonResponse = new JsonObject();
+        if(req.getParameter("path") != null){
+            switch (req.getParameter("path")){
+
             }
         }
     }

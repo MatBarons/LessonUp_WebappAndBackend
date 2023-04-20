@@ -7,6 +7,7 @@ import com.project.backend.Model.Lecture;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,7 +50,7 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
         }
     }
 
-    private boolean doesExist(String professor,String subject,Date date,Time time){
+    private boolean doesExist(String professor,String subject,Date date,LocalTime time){
         boolean check = false;
         try{
             CachedRowSet rs = launchQuery(doesExist,professor,date,time,subject);
@@ -97,7 +98,7 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
                 String profName = rs.getString("name");
                 String profSurname = rs.getString("surname");
                 String email = rs.getString("professor");
-                Time time = rs.getTime("time");
+                LocalTime time = rs.getTime("time").toLocalTime();
                 lectures.add(new Lecture(date, time, profName, profSurname, email,subject));
             }
         }catch (SQLException e){
@@ -115,7 +116,7 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
             CachedRowSet rs = launchQuery(getLecturesByStudentAndStatus, student, status);
             while (rs.next()) {
                 Date date = rs.getDate("date");
-                Time time = rs.getTime("time");
+                LocalTime time = rs.getTime("time").toLocalTime();
                 String profName = rs.getString("name");
                 String profSurname = rs.getString("surname");
                 String email = rs.getString("professor");
@@ -136,7 +137,7 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
         try {
             CachedRowSet rs = launchQuery(getLecturesByStudentAndStatusAndDateAndSubject, student, status,date,subject);
             while (rs.next()) {
-                Time time = rs.getTime("time");
+                LocalTime time = rs.getTime("time").toLocalTime();
                 String profName = rs.getString("name");
                 String profSurname = rs.getString("surname");
                 String email = rs.getString("professor");

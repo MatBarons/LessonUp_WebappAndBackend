@@ -6,21 +6,33 @@
 </template>
 
 <script>
+import {changeStatus} from "@/apiCalls/Lecture"
+import {parse_string_to_date,parse_string_to_time} from "@/utils/Utils";
 export default {
   name: "ConfirmButton",
+  props:{
+    date: null,
+    time: null,
+    professor: null,
+    subject: null
+  },
   data(){
     return{
       message: "Conferma la lezione",
       icon: "add_circle_outline",
       cursor: "pointer",
-
     }
   },
   methods:{
     confirmLecture(){
-      this.message = "Lezione confermata"
-      this.icon = "check"
-      this.cursor= "default"
+      changeStatus("ended", parse_string_to_date(this.date), parse_string_to_time(this.time), this.professor, this.subject)
+      .then(response => {
+        this.message = "Lezione confermata"
+        this.icon = "check"
+        this.cursor= "default"
+      }).catch(reason => {
+        console.log(reason)
+      })
     }
   }
 }

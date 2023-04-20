@@ -32,6 +32,7 @@ import moment from "moment/moment"
 import {getActiveCourses} from "@/apiCalls/Subject"
 import {getLecturesByDateAndSubject, getLecturesByStudentAndStatus} from "@/apiCalls/Lecture"
 import {store} from "@/apiCalls/User"
+import {format_date} from "@/utils/Utils";
 
 export default {
   name: "Home",
@@ -47,9 +48,7 @@ export default {
   },
   methods:{
     format_date(value){
-      if (value) {
-        return moment(String(value)).format('yyyy-MM-DD')
-      }
+      return format_date(value)
     },
     getCourses(){
       getActiveCourses().then(response => {
