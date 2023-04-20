@@ -1,8 +1,6 @@
 <template>
   <aside class="primary">
-    <div class="logo">
-      <img src="../assets/images/logo.png" alt="logo" />
-    </div>
+    <h2>Lesson Up</h2>
     <h3>Menu</h3>
     <div class="menu">
       <router-link to="/home" class="button">
@@ -17,6 +15,9 @@
         <span class="material-icons">person</span>
         <span class="text">You</span>
       </router-link>
+    </div>
+    <div class="logo">
+      <img src="../assets/images/logo.png" alt="logo" />
     </div>
   </aside>
 </template>
@@ -39,16 +40,24 @@ const ToggleMenu = () => {
 
 <style lang="scss" scoped>
 aside {
+  position: relative;
   display: flex;
   flex-direction: column;
+  overflow: auto;
   color: white;
   width: 12vw;
+  height: 100vh;
   background: #009b4d;
-  overflow: hidden;
-  min-height: 100vh;
   padding: 1rem;
   box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.15);
+  h2{
+    color: white;
+    font-weight: bold;
+    padding-bottom: 3rem;
+  }
   .logo {
+    bottom: 0px;
+    position: absolute;
     margin: 2rem;
     img {
       width: 100%;

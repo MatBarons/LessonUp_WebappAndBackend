@@ -19,10 +19,10 @@
     <hr>
     <div class="card-footer">
       <div v-if="this.context === 'free'">
-        <BuyButton/>
+        <BuyButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
       </div>
       <div v-else-if="this.context === 'booked'">
-        <RemoveButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
+        <DeleteButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
       </div>
       <div v-else-if="this.context === 'completed'">
         <ConfirmButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
@@ -31,7 +31,7 @@
         <AlreadyConfirmedButton/>
       </div>
       <div v-else>
-        <DeleteButton/>
+        <RemoveButton/>
       </div>
     </div>
   </div>

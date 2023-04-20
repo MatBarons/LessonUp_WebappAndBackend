@@ -49,12 +49,12 @@ export default {
   transition: background-color 0.3s ease;
   display: flex;
   align-content: center;
-h4{
-  padding-left: 0.25rem;
-  padding-top: 0.3rem;
-}
-&:hover{
-   background-color: lighten(#ffcc00,50);
- }
+  h4{
+    padding-left: 0.25rem;
+    padding-top: 0.3rem;
+  }
+  &:hover{
+     background-color: lighten(#ffcc00,50);
+   }
 }
 </style>

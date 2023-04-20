@@ -1,17 +1,39 @@
 <template>
   <button class="btn" @click="addToCart">
-    <i class="material-icons">add_shopping_cart</i>
-    <h4> Aggiungi al carrello</h4>
+    <i class="material-icons">{{icon}}</i>
+    <h4>{{message}}</h4>
   </button>
 </template>
 
 <script>
+import {store} from "@/apiCalls/User"
 export default {
   name: "BuyButton",
   emits: [],
+  props:{
+    date: null,
+    time: null,
+    professor: null,
+    subject: null
+  },
+  data(){
+    return{
+      message: "Aggiungi al carrello",
+      icon: "add_shopping_cart",
+      cursor: "pointer",
+      store
+    }
+  },
   methods:{
     addToCart() {
-      // Aggiungi la lezione al carrello
+      store.setElementInCartList(
+        {
+          date: this.date,
+          time: this.time,
+          professor: this.professor,
+          subject: this.subject
+        }
+      )
     },
   }
 }
@@ -24,7 +46,7 @@ export default {
   border: none;
   border-radius: 3px;
   padding: 10px 20px;
-  cursor: pointer;
+  cursor: v-bind(cursor);
   transition: background-color 0.3s ease;
   display: flex;
   align-content: center;

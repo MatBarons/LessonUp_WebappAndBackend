@@ -8,7 +8,11 @@ export async function logMeIn(email,password){
 
 export const store = reactive({
     email: null,
+    cart_list: [],
     setEmail(value){
         this.email = value
+    },
+    setElementInCartList(value){
+      this.cart_list.push(value)
     }
 })

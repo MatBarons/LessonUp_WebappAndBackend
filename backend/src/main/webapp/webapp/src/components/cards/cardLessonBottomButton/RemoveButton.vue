@@ -32,7 +32,7 @@ export default {
     padding-top: 0.3rem;
   }
   &:hover{
-    background-color: darken(red,10);
+    background-color: lighten(red,10);
   }
 }
 </style>
