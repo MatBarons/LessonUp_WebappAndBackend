@@ -40,6 +40,7 @@ export default {
   methods:{
     login(){
       logMeIn(this.email,this.password).then(response => {
+        store.setName(response.data)
         store.setEmail(this.email);
         console.log(store.email)
         router.push('layout');
@@ -64,7 +65,7 @@ export default {
       width: 60vw;
       height: 50vh;
       display: flex;
-      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) ;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
       border-radius: 1rem;
       overflow: hidden;
       .left-side-login{

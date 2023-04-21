@@ -39,11 +39,13 @@
 <script>
 import moment from 'moment';
 import {capitalize} from "@/utils/Utils";
+
 import BuyButton from "@/components/cards/cardLessonBottomButton/BuyButton.vue";
 import RemoveButton from "@/components/cards/cardLessonBottomButton/RemoveButton.vue";
 import ConfirmButton from "@/components/cards/cardLessonBottomButton/ConfirmButton.vue";
 import AlreadyConfirmedButton from "@/components/cards/cardLessonBottomButton/AlreadyConfirmedButton.vue";
 import DeleteButton from "@/components/cards/cardLessonBottomButton/DeleteButton.vue";
+
 export default {
   name: 'CardLesson',
   components: {DeleteButton, AlreadyConfirmedButton, ConfirmButton, RemoveButton, BuyButton},
@@ -53,7 +55,7 @@ export default {
       type: Object,
       required: true
     },
-    context:{
+    context: {
       type: String,
       required: true
     }

@@ -17,8 +17,8 @@ export default {
   },
   data(){
     return{
-      message: store.isElementInCartList(this.lesson) !== true ? "Aggiungi al carrello" : "Aggiunto al carrello",
-      icon: store.isElementInCartList(this.lesson) !== true ? "add_shopping_cart" : "check",
+      message: store.isElementInCartList(this.lesson) ? "Aggiunto al carrello" : "Aggiungi al carrello",
+      icon: store.isElementInCartList(this.lesson) ? "check" : "add_shopping_cart",
       store,
     }
   },
@@ -35,6 +35,7 @@ export default {
       }
     },
   },
+
 }
 </script>
 

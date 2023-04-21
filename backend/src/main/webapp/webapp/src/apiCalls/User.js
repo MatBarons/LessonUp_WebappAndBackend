@@ -8,25 +8,22 @@ export async function logMeIn(email,password){
 
 export const store = reactive({
     email: null,
-    cart_list: [],
+    name: null,
+    cart_list: new Set(),
     setEmail(value){
         this.email = value
     },
+    setName(value){
+        this.name = value
+    },
     addElementInCartList(value){
-        if(this.isElementInCartList(value) !== true){
-            this.cart_list.push(value)
-        }
+        this.cart_list.add(value)
     },
     removeElementInCartList(value){
-        let my_lecture;
-        if(this.isElementInCartList(value) === true){
-            my_lecture = this.cart_list.indexOf(value)
-            this.cart_list.splice(my_lecture,1)
-        }
-
+        this.cart_list.delete(value)
     },
     isElementInCartList(value){
-        return this.cart_list.includes(value,0)
+        return this.cart_list.has(value)
     }
 
 })

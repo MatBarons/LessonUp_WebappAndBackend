@@ -21,6 +21,9 @@ export default{
   },
   mounted() {
   },
+  setup(){
+
+  },
   methods:{
   }
 }

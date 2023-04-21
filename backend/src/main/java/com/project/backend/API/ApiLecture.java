@@ -243,7 +243,6 @@ public class ApiLecture extends HttpServlet {
                         System.out.println("wrong date format, please use yyyy-MM-dd");
                         throw new RuntimeException(e);
                     }
-
                     Lecture lecture = new Lecture(date,time.toLocalTime(),professor,subject);
                     String student = req.getParameter("student");
                     if(dao==null){
