@@ -2,7 +2,6 @@
   <div class="card">
     <div class="card-header">
       <h3>Prof. {{ this.firstUpperCase(lesson.name) }} {{ this.firstUpperCase(lesson.surname)}}</h3>
-
     </div>
     <hr>
     <div class="card-body">
@@ -19,7 +18,7 @@
     <hr>
     <div class="card-footer">
       <div v-if="this.context === 'free'">
-        <BuyButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
+        <BuyButton :lesson="lesson"/>
       </div>
       <div v-else-if="this.context === 'booked'">
         <DeleteButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
@@ -30,8 +29,8 @@
       <div v-else-if="this.context=== 'ended'">
         <AlreadyConfirmedButton/>
       </div>
-      <div v-else>
-        <RemoveButton/>
+      <div v-else-if="this.context === 'cart'">
+        <RemoveButton :lesson="lesson" @removeFromCart="removeElement"/>
       </div>
     </div>
   </div>
@@ -48,7 +47,7 @@ import DeleteButton from "@/components/cards/cardLessonBottomButton/DeleteButton
 export default {
   name: 'CardLesson',
   components: {DeleteButton, AlreadyConfirmedButton, ConfirmButton, RemoveButton, BuyButton},
-  emits: [],
+  emits: ['removeElement'],
   props: {
     lesson: {
       type: Object,
@@ -68,10 +67,10 @@ export default {
         return moment(String(value)).format('dd/MM/YYYY')
       }
     },
+    removeElement(value){
+      this.$emit('removeElement',value)
+    }
   },
-  mounted() {
-    console.log(this.lesson.date);
-  }
 }
 </script>
 
@@ -88,7 +87,6 @@ h3{
   background-color: #009b4d;
   width: 13rem;
   max-height: 13rem;
-  //clip-path: polygon(0% 0%,100% 5%, 100% 100%,100% 100%, 0% 100%);
   .card-header {
     display: flex;
     flex-direction: column;

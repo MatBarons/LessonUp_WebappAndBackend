@@ -46,7 +46,7 @@ aside {
   overflow: auto;
   color: white;
   width: 12vw;
-  height: 100vh;
+  min-height: 100vh;
   background: #009b4d;
   padding: 1rem;
   box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.15);

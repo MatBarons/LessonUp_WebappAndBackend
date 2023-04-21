@@ -9,33 +9,32 @@
 import {store} from "@/apiCalls/User"
 export default {
   name: "BuyButton",
-  emits: [],
   props:{
-    date: null,
-    time: null,
-    professor: null,
-    subject: null
+    lesson: {
+      type: Object,
+      required: true
+    }
   },
   data(){
     return{
-      message: "Aggiungi al carrello",
-      icon: "add_shopping_cart",
-      cursor: "pointer",
-      store
+      message: store.isElementInCartList(this.lesson) !== true ? "Aggiungi al carrello" : "Aggiunto al carrello",
+      icon: store.isElementInCartList(this.lesson) !== true ? "add_shopping_cart" : "check",
+      store,
     }
   },
   methods:{
     addToCart() {
-      store.setElementInCartList(
-        {
-          date: this.date,
-          time: this.time,
-          professor: this.professor,
-          subject: this.subject
-        }
-      )
+      if(store.isElementInCartList(this.lesson) === true){
+        store.removeElementInCartList(this.lesson)
+        this.message = "Aggiungi al carrello"
+        this.icon = "add_shopping_cart"
+      }else{
+        store.addElementInCartList(this.lesson)
+        this.message = "Aggiunto al carrello"
+        this.icon = "check"
+      }
     },
-  }
+  },
 }
 </script>
 
@@ -46,7 +45,7 @@ export default {
   border: none;
   border-radius: 3px;
   padding: 10px 20px;
-  cursor: v-bind(cursor);
+  cursor: pointer;
   transition: background-color 0.3s ease;
   display: flex;
   align-content: center;

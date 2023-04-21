@@ -3,7 +3,7 @@
     <div class="left-side-cart">
       <div class="sumOfLessons">
         <div class="lesson" v-for="lecture in lectures">
-          <CardLesson context="cart" :lesson="lecture"/>
+          <CardLesson context="cart" :lesson="lecture" @removeElement="removeLessonFromCart"/>
         </div>
       </div>
     </div>
@@ -28,9 +28,15 @@ export default {
   methods:{
     getCartLectures(){
       this.lectures = store.cart_list
+    },
+    removeLessonFromCart(value){
+      console.log("SIUM")
+      store.removeElementInCartList(value)
+      this.lectures = store.cart_list
+      console.log("CartList aggiornata:" + this.lectures)
     }
   },
-  created() {
+  mounted() {
     this.getCartLectures()
   }
 }
@@ -40,8 +46,10 @@ export default {
 #cart{
   height: 100vh;
   width: 88vw;
-  .left-side-homepage{
+  .left-side-cart{
     width: 50vw;
+    padding-top: 2rem;
+    padding-left: 2rem;
     display: flex;
     flex-direction: column;
     h2{

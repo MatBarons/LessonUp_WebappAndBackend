@@ -1,17 +1,41 @@
 <template>
   <button class="btn" @click="removeFromCart">
-    <i class="material-icons">close</i>
-    <h4>Rimuovi dal carrello</h4>
+    <i class="material-icons">{{icon}}</i>
+    <h4>{{message}}</h4>
   </button>
 </template>
 
 <script>
+import {store} from "@/apiCalls/User";
 export default {
   name: "RemoveButton",
+  emits : ['removeFromCart'],
+  props:{
+    lesson:{
+      type: Object,
+      required: true
+    }
+  },
+  data(){
+    return{
+      message: "Rimuovi dal carrello",
+      icon: "close",
+      store,
+    }
+  },
   methods:{
     removeFromCart(){
-
+      console.log("removeButton 1")
+      console.log(store.cart_list)
+      console.log(this.lesson)
+      if(store.isElementInCartList(this.lesson) === true){
+        console.log("removeButton 2")
+        this.$emit('removeFromCart',this.lesson)
+      }
     }
+  },
+  mounted() {
+    console.log(this.lesson.email)
   }
 }
 </script>
