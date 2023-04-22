@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import CardLesson from "@/components/cards/CardLesson.vue";
+import CardLesson from "@/components/user/cards/CardLesson.vue";
 
 import {store} from "@/apiCalls/User"
 import {changeStatusAndStudent} from "@/apiCalls/Lecture";

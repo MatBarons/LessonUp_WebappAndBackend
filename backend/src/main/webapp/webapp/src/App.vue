@@ -1,8 +1,8 @@
 <script>
 import {store} from "@/apiCalls/User"
 
-import Layout from "@/views/Layout.vue";
-import Login from "@/views/Login.vue";
+import Layout from "@/views/user/Layout.vue";
+import Login from "@/views/user/Login.vue";
 export default{
   name: 'App',
   components:{Login, Layout},

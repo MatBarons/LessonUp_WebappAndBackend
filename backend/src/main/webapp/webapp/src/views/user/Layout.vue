@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Sidebar from "@/components/Sidebar.vue";
+import Sidebar from "@/components/user/Sidebar.vue";
 import router from "@/router";
 import {store} from "@/apiCalls/User"
 

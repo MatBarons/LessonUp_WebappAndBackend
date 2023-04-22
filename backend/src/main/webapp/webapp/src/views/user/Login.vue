@@ -71,7 +71,7 @@ export default {
       .left-side-login{
         width: 40%;
         height: 100%;
-        background-image: url("../assets/images/2_sfondo.jpg") ;
+        background-image: url("../../assets/images/2_sfondo.jpg") ;
         background-size: cover;
         h1{
           padding-top: 7rem;

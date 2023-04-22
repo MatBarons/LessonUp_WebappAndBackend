@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import CardLesson from "@/components/cards/CardLesson.vue";
-import CardSubject from "@/components/cards/CardSubject.vue";
-import CustomCalendar from "@/components/homepage_components/CustomCalendar.vue";
-import RadioButtons from "@/components/homepage_components/RadioButtons.vue";
+import CardLesson from "@/components/user/cards/CardLesson.vue";
+import CardSubject from "@/components/user/cards/CardSubject.vue";
+import CustomCalendar from "@/components/user/homepage_components/CustomCalendar.vue";
+import RadioButtons from "@/components/user/homepage_components/RadioButtons.vue";
 
 import moment from "moment/moment"
 

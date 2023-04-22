@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from "@/views/Home.vue";
-import Cart from "@/views/Cart.vue";
-import Profile from "@/views/Profile.vue";
-import Login from "@/views/Login.vue";
-import Layout from "@/views/Layout.vue";
+import Home from "@/views/user/Home.vue";
+import Cart from "@/views/user/Cart.vue";
+import Profile from "@/views/user/Profile.vue";
+import Login from "@/views/user/Login.vue";
+import Layout from "@/views/user/Layout.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,12 +11,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'Login',
-      component: () => import("@/views/Login.vue"),
+      component: () => import("@/views/user/Login.vue"),
     },
     {
       path: '/layout',
       name: 'Layout',
-      component: () => import("@/views/Layout.vue"),
+      component: () => import("@/views/user/Layout.vue"),
       children:[
         {
           path: '/home',
