@@ -4,7 +4,6 @@ export function capitalize(string){
     return string.substring(0,1).toUpperCase() + string.substring(1)
 }
 
-
 export function format_date(value){
     if (value) {
         return moment(String(value)).format('yyyy-MM-DD')
