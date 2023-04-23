@@ -40,10 +40,20 @@ export default {
   methods:{
     login(){
       logMeIn(this.email,this.password).then(response => {
-        store.setName(response.data)
+        store.setData(response.data);
         store.setEmail(this.email);
-        console.log(store.email)
-        router.push('layout');
+        console.log("Prova")
+        console.log(store.data.role)
+        if(store.data.role === "student"){
+          router.push('layout');
+          console.log("Prova1")
+        }else if(store.data.role){
+          router.push('layoutAdmin');
+          console.log("Prova2")
+        }else{
+          console.log("oh no")
+        }
+        console.log("Prova3")
       }).catch(reason => {
         console.log("male")
         this.response="Credenziali errate"

@@ -161,9 +161,9 @@ public class ApiUser extends HttpServlet {
                         if(user.getPassword().equals(password)){
                             out.println("{");
                             out.println("\"name\"" + ":" + "\"" + user.getName() + "\"" + ",");
-                            out.println("\"surname\"" + ":" + "\"" + user.getSurname() + "\"");
+                            out.println("\"surname\"" + ":" + "\"" + user.getSurname() + "\"" + ",");
+                            out.println("\"role\"" + ":" + "\"" + user.getRole() + "\"");
                             out.println("}");
-                            out.println(g.toJson(user));
                             resp.setStatus(HttpServletResponse.SC_OK);
                             //resp.setHeader();
                         }else{

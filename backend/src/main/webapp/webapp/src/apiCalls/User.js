@@ -11,13 +11,17 @@ export async function changePassword(email,oldPassword,newPassword){
 
 export const store = reactive({
     email: null,
-    name: null,
+    data: {
+        name: "",
+        surname: "",
+        role: "",
+    },
     cart_list: new Set(),
     setEmail(value){
         this.email = value
     },
-    setName(value){
-        this.name = value
+    setData(value){
+        this.data = value
     },
     addElementInCartList(value){
         this.cart_list.add(value)
