@@ -12,6 +12,10 @@ export async function getLecturesByStudentAndStatusAndDateAndSubject(student,sta
     return await axios.get('http://localhost:8080/backend/api/lecture?path=getAllLecturesByStudentAndStatusAndDateAndSubject&student='+student+'&status='+status+'&date='+date+'&subject='+subject)
 }
 
+export async function getAllLecturesByStatus(status){
+    return await axios.get('http://localhost:8080/backend/api/lecture?path=getAllLecturesByStatus&status='+status)
+}
+
 export async function changeStatus(status,date,time,professor,subject){
     return await axios.post(
         'http://localhost:8080/backend/api/lecture?path=changeStatus&status='+status+"&professor=" + professor + "&subject=" + subject + "&date=" +date + "&time=" +time)

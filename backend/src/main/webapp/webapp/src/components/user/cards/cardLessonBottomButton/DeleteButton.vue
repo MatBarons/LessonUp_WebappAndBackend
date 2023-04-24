@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {changeStatus} from "@/apiCalls/Lecture";
+import {changeStatusAndStudent} from "@/apiCalls/Lecture";
 import {parse_string_to_date, parse_string_to_time} from "@/utils/Utils";
 
 export default {
@@ -27,7 +27,7 @@ export default {
   },
   methods:{
     cancelBookedLecture(){
-      changeStatus("free", parse_string_to_date(this.date), parse_string_to_time(this.time), this.professor, this.subject)
+      changeStatusAndStudent("free",null, parse_string_to_date(this.date), parse_string_to_time(this.time), this.professor, this.subject)
           .then(response => {
             this.message = "Prenotazione rimossa"
             this.icon = "check"

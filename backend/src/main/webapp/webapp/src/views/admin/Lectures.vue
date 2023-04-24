@@ -4,27 +4,27 @@
     <div class="insert-new-lecture">
       <div class="insert-date">
         <label for="date">Data</label>
-        <input v-model="date" name="date" required/>
+        <input v-model="lecture.date" name="date" required/>
       </div>
       <div class="insert-time">
         <label for="time">Ora</label>
-        <input v-model="time" name="time" required/>
+        <input v-model="lecture.time" name="time" required/>
       </div>
       <div class="insert-prof">
         <label for="professor">Professore</label>
-        <input v-model="professor" name="professor" required/>
+        <input v-model="lecture.professor" name="professor" required/>
       </div>
       <div class="insert-subject">
         <label for="subject">Materia</label>
-        <input v-model="subject" name="subject" required/>
+        <input v-model="lecture.subject" name="subject" required/>
       </div>
       <div class="insert-status">
         <label for="status">Status</label>
-        <input v-model="status" name="status" required/>
+        <input v-model="lecture.status" name="status" required/>
       </div>
       <div class="insert-student">
         <label for="student">Studente</label>
-        <input v-model="student" name="student" required/>
+        <input v-model="lecture.student" name="student" required/>
       </div>
       <button @click="insertLecture">Invia</button>
     </div>
@@ -35,7 +35,7 @@
       <h3>Materia</h3>
       <h3>Status</h3>
       <h3>Studente</h3>
-      <select name="status-choice">
+      <select v-model="selectedStatus" name="status-choice" @change="handleChangeStatus">
         <option value="free">Libera</option>
         <option value="booked">Prenotata</option>
         <option value="completed">Completata</option>
@@ -43,7 +43,7 @@
       </select>
     </div>
     <div class="all-lectures" v-for="lecture in lectures">
-      <RowLecture :lecture="lecture"/>
+      <RowLecture :lecture="lecture" :status="selectedStatus" :distance_right="distance_right"/>
       <hr>
     </div>
   </main>
@@ -51,6 +51,7 @@
 
 <script>
 import RowLecture from "@/components/admin/rows/RowLecture.vue";
+import {getAllLecturesByStatus} from "@/apiCalls/Lecture";
 
 export default {
   name: "Lectures",
@@ -58,12 +59,16 @@ export default {
   data(){
     return{
       lectures: [],
-      date: "",
-      time: "",
-      professor: "",
-      subject: "",
-      status: "", //ricorda di mettere la scelta multipla
-      student: "", //elimina la possibilità di scrivere se lo status è free
+      lecture: {
+        date: "",
+        time: "",
+        professor: "",
+        subject: "",
+        status: "", //ricorda di mettere la scelta multipla
+        student: "",  //elimina la possibilità di scrivere se lo status è free
+      },
+      selectedStatus: "free",
+      distance_right: "21%"
     }
   },
   methods:{
@@ -73,6 +78,23 @@ export default {
     deleteLecture(){
 
     },
+    getLectures(){
+      console.log("siamo qui" + this.selectedStatus)
+      getAllLecturesByStatus(this.selectedStatus).then(response =>{
+       this.lectures = response.data
+      })
+    },
+    handleChangeStatus(){
+      this.getLectures()
+      if(this.selectedStatus === "free"){
+        this.distance_right = "21%"
+      }else{
+        this.distance_right = "15%"
+      }
+    }
+  },
+  beforeMount() {
+    this.getLectures()
   }
 }
 </script>
@@ -93,10 +115,10 @@ export default {
     flex-direction: row;
     background: white;
     align-self: center;
-    height: 15%;
     margin-left: 9rem;
     padding-top: 2rem;
     padding-right: 1rem;
+    padding-bottom: 3rem;
     .insert-date{
       display: flex;
       flex-direction: column;
@@ -159,6 +181,7 @@ export default {
     display: flex;
     flex-direction: row;
     margin-top: 2rem;
+    margin-bottom: 2rem;
     h3{
       padding-top: 1rem;
       padding-left: 9.25rem;
@@ -176,6 +199,8 @@ export default {
     display: flex;
     flex-direction: column;
     background: white;
+    margin-left: 4rem;
+    width: 100%;
   }
 }
 </style>
