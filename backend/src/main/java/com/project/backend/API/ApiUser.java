@@ -64,7 +64,7 @@ public class ApiUser extends HttpServlet {
                     }
                 }
                 break;
-                case "getUsersByRole":{
+                case "getAllUsersByRole":{
                     /*
                     if(!(APIManager.checkAuth(req.getHeader("email"),"admin") || APIManager.checkAuth(req.getHeader("email"),"student"))){
                         resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -82,7 +82,9 @@ public class ApiUser extends HttpServlet {
                             out.println("{");
                             out.println("\"name\"" + ":" + "\"" + u.getName() + "\"" + ",");
                             out.println("\"surname\"" + ":" + "\"" + u.getSurname() + "\"" + ",");
-                            out.println("\"email\"" + ":" + "\"" + u.getEmail() + "\"");
+                            out.println("\"email\"" + ":" + "\"" + u.getEmail() + "\"" + ",");
+                            out.println("\"password\"" + ":" + "\"" + u.getPassword() + "\"" + ",");
+                            out.println("\"role\"" + ":" + "\"" + u.getRole() + "\"");
                             out.println("}");
                             if(i<list.size()-1){
                                 i++;

@@ -9,6 +9,10 @@ export async function changePassword(email,oldPassword,newPassword){
     return await axios.post('http://localhost:8080/backend/api/user?path=changePassword&email='+ email + "&oldPassword=" + oldPassword + "&newPassword=" + newPassword)
 }
 
+export async function getAllUsersByRole(role){
+    return await axios.get('http://localhost:8080/backend/api/user?path=getAllUsersByRole&role=' + role)
+}
+
 export const store = reactive({
     email: null,
     data: {

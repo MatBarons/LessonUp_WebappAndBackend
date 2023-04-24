@@ -4,23 +4,23 @@
     <div class="insert-new-user">
       <div class="insert-name">
         <label for="name">Nome</label>
-        <input v-model="name_user" name="name" required/>
+        <input v-model="user.name_user" name="name" required/>
       </div>
       <div class="insert-surname">
         <label for="surname">Cognome</label>
-        <input v-model="surname_user" name="surname" required/>
+        <input v-model="user.surname_user" name="surname" required/>
       </div>
       <div class="insert-email">
         <label for="email">Professore</label>
-        <input v-model="email" name="email" required/>
+        <input v-model="user.email" name="email" required/>
       </div>
       <div class="insert-password">
         <label for="password">Password</label>
-        <input v-model="password" name="password" required/>
+        <input v-model="user.password" name="password" required/>
       </div>
       <div class="insert-role">
         <label for="role">Ruolo</label>
-        <input v-model="role" name="role" required/>
+        <input v-model="user.role" name="role" required/>
       </div>
       <button @click="insertUser">Invia</button>
     </div>
@@ -30,7 +30,7 @@
       <h3>Email</h3>
       <h3>Password</h3>
       <h3>Ruolo</h3>
-      <select name="role-choice">
+      <select v-model="selectedRole" name="role-choice" @change="getUsersByRole">
         <option value="student">Studente</option>
         <option value="professor">Professore</option>
         <option value="admin">Admin</option>
@@ -45,18 +45,22 @@
 
 <script>
 import RowUser from "@/components/admin/rows/RowUser.vue";
+import {getAllUsersByRole} from "@/apiCalls/User";
 
 export default {
   name: "Users",
   components: {RowUser},
   data(){
     return{
-      name_user: "",
-      surname_user: "",
-      email: "",
-      password: "",
-      role: "",
-      users: []
+      user:{
+        name_user: "",
+        surname_user: "",
+        email: "",
+        password: "",
+        role: "",
+      },
+      users: [],
+      selectedRole: "student",
     }
   },
   methods:{
@@ -65,7 +69,15 @@ export default {
     },
     deleteUser(){
 
+    },
+    getUsersByRole(){
+      getAllUsersByRole(this.selectedRole).then(response =>{
+        this.users = response.data
+      })
     }
+  },
+  beforeMount() {
+    this.getUsersByRole()
   }
 }
 </script>
@@ -149,6 +161,7 @@ export default {
       padding-left: 11rem;
       font-weight: bold;
       font-size: 20px;
+      padding-bottom: 3rem;
     }
     select{
       margin-left: 15rem;
@@ -161,6 +174,8 @@ export default {
     display: flex;
     flex-direction: column;
     background: white;
+    width: 100%;
+    margin-left: 3rem;
   }
 }
 </style>
