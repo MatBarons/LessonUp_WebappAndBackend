@@ -55,15 +55,15 @@ export default {
     flex-direction: row;
     background: white;
     align-self: center;
-    width: 100%;
     height: 15%;
     padding-top: 2rem;
-    margin-left: 1.5rem;
+    margin-left: 9rem;
+    max-width: 85%;
     .insert-name{
       display: flex;
       flex-direction: column;
       margin-left: 3rem;
-      margin-right: 42rem;
+      margin-right: 32rem;
       input{
         height: 2.5rem;
       }
@@ -72,7 +72,7 @@ export default {
       display: flex;
       flex-direction: column;
       margin-left: 1rem;
-      margin-right: 17rem;
+      margin-right: 13rem;
       input{
         height: 2.5rem;
       }
@@ -91,17 +91,13 @@ export default {
     display: flex;
     flex-direction: row;
     margin-top: 2rem;
+    margin-left: 9rem;
     h3{
       padding-top: 1rem;
       padding-left: 3rem;
       font-weight: bold;
       font-size: 20px;
-    }
-    select{
-      margin-left: 7.5rem;
-      width: 6rem;
-      height: 3rem;
-      font-size: 13px;
+      padding-right: 38rem;
     }
   }
   .all-courses{

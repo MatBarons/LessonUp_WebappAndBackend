@@ -87,7 +87,7 @@ export default {
     font-weight: bold;
   }
   .insert-new-lecture{
-    box-shadow: 0 0px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 0 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     border-radius: 0.5rem;
     display: flex;
     flex-direction: row;
@@ -104,7 +104,6 @@ export default {
       input{
         height: 2.5rem;
       }
-
     }
     .insert-time{
       display: flex;
