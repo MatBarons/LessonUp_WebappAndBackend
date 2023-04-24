@@ -167,6 +167,33 @@ public class ApiLecture extends HttpServlet {
                     }
                 }
                 break;
+                case "getAllLecturesByStatus":{
+                    String status = req.getParameter("status");
+                    if(dao == null){
+                        out.println("dao is null -- API Lecture doGet");
+                    }else{
+                        int i=0;
+                        ArrayList<Lecture> list = dao.getLecturesByStatus(status);
+                        System.out.println(list);
+                        out.println("[");
+                        for(Lecture l : list){
+                            out.println("{");
+                            out.println("\"date\"" + ":" + "\"" + l.getDate() + "\"" + ",");
+                            out.println("\"time\"" + ":" + "\"" + l.getTime()+ "\"" + ",");
+                            out.println("\"email\"" + ":" + "\"" + l.getProfessor() + "\""+ ",");
+                            out.println("\"subject\"" + ":" + "\"" + l.getSubject() + "\"" + ",");
+                            out.println("\"student\"" + ":" + "\"" + l.getStudent() + "\"" );
+                            out.println("}");
+                            if(i<list.size()-1){
+                                i++;
+                                out.println(",");
+                            }
+                        }
+                        out.println("]");
+                        out.flush();
+                    }
+                }
+                break;
             }
         }
     }

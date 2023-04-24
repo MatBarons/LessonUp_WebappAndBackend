@@ -22,6 +22,7 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
     public static final String getLecturesBySubjectAndStatusAndDate = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.subject=? AND l.status=? AND l.date=?;";
     public static final String getLecturesByStudentAndStatus = "SELECT l.date,l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=?;";
     public static final String getLecturesByStudentAndStatusAndDateAndSubject = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=? AND l.date=? AND l.subject=?;";
+    public static final String getLecturesByStatus = "SELECT * FROM Lecture WHERE status=?";
 
     public DaoLecture() {
         super();
@@ -144,7 +145,32 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
                 lectures.add(new Lecture(date, time, profName,profSurname,email,subject));
             }
         }catch (SQLException e){
+            e.printStackTrace();
             System.out.println("Exception caused by CachedRowSet");
+            System.out.println(e.getMessage());
+        }catch (DaoExceptions e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return lectures;
+    }
+
+    public ArrayList<Lecture> getLecturesByStatus(String status){
+        ArrayList<Lecture> lectures = new ArrayList<>();
+        try {
+            CachedRowSet rs = launchQuery(getLecturesByStatus, status);
+            while (rs.next()) {
+                Date date = rs.getDate("date");
+                LocalTime time = rs.getTime("time").toLocalTime();
+                String email = rs.getString("professor");
+                String subject = rs.getString("subject");
+                String student = rs.getString("student");
+                lectures.add(new Lecture(date, time, email, subject,student));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("Exception caused by CachedRowSet");
+            System.out.println(e.getMessage());
         }catch (DaoExceptions e){
             System.out.println(e.getMessage());
             e.printStackTrace();

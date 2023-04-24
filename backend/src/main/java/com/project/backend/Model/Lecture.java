@@ -30,7 +30,13 @@ public class Lecture{
         this.subject = subject;
     }
 
-
+    public Lecture(Date date,LocalTime time,String professor,String subject,String student){
+        this.date = date;
+        this.time = time;
+        this.professor = professor;
+        this.subject = subject;
+        this.student = student;
+    }
 
 
     public String getProfName() {
