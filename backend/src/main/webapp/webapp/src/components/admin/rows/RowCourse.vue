@@ -1,7 +1,7 @@
 <template>
   <div class="row-course">
-    <h3>{{ course.name }}</h3>
-    <h3>{{ course.isActive }}</h3>
+    <h3 class="course-name">{{ course.name }}</h3>
+    <h3 class="course-active">{{ course.isActive }}</h3>
     <button @click="deleteCourse">Elimina</button>
   </div>
 </template>
@@ -28,11 +28,25 @@ export default {
 .row-course{
   display: flex;
   flex-direction: row;
-  h3{
-    margin-right: 40rem;
+  height: 5rem;
+  width: 100%;
+  align-items: center;
+  .course-name{
+    margin-left: 8rem;
+  }
+  .course-active{
+    right: 41%;
+    position: absolute;
   }
   button{
+    height: 55%;
+    width: 5%;
+    position: absolute;
+    right: 5px;
     background: red;
+    border-radius: 0.5rem;
+    font-size: 15px;
+    margin-right: 2rem;
   }
 }
 </style>

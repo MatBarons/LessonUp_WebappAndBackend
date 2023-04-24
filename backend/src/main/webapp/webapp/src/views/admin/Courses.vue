@@ -25,15 +25,27 @@
 
 <script>
 import RowCourse from "@/components/admin/rows/RowCourse.vue";
+import {getAllCourses} from "@/apiCalls/Subject";
 
 export default {
   name: "Courses",
   components: {RowCourse},
   data(){
     return{
+      courses: [],
       name: "",
       activity: ""
     }
+  },
+  methods:{
+    getCourses(){
+      getAllCourses().then(response =>{
+        this.courses = response.data
+      })
+    }
+  },
+  beforeMount() {
+    this.getCourses()
   }
 }
 </script>
@@ -92,6 +104,7 @@ export default {
     flex-direction: row;
     margin-top: 2rem;
     margin-left: 9rem;
+    margin-bottom: 3rem;
     h3{
       padding-top: 1rem;
       padding-left: 3rem;
@@ -104,6 +117,7 @@ export default {
     display: flex;
     flex-direction: column;
     background: white;
+    margin-left: 4rem;
   }
 }
 </style>
