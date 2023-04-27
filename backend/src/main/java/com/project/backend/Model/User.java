@@ -7,12 +7,15 @@ public class User{
     private String email;
     private String password;
 
-    public User(String name, String surname, String role, String email, String password) {
+    private boolean isActive;
+
+    public User(String name, String surname, String role, String email, String password, boolean isActive) {
         this.name = name;
         this.surname = surname;
         this.role = role;
         this.email = email;
         this.password = password;
+        this.isActive = isActive;
     }
 
     public User(String name, String surname, String email) { //constructor used for the lectures in the app

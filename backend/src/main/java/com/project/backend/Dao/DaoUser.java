@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DaoUser extends Dao{
 
-    public static final String insertUser = "INSERT INTO User (name,surname,role,email,password) Values(?,?,?,?,?);";
+    public static final String insertUser = "INSERT INTO User (name,surname,role,email,password,isActive) Values(?,?,?,?,?,?);";
     public static final String deleteUser = "DELETE FROM User WHERE email=?;";
     public static final String updatePassword = "UPDATE User SET password=? WHERE email=?;";
     private static final String doesExist =  "SELECT * FROM User WHERE email=?;";
@@ -87,7 +87,8 @@ public class DaoUser extends Dao{
                 String role = rs.getString("role");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                users.add(new User(name,surname,role,email,password));
+                String isActive = rs.getString("isActive");
+                users.add(new User(name,surname,role,email,password,Boolean.parseBoolean(isActive)));
             }
         }catch (SQLException e){
             System.out.println("Exception caused by CachedRowSet");
@@ -106,7 +107,8 @@ public class DaoUser extends Dao{
                 String surname = rs.getString("surname");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                users.add(new User(name,surname,role,email,password));
+                String isActive = rs.getString("isActive");
+                users.add(new User(name,surname,role,email,password,Boolean.parseBoolean(isActive)));
             }
         }catch (SQLException e){
             System.out.println("Exception caused by CachedRowSet");
@@ -128,7 +130,8 @@ public class DaoUser extends Dao{
             String surname = rs.getString("surname");
             String role = rs.getString("role");
             String password = rs.getString("password");
-            user = new User(name,surname,role,email,password);
+            String isActive = rs.getString("isActive");
+            user = new User(name,surname,role,email,password,Boolean.parseBoolean(isActive));
         }catch (SQLException e){
             System.out.println("Exception caused by CachedRowSet: "+ e.getCause());
             e.printStackTrace();

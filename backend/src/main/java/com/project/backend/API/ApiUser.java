@@ -192,7 +192,7 @@ public class ApiUser extends HttpServlet {
         if (req.getParameter("path") != null) {
             switch (req.getParameter("path")) {
                 case "insertUser": {
-                    User user = new User(req.getParameter("name"), req.getParameter("surname"), req.getParameter("role"), req.getParameter("email"), req.getParameter("password"));
+                    User user = new User(req.getParameter("name"), req.getParameter("surname"), req.getParameter("role"), req.getParameter("email"), req.getParameter("password"),true);
                     if (daoU == null) {
                         out.println("dao is null -- API User doPost -- insertUser");
                     } else {
