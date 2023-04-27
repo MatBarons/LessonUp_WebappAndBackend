@@ -129,7 +129,7 @@ public class ApiUser extends HttpServlet {
                     if(daoU == null){
                         out.println("dao is null -- API User doGet");
                     }else{
-                        ArrayList<User> users = daoU.getProfessorsBySubject(subject);
+                        ArrayList<User> users = daoU.getProfessorsBySubject(subject,true);
                         out.println("[");
                         for(User u : users){
                             out.println("{");
