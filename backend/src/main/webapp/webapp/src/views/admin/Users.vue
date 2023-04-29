@@ -11,7 +11,7 @@
         <input v-model="user.surname_user" name="surname" required/>
       </div>
       <div class="insert-email">
-        <label for="email">Professore</label>
+        <label for="email">Email</label>
         <input v-model="user.email" name="email" required/>
       </div>
       <div class="insert-password">
@@ -20,7 +20,18 @@
       </div>
       <div class="insert-role">
         <label for="role">Ruolo</label>
-        <input v-model="user.role" name="role" required/>
+        <select v-model="user.role" name="role" required>
+          <option value="student">Studente</option>
+          <option value="professor">Professore</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="insert-activity">
+        <label for="activity">Attività</label>
+        <select v-model="user.isActive" name="activity" required>
+          <option value="true">Attivo</option>
+          <option value="false">Inattivo</option>
+        </select>
       </div>
       <button @click="insertUser">Invia</button>
     </div>
@@ -100,10 +111,10 @@ export default {
     flex-direction: row;
     background: white;
     align-self: center;
-    height: 15%;
     margin-left: 9rem;
     padding-top: 2rem;
     padding-right: 1rem;
+    padding-bottom: 3rem;
     .insert-name{
       display: flex;
       flex-direction: column;
@@ -115,7 +126,7 @@ export default {
     .insert-surname{
       display: flex;
       flex-direction: column;
-      margin-left: 3rem;
+      margin-left: 2rem;
       input{
         height: 2.5rem;
       }
@@ -123,7 +134,7 @@ export default {
     .insert-email{
       display: flex;
       flex-direction: column;
-      margin-left: 3rem;
+      margin-left: 2rem;
       input{
         height: 2.5rem;
       }
@@ -131,7 +142,7 @@ export default {
     .insert-password{
       display: flex;
       flex-direction: column;
-      margin-left: 3rem;
+      margin-left: 2rem;
       input{
         height: 2.5rem;
       }
@@ -139,9 +150,19 @@ export default {
     .insert-role{
       display: flex;
       flex-direction: column;
-      margin-left: 3rem;
-      input{
+      margin-left: 2rem;
+      select{
         height: 2.5rem;
+        width: 10rem;
+      }
+    }
+    .insert-activity{
+      display: flex;
+      flex-direction: column;
+      margin-left: 2rem;
+      select{
+        height: 2.5rem;
+        width: 7rem;
       }
     }
     button{
@@ -150,7 +171,7 @@ export default {
       background: #009b4d;
       color: white;
       border-radius: 0.5rem;
-      margin-left: 7rem;
+      margin-left: 4rem;
       margin-top: 1.2rem;
     }
   }
@@ -177,7 +198,7 @@ export default {
     display: flex;
     flex-direction: column;
     background: white;
-    width: 95%;
+    width: 100%;
     margin-left: 3rem;
   }
 }

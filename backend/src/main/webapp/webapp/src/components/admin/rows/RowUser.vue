@@ -36,11 +36,11 @@ export default {
   width: 100%;
   align-items: center;
   .user-name{
-    left: 7%;
+    left: 8%;
     position: absolute;
   }
   .user-surname{
-    left: 19%;
+    left: 22%;
     position: absolute;
   }
   .user-email{
@@ -48,15 +48,15 @@ export default {
     position: absolute;
   }
   .user-password{
-    right: 41%;
+    right: 43%;
     position: absolute;
   }
   .user-role{
-    right: 25%;
+    right: 28%;
     position: absolute;
   }
   .user-activity{
-    right: 12%;
+    right: 15%;
     position: absolute;
   }
   button{
