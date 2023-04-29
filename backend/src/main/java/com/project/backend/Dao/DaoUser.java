@@ -11,15 +11,13 @@ import java.util.ArrayList;
 public class DaoUser extends Dao{
 
     public static final String insertUser = "INSERT INTO User (name,surname,role,email,password,isActive) Values(?,?,?,?,?,?);";
-    public static final String deleteUser = "DELETE FROM User WHERE email=?;";
+    public static final String toggleUserActivity = "UPDATE User SET isActive=? WHERE email=?";
     public static final String updatePassword = "UPDATE User SET password=? WHERE email=?;";
     private static final String doesExist =  "SELECT * FROM User WHERE email=?;";
     public static final String getAllUsers = "SELECT * FROM User;";
     public static final String getUserData = "SELECT * FROM User WHERE email=?;";
     public static final String getUsersByRole = "SELECT * FROM User WHERE role=?;";
     public static final String getProfessorsBySubject = "SELECT u.email,u.name,u.surname FROM Teaching t JOIN User u ON(t.emailProf = u.email) WHERE t.nomeCorso=? AND u.isActive=?;";
-    public static final String checkLogin = "SELECT * FROM User WHERE email=? AND role='student' AND password=?;"; //FORSE IL PROBLEMA E' QUA
-
     public static final String checkAuth = "SELECT * FROM User WHERE email=? AND role=?;";
     public DaoUser() {
         super();
@@ -38,12 +36,12 @@ public class DaoUser extends Dao{
             d.printStackTrace();
         }
     }
-    public void deleteUser(String email) throws UserDoesNotExist {
+    public void toggleUserActivity(String email,boolean activity) throws UserDoesNotExist {
         try{
             if(!doesExist(email)){
                 throw new UserDoesNotExist("This user doesn't exist -- deleteUser");
             }
-            launchUpdate(deleteUser,email);
+            launchUpdate(toggleUserActivity,activity,email);
         }catch (DaoExceptions d){
             System.out.println(d.getMessage());
             d.printStackTrace();
@@ -161,24 +159,6 @@ public class DaoUser extends Dao{
         }
         return professors;
     }
-
-    /*
-    public boolean checkLogin(String email,String password){
-        boolean check=false;
-        try{
-            CachedRowSet rs = launchQuery(checkLogin,email,password);
-            check = rs.next();
-        }catch(SQLException e){
-            System.out.println("Exception caused by CachedRowSet");
-            check = false;
-        }catch(DaoExceptions e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            check = false;
-        }
-        return check;
-    }
-     */
 
     public boolean checkAuth(String email,String role){
         boolean check=false;

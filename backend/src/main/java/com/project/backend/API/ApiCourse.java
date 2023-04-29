@@ -81,34 +81,29 @@ public class ApiCourse extends HttpServlet {
         JsonObject jsonResponse = new JsonObject();
         if(req.getParameter("path")!= null){
             String name = req.getParameter("name");
-            if(dao == null){
-                out.println("dao is null -- API Courses doPut -- deactivateCourse");
-            }else{
-                try {
-                    dao.insertCourse(name);
-                    jsonResponse.addProperty("message", "Course registered successfully");
-                    resp.setStatus(HttpServletResponse.SC_OK);
-                } catch (CourseAlreadyExist e) {
-                    jsonResponse.addProperty("error", "Failed to register course, it already exist");
-                    resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                }
-            }
-        }
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        PrintWriter out = resp.getWriter();
-        resp.setContentType("application/json");
-        if(req.getParameter("path")!= null){
-            String name = req.getParameter("name");
-            switch(req.getParameter("path")){
-                case "deactivateCourse":{
+            switch (req.getParameter("path")){
+                case "insertCourse":{
                     if(dao == null){
                         out.println("dao is null -- API Courses doPut -- deactivateCourse");
                     }else{
                         try {
-                            dao.deactivateCourse(name);
+                            dao.insertCourse(name);
+                            jsonResponse.addProperty("message", "Course registered successfully");
+                            resp.setStatus(HttpServletResponse.SC_OK);
+                        } catch (CourseAlreadyExist e) {
+                            jsonResponse.addProperty("error", "Failed to register course, it already exist");
+                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        }
+                    }
+                }
+                break;
+                case "toggleCourse":{
+                    if(dao == null){
+                        out.println("dao is null -- API Courses doPut -- deactivateCourse");
+                    }else{
+                        try {
+                            boolean activity = Boolean.parseBoolean(req.getParameter("activity"));
+                            dao.toggleCourse(name,activity);
                             out.print("{" +
                                     "\"active_state\"" + ":" + "\"false\"" +" ,"+
                                     "\"state_description\"" + ":" + "\"course successfully deactivated\"" +
@@ -133,38 +128,10 @@ public class ApiCourse extends HttpServlet {
                     }
                 }
                 break;
-                case "reactivateCourse":{
-                    if(dao == null){
-                        out.println("dao is null -- API Courses doPut -- deactivateCourse");
-                    }else{
-                        try {
-                            dao.reactivateCourse(name);
-                            out.print("{" +
-                                    "\"active_state\"" + ":" + "\"true\"" +" ,"+
-                                    "\"state_description\"" + ":" + "\"course successfully reactivated\"" +
-                                    "}");
-                            out.flush();
-                            resp.setStatus(HttpServletResponse.SC_OK);
-                        }catch (CourseAlreadyActive e) {
-                            out.print("{" +
-                                    "\"active_state\"" + ":" + "\"???\"" +" ,"+
-                                    "\"state_description\"" + ":" + "\"course is already active\"" +
-                                    "}");
-                            out.flush();
-                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        } catch (CourseDoesNotExist e){
-                            out.print("{" +
-                                    "\"active_state\"" + ":" + "\"???\"" +" ,"+
-                                    "\"state_description\"" + ":" + "\"course doesn't exist \"" +
-                                    "}");
-                            out.flush();
-                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        }
-                    }
-                }
-                break;
             }
         }
     }
+
+
 }
 

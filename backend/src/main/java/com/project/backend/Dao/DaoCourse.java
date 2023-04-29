@@ -33,7 +33,7 @@ public class DaoCourse extends Dao{
             d.getStackTrace();
         }
     }
-    public void deactivateCourse(String name) throws CourseDoesNotExist, CourseAlreadyNotActive {
+    public void toggleCourse(String name,boolean activity) throws CourseDoesNotExist, CourseAlreadyNotActive {
         try{
             if(!doesExist(name)){
                 throw new CourseDoesNotExist("This course doesn't exist -- deactivateCourse");
@@ -41,27 +41,13 @@ public class DaoCourse extends Dao{
             if(!isActive(name)){
                 throw new CourseAlreadyNotActive("This course is already deactivated -- deactivateCourse");
             }
-            launchUpdate(toggleCourse,false,name);
+            launchUpdate(toggleCourse,activity,name);
         }catch (DaoExceptions d){
             System.out.println(d.getMessage());
             d.printStackTrace();
         }
     }
 
-    public void reactivateCourse(String name) throws CourseDoesNotExist,CourseAlreadyActive {
-        try{
-            if(!doesExist(name)){
-                throw new CourseDoesNotExist("This course doesn't exist -- reactivateCourse");
-            }
-            if(!isActive(name)){
-                throw new CourseAlreadyActive("This course is already active -- reactivateCourse");
-            }
-            launchUpdate(toggleCourse,true,name);
-        }catch (DaoExceptions d){
-            System.out.println(d.getMessage());
-            d.printStackTrace();
-        }
-    }
 
     private boolean isActive(String name){
         boolean check = false;

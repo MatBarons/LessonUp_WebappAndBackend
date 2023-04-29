@@ -204,7 +204,7 @@ public class ApiLecture extends HttpServlet {
         JsonObject jsonResponse = new JsonObject();
         if(req.getParameter("path")!= null){
             switch (req.getParameter("path")){
-                case "addLecture": {
+                case "insertLecture": {
                     Lecture lecture = gson.fromJson(req.getReader(), Lecture.class);
                     if(dao == null){
                         out.println("dao is null -- API Lecture doPost -- insertLecture");
@@ -284,24 +284,33 @@ public class ApiLecture extends HttpServlet {
                     }
                 }
                 break;
-            }
-        }
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        PrintWriter out = resp.getWriter();
-        Gson gson = new Gson();
-        resp.setContentType("application/json");
-        JsonObject jsonResponse = new JsonObject();
-        if(req.getParameter("path") != null){
-            switch (req.getParameter("path")){
-                case "changeStatus":{
-
-                }
-                break;
-                case "changeStatusAndStudent":{
-
+                case "deleteLecture":{
+                    if(dao == null){
+                        out.println("dao is null -- API Lecture doDelete -- deleteLecture");
+                    }else{
+                        try{
+                            String professor = req.getParameter("professor");
+                            String subject = req.getParameter("subject");
+                            String d = req.getParameter("date");
+                            String t = req.getParameter("time");
+                            Time time = new Time(Integer.parseInt(t.substring(0,2)),Integer.parseInt(t.substring(3,5)),Integer.parseInt(t.substring(6,8)));
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            Date date = null;
+                            System.out.println(d);
+                            try {
+                                date = format.parse(d);
+                            } catch (ParseException e) {
+                                System.out.println("wrong date format, please use yyyy-MM-dd");
+                                throw new RuntimeException(e);
+                            }
+                            dao.deleteLecture(new Lecture(date,time.toLocalTime(),professor,subject));
+                            jsonResponse.addProperty("message", "Lecture deleted successfully");
+                            resp.setStatus(HttpServletResponse.SC_OK);
+                        }catch (LectureDoesNotExist e){
+                            jsonResponse.addProperty("error", "Failed to delete lecture, lecture doesn't exist");
+                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        }
+                    }
                 }
                 break;
             }

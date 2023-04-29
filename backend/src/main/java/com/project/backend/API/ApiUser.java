@@ -228,38 +228,27 @@ public class ApiUser extends HttpServlet {
                     }
                 }
                 break;
-            }
-        }
-    }
-
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        /*
-        if(!APIManager.checkAuth(req.getHeader("email"),"admin")){
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }
-           */
-        PrintWriter out = resp.getWriter();
-        Gson gson = new Gson();
-        resp.setContentType("application/json");
-        JsonObject jsonResponse = new JsonObject();
-        if(req.getParameter("path")!= null){
-            User user = gson.fromJson(req.getReader(),User.class);
-            if(daoU == null){
-                out.println("dao is null -- API User doDelete -- deleteUser");
-            }else{
-                try{
-                    daoU.deleteUser(user.getEmail());
-                    jsonResponse.addProperty("message", "User deleted successfully");
-                    resp.setStatus(HttpServletResponse.SC_OK);
-                }catch (UserDoesNotExist e){
-                    jsonResponse.addProperty("error", "Failed to delete user, user doesn't exist");
-                    resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                case "toggleUser":{
+                    if(daoU == null){
+                        out.println("dao is null -- API User doDelete -- deleteUser");
+                    }else{
+                        try{
+                            String email = req.getParameter("email");
+                            boolean activity = Boolean.parseBoolean(req.getParameter("activity"));
+                            daoU.toggleUserActivity(email,activity);
+                            jsonResponse.addProperty("message", "User deleted successfully");
+                            resp.setStatus(HttpServletResponse.SC_OK);
+                        }catch (UserDoesNotExist e){
+                            jsonResponse.addProperty("error", "Failed to delete user, user doesn't exist");
+                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        }
+                    }
                 }
             }
         }
     }
+
+
 }
 
 
