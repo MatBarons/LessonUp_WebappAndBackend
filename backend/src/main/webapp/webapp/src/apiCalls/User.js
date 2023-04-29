@@ -13,8 +13,14 @@ export async function getAllUsersByRole(role){
     return await axios.get('http://localhost:8080/backend/api/user?path=getAllUsersByRole&role=' + role)
 }
 
-export async function getProfessorsBySubject(subject){
-    return await axios.get('http://localhost:8080/backend/api/teaching?path=getAllProfessorForASubject&subject=' + subject)
+
+export async function insertUser(name,surname,email,password,role,activity){
+    console.log("user: "+name + " " + surname + " " + email + " " + password + " " + role + " " + activity)
+    return await axios.post('http://localhost:8080/backend/api/user?path=insertUser&name='+name+"&surname="+surname+"&email="+email+"&password="+password+"&role="+role+"&isActive="+activity)
+}
+
+export async function toggleUser(email,activity){
+    return await axios.post('http://localhost:8080/backend/api/user?path=toggleUser&email='+email+"&isActive="+activity)
 }
 
 export const store = reactive({

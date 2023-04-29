@@ -24,14 +24,15 @@
       </select>
     </div>
     <div class="all-associations" v-for="professor in professors">
-      <RowTeaching :email="professor" :subject="selectedSubject" />
+      <RowTeaching :email="professor" :subject="selectedSubject" @deleteAssociation="deleteTeaching"/>
       <hr>
     </div>
   </main>
 </template>
 
 <script>
-import {getAllUsersByRole, getProfessorsBySubject} from "@/apiCalls/User";
+import {getAllUsersByRole} from "@/apiCalls/User";
+import {deleteTeaching, getProfessorsBySubject, insertTeaching} from "@/apiCalls/Teaching"
 import {getAllCourses} from "@/apiCalls/Subject";
 import RowTeaching from "@/components/admin/rows/RowTeaching.vue";
 
@@ -53,7 +54,14 @@ export default {
       this.getProfessors()
     },
     insertAssociation(){
+      insertTeaching(this.email,this.course).then(response =>{
 
+      })
+    },
+    deleteTeaching(professor,subject){
+      deleteTeaching(professor,subject).then(response =>{
+
+      })
     },
     getProfessors(){
       getProfessorsBySubject(this.selectedSubject).then(response =>{

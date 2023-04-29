@@ -169,7 +169,7 @@ export default {
     .insert-date{
       display: flex;
       flex-direction: column;
-      margin-left: 1rem;
+      margin-left: 2rem;
       input{
         height: 2.5rem;
       }
@@ -177,7 +177,7 @@ export default {
     .insert-time{
       display: flex;
       flex-direction: column;
-      margin-left: 1rem;
+      margin-left: 2rem;
       input{
         height: 2.5rem;
       }
@@ -185,7 +185,7 @@ export default {
     .insert-prof{
       display: flex;
       flex-direction: column;
-      margin-left: 1rem;
+      margin-left: 2rem;
       select{
         height: 2.5rem;
       }
@@ -193,7 +193,7 @@ export default {
     .insert-subject{
       display: flex;
       flex-direction: column;
-      margin-left: 1rem;
+      margin-left: 2rem;
       select{
         height: 2.5rem;
       }
@@ -201,7 +201,7 @@ export default {
     .insert-status{
       display: flex;
       flex-direction: column;
-      margin-left: 1rem;
+      margin-left: 2rem;
       margin-bottom: 1.1rem;
       select{
         height: 2.5rem;
@@ -210,7 +210,7 @@ export default {
     .insert-student-free{
       display: flex;
       flex-direction: column;
-      margin-left: 1rem;
+      margin-left: 2rem;
       input{
         height: 2.5rem;
       }
@@ -218,7 +218,7 @@ export default {
     .insert-student-other{
       display: flex;
       flex-direction: column;
-      margin-left: 1rem;
+      margin-left: 2rem;
       select{
         height: 2.5rem;
       }

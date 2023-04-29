@@ -13,8 +13,8 @@ import java.util.Date;
 
 import com.project.backend.Dao.DaoUser;
 
-public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
-    public static final String insertLecture = "INSERT INTO Lecture (student,professor,subject,date,time,status) Values(null,?,?,?,?,?);";
+public class DaoLecture extends Dao{
+    public static final String insertLecture = "INSERT INTO Lecture (date,time,professor,subject,status,student) Values(null,?,?,?,?,?);";
     public static final String deleteLecture = "DELETE FROM Lecture WHERE professor=? AND date=? AND time=? AND subject=?;";
     public static final String doesExist = "SELECT * FROM Lecture WHERE professor=? AND date=? AND time=? AND subject=?;";
     public static final String changeStatusAndStudent = "UPDATE Lecture SET student=?,status=? WHERE date=? AND time=? AND professor=? AND subject=?;";
@@ -28,12 +28,12 @@ public class DaoLecture extends Dao{//DECIDI LE CHIAVI NEL DB
         super();
     }
 
-    public void insertLecture(Lecture lecture) throws LectureAlreadyExist {
+    public void insertLecture(Lecture lecture,String student,String status) throws LectureAlreadyExist {
         try{
             if(doesExist(lecture.getProfessor(), lecture.getSubject(), lecture.getDate(), lecture.getTime())){
                 throw new LectureAlreadyExist("This lecture already exist -- insertLecture");
             }
-            launchUpdate(insertLecture,lecture.getProfessor(), lecture.getSubject(), lecture.getDate(), lecture.getTime());
+            launchUpdate(insertLecture, lecture.getDate(), lecture.getTime(),lecture.getProfessor(), lecture.getSubject(),status,student);
         }catch (DaoExceptions d){
             System.out.println(d.getMessage());
             d.printStackTrace();

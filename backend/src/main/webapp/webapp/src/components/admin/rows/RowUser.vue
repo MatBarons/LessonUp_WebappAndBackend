@@ -6,25 +6,25 @@
     <h3 class="user-password">{{ user.password }}</h3>
     <h3 class="user-role">{{ user.role }}</h3>
     <h3 class="user-activity">{{user.isActive}}</h3>
-    <button @click="deleteUser">Elimina</button>
+    <button @click="toggleUser">Cambia stato</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "RowUser",
-  emits: ['deleteUser'],
+  emits: ['toggleUser'],
   props:{
     user:{
       type: Object,
       required: true
-    }
+    },
   },
   methods:{
-    deleteUser(){
-      this.$emit('deleteUser',this.user)
+    toggleUser(){
+      this.$emit('toggleUser',this.user)
     }
-  }
+  },
 }
 </script>
 
@@ -61,7 +61,7 @@ export default {
   }
   button{
     height: 55%;
-    width: 5%;
+    width: 8%;
     position: absolute;
     right: 10px;
     background: red;

@@ -33,7 +33,7 @@
           <option value="false">Inattivo</option>
         </select>
       </div>
-      <button @click="insertUser">Invia</button>
+      <button @click="insert">Invia</button>
     </div>
     <div class="user-variables">
       <h3>Nome</h3>
@@ -49,7 +49,7 @@
       </select>
     </div>
     <div class="all-users" v-for="user in users">
-      <RowUser :user="user"/>
+      <RowUser :user="user" @toggleUser="toggleUser"/>
       <hr>
     </div>
   </main>
@@ -57,7 +57,7 @@
 
 <script>
 import RowUser from "@/components/admin/rows/RowUser.vue";
-import {getAllUsersByRole} from "@/apiCalls/User";
+import {getAllUsersByRole, insertUser, toggleUser} from "@/apiCalls/User";
 
 export default {
   name: "Users",
@@ -74,20 +74,26 @@ export default {
       },
       users: [],
       selectedRole: "student",
+      buttonText: "",
     }
   },
   methods:{
-    insertUser(){
+    insert(){
+      console.log("prova")
+      insertUser(this.user.name_user,this.user.surname_user,this.user.email,this.user.password,this.user.role,this.user.isActive).then(response => {
 
+      })
     },
-    deleteUser(){
+    toggleUser(email,activity){
+      toggleUser(email,activity).then(response =>{
 
+      })
     },
     getUsersByRole(){
       getAllUsersByRole(this.selectedRole).then(response =>{
         this.users = response.data
       })
-    }
+    },
   },
   beforeMount() {
     this.getUsersByRole()

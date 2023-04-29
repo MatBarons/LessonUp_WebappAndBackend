@@ -22,7 +22,7 @@ export default {
   },
   methods:{
     deleteAssociation(){
-      this.$emit('deleteAssociation',this.email)
+      this.$emit('deleteAssociation',this.email,this.subject)
     }
   }
 }

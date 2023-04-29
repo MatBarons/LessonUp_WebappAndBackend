@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.project.backend.Dao.DaoTeaching;
 import com.project.backend.Exceptions.TeachingExceptions.ProfessorCourseCoupleAlreadyExist;
+import com.project.backend.Exceptions.TeachingExceptions.ProfessorCourseCoupleDoesNotExist;
 import com.project.backend.Exceptions.TeachingExceptions.UserIsNotAProfessor;
 
 import javax.servlet.ServletException;
@@ -75,9 +76,9 @@ public class ApiTeaching extends HttpServlet {
         JsonObject jsonResponse = new JsonObject();
         if(req.getParameter("path") != null){
             switch (req.getParameter("path")){
-                case "insertAssociation":{
+                case "insertTeaching":{
                     if(daoT == null){
-                        out.println("dao is null -- Api Teaching doPost -- insertAssociation");
+                        out.println("dao is null -- Api Teaching doPost -- insertTeaching");
                     }else{
                         try {
                             daoT.insertSubjectForProfessor(req.getParameter("email"),req.getParameter("subject"));
@@ -91,6 +92,20 @@ public class ApiTeaching extends HttpServlet {
                     }
                 }
                 break;
+                case "deleteAssociation":{
+                    if(daoT == null){
+                        out.println("dao is null -- Api Teaching doPost -- deleteTeaching");
+                    }else{
+                        try {
+                            daoT.deleteTeaching(req.getParameter("email"),req.getParameter("subject"));
+                        }catch (ProfessorCourseCoupleDoesNotExist e) {
+                            jsonResponse.addProperty("error","Failed to insert,association already exist");
+                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        }
+                    }
+                }
+                break;
+
             }
         }
     }

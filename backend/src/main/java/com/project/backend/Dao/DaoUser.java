@@ -30,7 +30,7 @@ public class DaoUser extends Dao{
             if(doesExist(user.getEmail())){
                 throw new UserAlreadyExist("This user already exist -- insertUser");
             }
-            launchUpdate(insertUser,user.getName(),user.getSurname(),user.getRole(),user.getEmail(),user.getPassword());
+            launchUpdate(insertUser,user.getName(),user.getSurname(),user.getRole(),user.getEmail(),user.getPassword(),user.isActive());
         }catch (DaoExceptions d){
             System.out.println(d.getMessage());
             d.printStackTrace();

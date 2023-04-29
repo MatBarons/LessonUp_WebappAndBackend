@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DaoCourse extends Dao{
-    public static final String insertCourse = "INSERT INTO Course (name,isActive) Values(?,'true');";
+    public static final String insertCourse = "INSERT INTO Course (name,isActive) Values(?,?);";
     public static final String isActive = "SELECT isActive FROM Course WHERE name=?;";
     public static final String toggleCourse = "UPDATE Course SET isActive=? WHERE name = ?;";
     public static final String doesExist = "SELECT * FROM Course WHERE name=?;";
@@ -22,12 +22,12 @@ public class DaoCourse extends Dao{
         super();
     }
 
-    public void insertCourse(String name) throws CourseAlreadyExist {
+    public void insertCourse(String name,boolean activity) throws CourseAlreadyExist {
         try{
             if(doesExist(name)){
                 throw new CourseAlreadyExist("This course already exist -- insertCourse");
             }
-            launchUpdate(insertCourse,name);
+            launchUpdate(insertCourse,name,activity ? 1 : 0);
         }catch (DaoExceptions d){
             System.out.println(d.getMessage());
             d.getStackTrace();

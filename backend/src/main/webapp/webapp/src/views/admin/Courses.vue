@@ -13,14 +13,15 @@
           <option value="false">Inattiva</option>
         </select>
       </div>
-      <button @click="insertCourse">Invia</button>
+      <button @click="insertCourse">Aggiungi</button>
     </div>
+    <div class="response-insertion">{{responseText}}</div>
     <div class="courses-variables">
       <h3>Nome</h3>
       <h3>Attività</h3>
     </div>
     <div class="all-courses" v-for="course in courses">
-      <RowCourse :course="course"/>
+      <RowCourse :course="course" @deleteCourse="toggleCourse"/>
       <hr>
     </div>
   </main>
@@ -28,7 +29,7 @@
 
 <script>
 import RowCourse from "@/components/admin/rows/RowCourse.vue";
-import {getAllCourses} from "@/apiCalls/Subject";
+import {getAllCourses, insertCourse, toggleCourse} from "@/apiCalls/Subject";
 
 export default {
   name: "Courses",
@@ -37,7 +38,8 @@ export default {
     return{
       courses: [],
       name: "",
-      activity: ""
+      activity: "",
+      responseText: "",
     }
   },
   methods:{
@@ -47,8 +49,15 @@ export default {
       })
     },
     insertCourse(){
-
+      insertCourse(this.name,this.activity).then(response =>{
+        this.responseText = "Corso inserito correttamente"
+      })
     },
+    toggleCourse(course){
+      toggleCourse(course.name,course.activity).then(response =>{
+
+      })
+    }
   },
   beforeMount() {
     this.getCourses()

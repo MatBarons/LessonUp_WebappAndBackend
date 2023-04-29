@@ -87,7 +87,8 @@ public class ApiCourse extends HttpServlet {
                         out.println("dao is null -- API Courses doPut -- deactivateCourse");
                     }else{
                         try {
-                            dao.insertCourse(name);
+                            boolean activity = Boolean.parseBoolean(req.getParameter("isActive"));
+                            dao.insertCourse(name,activity);
                             jsonResponse.addProperty("message", "Course registered successfully");
                             resp.setStatus(HttpServletResponse.SC_OK);
                         } catch (CourseAlreadyExist e) {
@@ -102,7 +103,7 @@ public class ApiCourse extends HttpServlet {
                         out.println("dao is null -- API Courses doPut -- deactivateCourse");
                     }else{
                         try {
-                            boolean activity = Boolean.parseBoolean(req.getParameter("activity"));
+                            boolean activity = Boolean.parseBoolean(req.getParameter("isActive"));
                             dao.toggleCourse(name,activity);
                             out.print("{" +
                                     "\"active_state\"" + ":" + "\"false\"" +" ,"+

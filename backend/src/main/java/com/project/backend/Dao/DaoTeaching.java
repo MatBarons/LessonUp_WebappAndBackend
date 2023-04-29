@@ -2,6 +2,7 @@ package com.project.backend.Dao;
 
 import com.project.backend.Exceptions.DaoExceptions;
 import com.project.backend.Exceptions.TeachingExceptions.ProfessorCourseCoupleAlreadyExist;
+import com.project.backend.Exceptions.TeachingExceptions.ProfessorCourseCoupleDoesNotExist;
 import com.project.backend.Exceptions.TeachingExceptions.UserIsNotAProfessor;
 
 import javax.sql.rowset.CachedRowSet;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class DaoTeaching extends Dao{
 
     public static final String insertSubjectForProfessor = "INSERT INTO Teaching (emailProf,nomeCorso) Values(?,?)";
+    public static final String deleteAssociation = "";
     public static final String getAllProfessorForASubject = "SELECT emailProf FROM Teaching WHERE nomeCorso=?";
     public static final String getAllSubjectForAProfessor = "SELECT nomeCorso FROM Teaching WHERE emailProf=?";
     public static final String doesExist = "SELECT * FROM Teaching WHERE email=? AND nomeCorso=?";
@@ -21,7 +23,7 @@ public class DaoTeaching extends Dao{
     public void insertSubjectForProfessor(String emailProf,String subject) throws UserIsNotAProfessor,ProfessorCourseCoupleAlreadyExist{
         try{
             if(isAProfessor(emailProf)){
-                if(doesExist(emailProf,subject)){
+                if(!doesExist(emailProf,subject)){
                     launchUpdate(insertSubjectForProfessor,emailProf,subject);
                 }else{
                     throw new ProfessorCourseCoupleAlreadyExist("This professor/subject couple already exist -- insertTeaching");
@@ -30,6 +32,19 @@ public class DaoTeaching extends Dao{
                 throw new UserIsNotAProfessor("This user is not a professor -- insertTeaching");
             }
         } catch (DaoExceptions e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteTeaching(String email,String subject) throws ProfessorCourseCoupleDoesNotExist{
+        try{
+            if(doesExist(email,subject)){
+                launchUpdate(deleteAssociation,email,subject);
+            }else{
+                throw new ProfessorCourseCoupleDoesNotExist("This professor/subject couple doesn't exist -- deleteTeaching");
+            }
+        }catch (DaoExceptions e){
             System.out.println(e.getMessage());
             e.printStackTrace();
         }

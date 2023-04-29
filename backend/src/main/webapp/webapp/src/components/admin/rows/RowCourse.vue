@@ -2,7 +2,7 @@
   <div class="row-course">
     <h3 class="course-name">{{ course.name }}</h3>
     <h3 class="course-active">{{ course.isActive }}</h3>
-    <button @click="deleteCourse">Elimina</button>
+    <button @click="deleteCourse">Cambia stato</button>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
     deleteCourse(){
       this.$emit('deleteCourse',this.course)
     }
-  }
+  },
 }
 </script>
 
@@ -40,7 +40,7 @@ export default {
   }
   button{
     height: 55%;
-    width: 5%;
+    width: 8%;
     position: absolute;
     right: 5px;
     background: red;

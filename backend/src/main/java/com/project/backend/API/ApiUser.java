@@ -190,7 +190,7 @@ public class ApiUser extends HttpServlet {
         if (req.getParameter("path") != null) {
             switch (req.getParameter("path")) {
                 case "insertUser": {
-                    User user = new User(req.getParameter("name"), req.getParameter("surname"), req.getParameter("role"), req.getParameter("email"), req.getParameter("password"),true);
+                    User user = new User(req.getParameter("name"), req.getParameter("surname"), req.getParameter("role"), req.getParameter("email"), req.getParameter("password"),Boolean.parseBoolean(req.getParameter("isActive")));
                     if (daoU == null) {
                         out.println("dao is null -- API User doPost -- insertUser");
                     } else {
@@ -234,7 +234,7 @@ public class ApiUser extends HttpServlet {
                     }else{
                         try{
                             String email = req.getParameter("email");
-                            boolean activity = Boolean.parseBoolean(req.getParameter("activity"));
+                            boolean activity = Boolean.parseBoolean(req.getParameter("isActive"));
                             daoU.toggleUserActivity(email,activity);
                             jsonResponse.addProperty("message", "User deleted successfully");
                             resp.setStatus(HttpServletResponse.SC_OK);
@@ -247,8 +247,6 @@ public class ApiUser extends HttpServlet {
             }
         }
     }
-
-
 }
 
 
