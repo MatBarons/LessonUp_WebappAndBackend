@@ -1,10 +1,11 @@
 package com.project.backend.API;
-import com.google.gson.JsonObject;
+
 import com.project.backend.Dao.DaoUser;
 import com.project.backend.Exceptions.UserException.UserAlreadyExist;
 import com.project.backend.Exceptions.UserException.UserDoesNotExist;
 import com.project.backend.Model.User;
 
+import com.google.gson.JsonObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +26,8 @@ public class ApiUser extends HttpServlet {
      */
 
 
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
@@ -33,13 +36,6 @@ public class ApiUser extends HttpServlet {
         if(req.getParameter("path")!= null){
             switch (req.getParameter("path")){
                 case "getAllUsers":{
-
-                    /*
-                    if(!(APIManager.checkAuth(req.getHeader("email"),"admin") || APIManager.checkAuth(req.getHeader("email"),"student"))){
-                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    }
-                     */
-
                     if(daoU == null){
                         out.println("dao is null -- API User doGet");
                     }else{
@@ -160,6 +156,7 @@ public class ApiUser extends HttpServlet {
                         String email = req.getParameter("email");
                         String password = req.getParameter("password");
                         User user = daoU.getUserData(email);
+                        HttpSession session = req.getSession();
                         if(user.getPassword().equals(password)){
                             out.println("{");
                             out.println("\"name\"" + ":" + "\"" + user.getName() + "\"" + ",");

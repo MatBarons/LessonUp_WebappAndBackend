@@ -13,10 +13,6 @@
         <url-pattern>*</url-pattern>
     </filter-mapping>
     <servlet-mapping>
-        <servlet-name>ApiProvaServlet</servlet-name>
-        <url-pattern>/api/PROVA</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ApiCourse</servlet-name>
         <url-pattern>/api/course</url-pattern>
     </servlet-mapping>
@@ -27,5 +23,9 @@
     <servlet-mapping>
         <servlet-name>ApiLecture</servlet-name>
         <url-pattern>/api/lecture</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApiTeaching</servlet-name>
+        <url-pattern>/api/teaching</url-pattern>
     </servlet-mapping>
 </web-app>

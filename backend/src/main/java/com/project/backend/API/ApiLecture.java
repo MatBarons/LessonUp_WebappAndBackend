@@ -16,8 +16,6 @@ import java.io.PrintWriter;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -298,7 +296,14 @@ public class ApiLecture extends HttpServlet {
         JsonObject jsonResponse = new JsonObject();
         if(req.getParameter("path") != null){
             switch (req.getParameter("path")){
+                case "changeStatus":{
 
+                }
+                break;
+                case "changeStatusAndStudent":{
+
+                }
+                break;
             }
         }
     }
