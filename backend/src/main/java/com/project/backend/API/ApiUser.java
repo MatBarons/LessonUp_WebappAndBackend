@@ -80,7 +80,8 @@ public class ApiUser extends HttpServlet {
                             out.println("\"surname\"" + ":" + "\"" + u.getSurname() + "\"" + ",");
                             out.println("\"email\"" + ":" + "\"" + u.getEmail() + "\"" + ",");
                             out.println("\"password\"" + ":" + "\"" + u.getPassword() + "\"" + ",");
-                            out.println("\"role\"" + ":" + "\"" + u.getRole() + "\"");
+                            out.println("\"role\"" + ":" + "\"" + u.getRole() + "\"" + ",");
+                            out.println("\"isActive\"" + ":" + "\"" + u.isActive() + "\"");
                             out.println("}");
                             if(i<list.size()-1){
                                 i++;

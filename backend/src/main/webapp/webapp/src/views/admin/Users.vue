@@ -30,6 +30,7 @@
       <h3>Email</h3>
       <h3>Password</h3>
       <h3>Ruolo</h3>
+      <h3>Attivo</h3>
       <select v-model="selectedRole" name="role-choice" @change="getUsersByRole">
         <option value="student">Studente</option>
         <option value="professor">Professore</option>
@@ -58,6 +59,7 @@ export default {
         email: "",
         password: "",
         role: "",
+        isActive: "",
       },
       users: [],
       selectedRole: "student",
@@ -158,13 +160,14 @@ export default {
     margin-top: 2rem;
     h3{
       padding-top: 1rem;
-      padding-left: 11rem;
+      padding-left: 10rem;
       font-weight: bold;
       font-size: 20px;
       padding-bottom: 3rem;
     }
     select{
-      margin-left: 15rem;
+      margin-left: 5rem;
+      margin-top: 0.7rem;
       width: 6rem;
       height: 3rem;
       font-size: 13px;
@@ -174,7 +177,7 @@ export default {
     display: flex;
     flex-direction: column;
     background: white;
-    width: 100%;
+    width: 95%;
     margin-left: 3rem;
   }
 }

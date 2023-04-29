@@ -3,12 +3,16 @@
     <h1>Associazioni professore materia</h1>
     <div class="insert-new-association">
       <div class="insert-professor">
-        <label for="email">Email Professore</label>
-        <input v-model="email" name="email" required/>
+        <label for="email-choice">Professore</label>
+        <select v-model="email" name="email-choice" required>
+          <option v-for="professor in allProfessors" :value="professor.email">{{professor.email}}</option>
+        </select>
       </div>
       <div class="insert-course">
-        <label for="course">Nome Corso</label>
-        <input v-model="course" name="course" required/>
+        <label for="course-choice">Materia</label>
+        <select v-model="course" name="course-choice" required>
+          <option v-for="course in allCourses" :value="course.name">{{course.name}}</option>
+        </select>
       </div>
       <button @click="insertAssociation">Invia</button>
     </div>
@@ -27,7 +31,7 @@
 </template>
 
 <script>
-import {getProfessorsBySubject} from "@/apiCalls/User";
+import {getAllUsersByRole, getProfessorsBySubject} from "@/apiCalls/User";
 import {getAllCourses} from "@/apiCalls/Subject";
 import RowTeaching from "@/components/admin/rows/RowTeaching.vue";
 
@@ -41,6 +45,7 @@ export default {
       allCourses: [],
       selectedSubject: "francese",
       professors: [],
+      allProfessors: [],
     }
   },
   methods:{
@@ -59,11 +64,17 @@ export default {
       getAllCourses().then(response =>{
         this.allCourses = response.data
       })
+    },
+    getAllProfessors(){
+      getAllUsersByRole("professor").then(response =>{
+        this.allProfessors = response.data
+      })
     }
   },
   beforeMount() {
     this.getProfessors()
     this.getAllCourses()
+    this.getAllProfessors()
   }
 }
 </script>
@@ -90,20 +101,23 @@ export default {
     padding-top: 2rem;
     padding-right: 1rem;
     padding-bottom: 3rem;
+    align-items: center;
     .insert-professor{
       display: flex;
       flex-direction: column;
       margin-left: 1rem;
-      input{
+      select{
         height: 2.5rem;
+        font-size: 20px;
       }
     }
     .insert-course{
       display: flex;
       flex-direction: column;
       margin-left: 30rem;
-      input{
+      select{
         height: 2.5rem;
+        font-size: 20px;
       }
     }
     button{
@@ -113,7 +127,6 @@ export default {
       color: white;
       border-radius: 0.5rem;
       margin-left: 20rem;
-      margin-top: 1.2rem;
     }
   }
   .association-variables{

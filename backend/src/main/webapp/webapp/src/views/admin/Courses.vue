@@ -8,9 +8,12 @@
       </div>
       <div class="insert-activity">
         <label for="activity">Attività</label>
-        <input v-model="activity" name="activity" required/>
+        <select v-model="activity" name="activity" required>
+          <option value="true">Attiva</option>
+          <option value="false">Inattiva</option>
+        </select>
       </div>
-      <button @click="insertLecture">Invia</button>
+      <button @click="insertCourse">Invia</button>
     </div>
     <div class="courses-variables">
       <h3>Nome</h3>
@@ -42,7 +45,10 @@ export default {
       getAllCourses().then(response =>{
         this.courses = response.data
       })
-    }
+    },
+    insertCourse(){
+
+    },
   },
   beforeMount() {
     this.getCourses()
@@ -66,27 +72,30 @@ export default {
     display: flex;
     flex-direction: row;
     background: white;
-    align-self: center;
     height: 15%;
-    padding-top: 2rem;
     margin-left: 9rem;
     max-width: 85%;
+    align-items: center;
     .insert-name{
       display: flex;
       flex-direction: column;
       margin-left: 3rem;
-      margin-right: 32rem;
+      margin-right: 27rem;
+      margin-bottom: 1rem;
       input{
         height: 2.5rem;
+        font-size: 20px;
       }
     }
     .insert-activity{
       display: flex;
       flex-direction: column;
       margin-left: 1rem;
-      margin-right: 13rem;
-      input{
+      margin-right: 17rem;
+      margin-bottom: 1rem;
+      select{
         height: 2.5rem;
+        font-size: 20px;
       }
     }
     button{
@@ -95,7 +104,6 @@ export default {
       background: #009b4d;
       color: white;
       border-radius: 0.5rem;
-      margin-top: 1.2rem;
       margin-right: 5rem;
     }
   }

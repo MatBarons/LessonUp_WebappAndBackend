@@ -12,19 +12,34 @@
       </div>
       <div class="insert-prof">
         <label for="professor">Professore</label>
-        <input v-model="lecture.professor" name="professor" required/>
+        <select v-model="lecture.professor" name="status" required @change="changeDisplayedStudentsValue">
+          <option v-for="professor in professors"  :value="professor">{{professor.email}}</option>
+        </select>
       </div>
       <div class="insert-subject">
         <label for="subject">Materia</label>
-        <input v-model="lecture.subject" name="subject" required/>
+        <select v-model="lecture.subject" name="status" required @change="changeDisplayedStudentsValue">
+          <option v-for="subject in subjects" :value="subject">{{ subject.name }}</option>
+        </select>
       </div>
       <div class="insert-status">
         <label for="status">Status</label>
-        <input v-model="lecture.status" name="status" required/>
+        <select v-model="lecture.status" name="status" required @change="changeDisplayedStudentsValue">
+          <option value="free">Libera</option>
+          <option value="booked">Prenotata</option>
+          <option value="completed">Completata</option>
+          <option value="ended">Confermata</option>
+        </select>
       </div>
-      <div class="insert-student">
+      <div class="insert-student-free" v-if="showStudentList === false" >
         <label for="student">Studente</label>
         <input v-model="lecture.student" name="student" required/>
+      </div>
+      <div class="insert-student-other" v-else>
+        <label for="student">Studente</label>
+        <select v-model="lecture.student" required>
+          <option v-for="student in students" :value="student">{{student.email}}</option>
+        </select>
       </div>
       <button @click="insertLecture">Invia</button>
     </div>
@@ -35,7 +50,7 @@
       <h3>Materia</h3>
       <h3>Status</h3>
       <h3>Studente</h3>
-      <select v-model="selectedStatus" name="status-choice" @change="handleChangeStatus">
+      <select v-model="selectedStatusBottomPart" name="status-choice" @change="handleChangeStatus">
         <option value="free">Libera</option>
         <option value="booked">Prenotata</option>
         <option value="completed">Completata</option>
@@ -43,7 +58,7 @@
       </select>
     </div>
     <div class="all-lectures" v-for="lecture in lectures">
-      <RowLecture :lecture="lecture" :status="selectedStatus" :distance_right="distance_right"/>
+      <RowLecture :lecture="lecture" :status="selectedStatusBottomPart" :distance_right="distance_right"/>
       <hr>
     </div>
   </main>
@@ -52,6 +67,8 @@
 <script>
 import RowLecture from "@/components/admin/rows/RowLecture.vue";
 import {getAllLecturesByStatus} from "@/apiCalls/Lecture";
+import {getAllUsersByRole} from "@/apiCalls/User";
+import {getAllCourses} from "@/apiCalls/Subject";
 
 export default {
   name: "Lectures",
@@ -59,16 +76,20 @@ export default {
   data(){
     return{
       lectures: [],
+      students: [],
+      subjects: [],
+      professors: [],
       lecture: {
         date: "",
         time: "",
         professor: "",
-        subject: "",
-        status: "", //ricorda di mettere la scelta multipla
+        subject: "francese",
+        status: "free", //ricorda di mettere la scelta multipla
         student: "",  //elimina la possibilità di scrivere se lo status è free
       },
-      selectedStatus: "free",
-      distance_right: "21%"
+      selectedStatusBottomPart: "free",
+      distance_right: "21%",
+      showStudentList: true,
     }
   },
   methods:{
@@ -79,22 +100,48 @@ export default {
 
     },
     getLectures(){
-      console.log("siamo qui" + this.selectedStatus)
-      getAllLecturesByStatus(this.selectedStatus).then(response =>{
+      getAllLecturesByStatus(this.selectedStatusBottomPart).then(response =>{
        this.lectures = response.data
+      })
+    },
+    getStudents(){
+      getAllUsersByRole("student").then(response => {
+        this.students = response.data
+      })
+    },
+    getSubjects(){
+      getAllCourses().then(response => {
+        this.subjects = response.data
+      })
+    },
+    getProfessors(){
+      getAllUsersByRole("professor").then(response =>{
+        this.professors = response.data
       })
     },
     handleChangeStatus(){
       this.getLectures()
-      if(this.selectedStatus === "free"){
+      if(this.selectedStatusBottomPart === "free"){
         this.distance_right = "21%"
       }else{
         this.distance_right = "15%"
+      }
+    },
+    changeDisplayedStudentsValue(){
+      if(this.lecture.status === "free"){
+        this.showStudentList = false;
+        this.lecture.student = null;
+      }else{
+        this.showStudentList = true;
       }
     }
   },
   beforeMount() {
     this.getLectures()
+    this.getStudents()
+    this.changeDisplayedStudentsValue()
+    this.getSubjects()
+    this.getProfessors()
   }
 }
 </script>
@@ -139,7 +186,7 @@ export default {
       display: flex;
       flex-direction: column;
       margin-left: 1rem;
-      input{
+      select{
         height: 2.5rem;
       }
     }
@@ -147,7 +194,7 @@ export default {
       display: flex;
       flex-direction: column;
       margin-left: 1rem;
-      input{
+      select{
         height: 2.5rem;
       }
     }
@@ -155,15 +202,24 @@ export default {
       display: flex;
       flex-direction: column;
       margin-left: 1rem;
-      input{
+      margin-bottom: 1.1rem;
+      select{
         height: 2.5rem;
       }
     }
-    .insert-student{
+    .insert-student-free{
       display: flex;
       flex-direction: column;
       margin-left: 1rem;
       input{
+        height: 2.5rem;
+      }
+    }
+    .insert-student-other{
+      display: flex;
+      flex-direction: column;
+      margin-left: 1rem;
+      select{
         height: 2.5rem;
       }
     }

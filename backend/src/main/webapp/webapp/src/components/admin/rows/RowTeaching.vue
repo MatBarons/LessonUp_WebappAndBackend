@@ -40,7 +40,7 @@ export default {
     position: absolute;
   }
   .subject{
-    left: 50%;
+    left: 53%;
     position: absolute;
   }
   button{

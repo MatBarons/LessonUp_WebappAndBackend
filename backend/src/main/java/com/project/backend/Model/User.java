@@ -36,6 +36,14 @@ public class User{
         return surname;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public void setSurname(String surname) {
         this.surname = surname;
     }

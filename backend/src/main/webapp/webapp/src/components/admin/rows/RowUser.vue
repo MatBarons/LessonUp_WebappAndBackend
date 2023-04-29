@@ -5,6 +5,7 @@
     <h3 class="user-email">{{ user.email }}</h3>
     <h3 class="user-password">{{ user.password }}</h3>
     <h3 class="user-role">{{ user.role }}</h3>
+    <h3 class="user-activity">{{user.isActive}}</h3>
     <button @click="deleteUser">Elimina</button>
   </div>
 </template>
@@ -35,34 +36,37 @@ export default {
   width: 100%;
   align-items: center;
   .user-name{
-    left: 9%;
+    left: 7%;
     position: absolute;
   }
   .user-surname{
-    left: 24%;
+    left: 19%;
     position: absolute;
   }
   .user-email{
-    left: 35%;
+    left: 33%;
     position: absolute;
   }
   .user-password{
-    right: 40%;
+    right: 41%;
     position: absolute;
   }
   .user-role{
-    right: 24%;
+    right: 25%;
+    position: absolute;
+  }
+  .user-activity{
+    right: 12%;
     position: absolute;
   }
   button{
     height: 55%;
     width: 5%;
     position: absolute;
-    right: 5px;
+    right: 10px;
     background: red;
     border-radius: 0.5rem;
     font-size: 15px;
-    margin-right: 2rem;
   }
 }
 </style>
