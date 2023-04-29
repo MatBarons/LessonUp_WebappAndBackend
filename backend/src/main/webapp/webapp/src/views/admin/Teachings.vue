@@ -16,7 +16,7 @@
       <h3 class="email-variable">Email</h3>
       <h3 class="subject-variable">Materia</h3>
       <select v-model="selectedSubject" name="status-choice" @change="handleSubjectChange">
-        <option  v-for="course in allCourses" :value="course">{{ course.name }}</option>
+        <option v-for="course in allCourses" :value="course.name">{{ course.name }}</option>
       </select>
     </div>
     <div class="all-associations" v-for="professor in professors">
@@ -45,12 +45,12 @@ export default {
   },
   methods:{
     handleSubjectChange(){
-      getProfessorsBySubject()
+      this.getProfessors()
     },
     insertAssociation(){
 
     },
-    getProfessorsBySubject(){
+    getProfessors(){
       getProfessorsBySubject(this.selectedSubject).then(response =>{
         this.professors = response.data
       })
@@ -62,7 +62,7 @@ export default {
     }
   },
   beforeMount() {
-    this.getProfessorsBySubject()
+    this.getProfessors()
     this.getAllCourses()
   }
 }
