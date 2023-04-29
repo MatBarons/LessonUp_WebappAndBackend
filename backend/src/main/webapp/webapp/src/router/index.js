@@ -9,6 +9,7 @@ import Layout from "@/views/user/Layout.vue";
 import Courses from "@/views/admin/Courses.vue";
 import Lectures from "@/views/admin/Lectures.vue";
 import Users from "@/views/admin/Users.vue";
+import Teachings from "@/views/admin/Teachings.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +60,11 @@ const router = createRouter({
           path: '/users',
           name: 'users',
           component: Users
+        },
+        {
+          path: '/teachings',
+          name: 'teaching',
+          component: Teachings
         }
       ]
     }

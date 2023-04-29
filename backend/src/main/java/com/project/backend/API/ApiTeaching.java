@@ -33,7 +33,7 @@ public class ApiTeaching extends HttpServlet {
                         ArrayList<String> professors = daoT.getAllProfessorForASubject(req.getParameter("subject"));
                         out.println("[");
                         for(String s : professors){
-                            out.println(s);
+                            out.println("\"" + s + "\"");
                             if(i<professors.size()-1){
                                 i++;
                                 out.println(",");

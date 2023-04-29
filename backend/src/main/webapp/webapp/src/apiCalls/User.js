@@ -13,6 +13,10 @@ export async function getAllUsersByRole(role){
     return await axios.get('http://localhost:8080/backend/api/user?path=getAllUsersByRole&role=' + role)
 }
 
+export async function getProfessorsBySubject(subject){
+    return await axios.get('http://localhost:8080/backend/api/teaching?path=getAllProfessorForASubject&subject=' + subject)
+}
+
 export const store = reactive({
     email: null,
     data: {

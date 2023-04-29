@@ -12,9 +12,13 @@
         <span class="material-icons">shopping_cart</span>
         <span class="text">Corsi</span>
       </router-link>
-      <router-link to="/Users" class="button">
+      <router-link to="/users" class="button">
         <span class="material-icons">person</span>
         <span class="text">Utenti</span>
+      </router-link>
+      <router-link to="/teachings" class="button">
+        <span class="material-icons">person</span>
+        <span class="text">Docenza</span>
       </router-link>
     </div>
     <div class="logo">
