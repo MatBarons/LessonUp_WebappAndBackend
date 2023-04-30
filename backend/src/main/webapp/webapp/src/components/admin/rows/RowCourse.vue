@@ -18,6 +18,7 @@ export default {
   },
   methods:{
     deleteCourse(){
+      this.course.isActive = !this.course.isActive
       this.$emit('deleteCourse',this.course)
     }
   },

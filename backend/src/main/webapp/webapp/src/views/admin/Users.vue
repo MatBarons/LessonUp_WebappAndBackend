@@ -84,8 +84,8 @@ export default {
 
       })
     },
-    toggleUser(email,activity){
-      toggleUser(email,activity).then(response =>{
+    toggleUser(user){
+      toggleUser(user.email,user.isActive).then(response =>{
 
       })
     },

@@ -41,7 +41,7 @@ public class DaoUser extends Dao{
             if(!doesExist(email)){
                 throw new UserDoesNotExist("This user doesn't exist -- deleteUser");
             }
-            launchUpdate(toggleUserActivity,activity,email);
+            launchUpdate(toggleUserActivity,activity ? 1 : 0,email);
         }catch (DaoExceptions d){
             System.out.println(d.getMessage());
             d.printStackTrace();

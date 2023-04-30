@@ -8,7 +8,7 @@
       </div>
       <div class="insert-activity">
         <label for="activity">Attività</label>
-        <select v-model="activity" name="activity" required>
+        <select v-model="isActive" name="activity" required>
           <option value="true">Attiva</option>
           <option value="false">Inattiva</option>
         </select>
@@ -38,7 +38,7 @@ export default {
     return{
       courses: [],
       name: "",
-      activity: "",
+      isActive: "",
       responseText: "",
     }
   },
@@ -49,12 +49,12 @@ export default {
       })
     },
     insertCourse(){
-      insertCourse(this.name,this.activity).then(response =>{
+      insertCourse(this.name,this.isActive).then(response =>{
         this.responseText = "Corso inserito correttamente"
       })
     },
     toggleCourse(course){
-      toggleCourse(course.name,course.activity).then(response =>{
+      toggleCourse(course.name,course.isActive).then(response =>{
 
       })
     }

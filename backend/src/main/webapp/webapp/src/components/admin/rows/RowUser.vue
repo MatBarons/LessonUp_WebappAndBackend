@@ -22,6 +22,7 @@ export default {
   },
   methods:{
     toggleUser(){
+      this.user.isActive = !this.user.isActive
       this.$emit('toggleUser',this.user)
     }
   },
