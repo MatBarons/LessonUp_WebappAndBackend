@@ -84,8 +84,8 @@ export default {
         time: "",
         professor: "",
         subject: "francese",
-        status: "free", //ricorda di mettere la scelta multipla
-        student: "",  //elimina la possibilità di scrivere se lo status è free
+        status: "free",
+        student: "",
       },
       selectedStatusBottomPart: "free",
       distance_right: "21%",
@@ -94,7 +94,15 @@ export default {
   },
   methods:{
     insertLecture(){
-      insertLecture(this.lecture.date,this.lecture.time,this.lecture.professor,this.lecture.subject,this.lecture.status,this.lecture.student).then(response =>{
+      const lecture = {
+        date: this.lecture.date,
+        time: this.lecture.time,
+        professor: this.lecture.professor,
+        subject: this.lecture.subject,
+        status: this.lecture.status,
+        student: this.lecture.student,
+      }
+      insertLecture(lecture).then(response =>{
 
       })
     },

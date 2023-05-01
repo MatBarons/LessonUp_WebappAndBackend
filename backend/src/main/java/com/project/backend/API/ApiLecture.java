@@ -203,7 +203,6 @@ public class ApiLecture extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
-        Gson gson = new Gson();
         resp.setContentType("application/json");
         JsonObject jsonResponse = new JsonObject();
         if(req.getParameter("path")!= null){
@@ -211,60 +210,46 @@ public class ApiLecture extends HttpServlet {
             if(token != null && TokenManager.verifyToken(token)){
                 switch (req.getParameter("path")){
                     case "insertLecture": {
-                        String student = req.getParameter("student");
-                        String status = req.getParameter("status");
-                        String professor = req.getParameter("professor");
-                        String subject = req.getParameter("subject");
-                        String d = req.getParameter("date");
-                        String t = req.getParameter("time");
-                        Time time = new Time(Integer.parseInt(t.substring(0,2)),Integer.parseInt(t.substring(3,5)),Integer.parseInt(t.substring(6,8)));
+                        BufferedReader reader = req.getReader();
+                        String body = "";
+                        String line;
+                        while((line=reader.readLine()) != null){
+                            body += line;
+                        }
+                        Gson gson = new Gson();
+                        JsonObject jsonObject = gson.fromJson(body,JsonObject.class);
+
+                        String d = jsonObject.get("date").getAsString();
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                         Date date = null;
-                        System.out.println(d);
                         try {
                             date = format.parse(d);
                         } catch (ParseException e) {
                             System.out.println("wrong date format, please use yyyy-MM-dd");
                             throw new RuntimeException(e);
                         }
+
+                        String t = jsonObject.get("time").getAsString();
+                        Time time = new Time(Integer.parseInt(t.substring(0,2)),Integer.parseInt(t.substring(3,5)),Integer.parseInt(t.substring(6,8)));
+
+
+                        Lecture lecture = new Lecture(date,time.toLocalTime(),jsonObject.get("professor").getAsString(),jsonObject.get("subject").getAsString());
                         if(dao == null){
                             out.println("dao is null -- API Lecture doPost -- insertLecture");
                         }else{
                             try {
-                                dao.insertLecture(new Lecture(date,time.toLocalTime(),professor,subject),student,status);
+                                String status = jsonObject.get("status").getAsString();
+                                String student;
+                                if(status.equals("free")){
+                                    student = String.valueOf(jsonObject.get("student").getAsJsonNull());
+                                }else{
+                                    student = jsonObject.get("student").getAsString();
+                                }
+                                dao.insertLecture(lecture,status,student);
                                 jsonResponse.addProperty("message", "Lecture registered successfully");
                                 resp.setStatus(HttpServletResponse.SC_OK);
                             } catch (LectureAlreadyExist e) {
                                 jsonResponse.addProperty("error", "Failed to register lecture, it already exist");
-                                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                            }
-                        }
-                    }
-                    break;
-                    case "deleteLecture":{
-                        if(dao == null){
-                            out.println("dao is null -- API Lecture doDelete -- deleteLecture");
-                        }else{
-                            try{
-                                String professor = req.getParameter("professor");
-                                String subject = req.getParameter("subject");
-                                String d = req.getParameter("date");
-                                String t = req.getParameter("time");
-                                Time time = new Time(Integer.parseInt(t.substring(0,2)),Integer.parseInt(t.substring(3,5)),Integer.parseInt(t.substring(6,8)));
-                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                                Date date = null;
-                                System.out.println(d);
-                                try {
-                                    date = format.parse(d);
-                                } catch (ParseException e) {
-                                    System.out.println("wrong date format, please use yyyy-MM-dd");
-                                    throw new RuntimeException(e);
-                                }
-                                dao.deleteLecture(new Lecture(date,time.toLocalTime(),professor,subject));
-                                jsonResponse.addProperty("message", "Lecture deleted successfully");
-                                resp.setStatus(HttpServletResponse.SC_OK);
-                            }catch (LectureDoesNotExist e){
-                                jsonResponse.addProperty("error", "Failed to delete lecture, lecture doesn't exist");
                                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                             }
                         }
@@ -364,6 +349,45 @@ public class ApiLecture extends HttpServlet {
                         }
                     }
                     break;
+                }
+            }
+        }
+    }
+
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PrintWriter out = resp.getWriter();
+        resp.setContentType("application/json");
+        JsonObject jsonResponse = new JsonObject();
+        if(req.getParameter("path")!= null){
+            String token = req.getHeader("Authorization");
+            if(token != null && TokenManager.verifyToken(token)){
+                if(dao == null){
+                    out.println("dao is null -- API Lecture doDelete -- deleteLecture");
+                }else{
+                    try{
+                        String professor = req.getParameter("professor");
+                        String subject = req.getParameter("subject");
+                        String d = req.getParameter("date");
+                        String t = req.getParameter("time");
+                        Time time = new Time(Integer.parseInt(t.substring(0,2)),Integer.parseInt(t.substring(3,5)),Integer.parseInt(t.substring(6,8)));
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = null;
+                        System.out.println(d);
+                        try {
+                            date = format.parse(d);
+                        } catch (ParseException e) {
+                            System.out.println("wrong date format, please use yyyy-MM-dd");
+                            throw new RuntimeException(e);
+                        }
+                        dao.deleteLecture(new Lecture(date,time.toLocalTime(),professor,subject));
+                        jsonResponse.addProperty("message", "Lecture deleted successfully");
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                    }catch (LectureDoesNotExist e){
+                        jsonResponse.addProperty("error", "Failed to delete lecture, lecture doesn't exist");
+                        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    }
                 }
             }
         }
