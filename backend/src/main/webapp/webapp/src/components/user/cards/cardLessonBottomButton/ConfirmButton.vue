@@ -11,10 +11,10 @@ import {parse_string_to_date,parse_string_to_time} from "@/utils/Utils";
 export default {
   name: "ConfirmButton",
   props:{
-    date: null,
-    time: null,
-    professor: null,
-    subject: null
+    lesson:{
+      type: Object,
+      required: true
+    }
   },
   data(){
     return{
@@ -25,7 +25,14 @@ export default {
   },
   methods:{
     confirmLecture(){
-      changeStatus("ended", parse_string_to_date(this.date), parse_string_to_time(this.time), this.professor, this.subject)
+      const lecture = {
+        date: parse_string_to_date(this.date),
+        time: parse_string_to_time(this.time),
+        professor: this.professor,
+        subject: this.subject,
+        status: "ended",
+      }
+      changeStatus(lecture)
       .then(response => {
         this.message = "Lezione confermata"
         this.icon = "check"

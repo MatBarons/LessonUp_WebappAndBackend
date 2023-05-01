@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from "@/views/user/Home.vue";
 import Cart from "@/views/user/Cart.vue";
 import Profile from "@/views/user/Profile.vue";
-import Login from "@/views/user/Login.vue";
+import Login from "@/views/Login.vue";
 import Layout from "@/views/user/Layout.vue";
 
 import Courses from "@/views/admin/Courses.vue";
@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Login',
-      component: () => import("@/views/user/Login.vue"),
+      component: () => import("@/views/Login.vue"),
     },
     {
       path: '/layout',

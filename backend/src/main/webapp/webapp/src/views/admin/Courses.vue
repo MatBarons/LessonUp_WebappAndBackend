@@ -4,11 +4,11 @@
     <div class="insert-new-course">
       <div class="insert-name">
         <label for="name">Nome</label>
-        <input v-model="name" name="name" required/>
+        <input v-model="course.name" name="name" required/>
       </div>
       <div class="insert-activity">
         <label for="activity">Attività</label>
-        <select v-model="isActive" name="activity" required>
+        <select v-model="course.isActive" name="activity" required>
           <option value="true">Attiva</option>
           <option value="false">Inattiva</option>
         </select>
@@ -37,24 +37,26 @@ export default {
   data(){
     return{
       courses: [],
-      name: "",
-      isActive: "",
+      course:{
+        name: "",
+        isActive: ""
+      },
       responseText: "",
     }
   },
   methods:{
     getCourses(){
-      getAllCourses().then(response =>{
+      getAllCourses(this.course).then(response =>{
         this.courses = response.data
       })
     },
     insertCourse(){
-      insertCourse(this.name,this.isActive).then(response =>{
+      insertCourse().then(response =>{
         this.responseText = "Corso inserito correttamente"
       })
     },
     toggleCourse(course){
-      toggleCourse(course.name,course.isActive).then(response =>{
+      toggleCourse(course).then(response =>{
 
       })
     }

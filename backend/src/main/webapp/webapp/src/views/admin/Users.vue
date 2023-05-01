@@ -4,11 +4,11 @@
     <div class="insert-new-user">
       <div class="insert-name">
         <label for="name">Nome</label>
-        <input v-model="user.name_user" name="name" required/>
+        <input v-model="user.name" name="name" required/>
       </div>
       <div class="insert-surname">
         <label for="surname">Cognome</label>
-        <input v-model="user.surname_user" name="surname" required/>
+        <input v-model="user.surname" name="surname" required/>
       </div>
       <div class="insert-email">
         <label for="email">Email</label>
@@ -65,8 +65,8 @@ export default {
   data(){
     return{
       user:{
-        name_user: "",
-        surname_user: "",
+        name: "",
+        surname: "",
         email: "",
         password: "",
         role: "",
@@ -79,13 +79,12 @@ export default {
   },
   methods:{
     insert(){
-      console.log("prova")
-      insertUser(this.user.name_user,this.user.surname_user,this.user.email,this.user.password,this.user.role,this.user.isActive).then(response => {
+      insertUser(this.user).then(response => {
 
       })
     },
     toggleUser(user){
-      toggleUser(user.email,user.isActive).then(response =>{
+      toggleUser(user).then(response =>{
 
       })
     },

@@ -6,21 +6,46 @@ export async function logMeIn(email,password){
 }
 
 export async function changePassword(email,oldPassword,newPassword){
-    return await axios.post('http://localhost:8080/backend/api/user?path=changePassword&email='+ email + "&oldPassword=" + oldPassword + "&newPassword=" + newPassword)
+    return await axios.put(
+        'http://localhost:8080/backend/api/user?path=changePassword&email='+ email + "&oldPassword=" + oldPassword + "&newPassword=" + newPassword,{},{
+            headers: {
+                'Authorization' : store.data.token
+            }
+        }
+    )
 }
 
 export async function getAllUsersByRole(role){
-    return await axios.get('http://localhost:8080/backend/api/user?path=getAllUsersByRole&role=' + role)
+    return await axios.get(
+        'http://localhost:8080/backend/api/user?path=getAllUsersByRole&role=' + role,{
+            headers:{
+                'Authorization': store.data.token
+            }
+        }
+    )
 }
 
 
-export async function insertUser(name,surname,email,password,role,activity){
-    console.log("user: "+name + " " + surname + " " + email + " " + password + " " + role + " " + activity)
-    return await axios.post('http://localhost:8080/backend/api/user?path=insertUser&name='+name+"&surname="+surname+"&email="+email+"&password="+password+"&role="+role+"&isActive="+activity)
+export async function insertUser(user){
+    return await axios.post(
+        'http://localhost:8080/backend/api/user?path=insertUser', user,
+        {
+            headers:{
+                'Authorization': store.data.token
+            }
+        }
+    )
 }
 
-export async function toggleUser(email,activity){
-    return await axios.post('http://localhost:8080/backend/api/user?path=toggleUser&email='+email+"&isActive="+activity)
+export async function toggleUser(user){
+    return await axios.put(
+        'http://localhost:8080/backend/api/user?path=toggleUser', user,
+        {
+            headers:{
+                'Authorization': store.data.token
+            }
+        }
+    )
 }
 
 export const store = reactive({
@@ -29,6 +54,7 @@ export const store = reactive({
         name: "",
         surname: "",
         role: "",
+        token: ""
     },
     cart_list: new Set(),
     setEmail(value){

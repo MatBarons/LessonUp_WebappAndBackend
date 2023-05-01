@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -25,45 +26,48 @@ public class ApiTeaching extends HttpServlet {
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         if(req.getParameter("path")!=null){
-            switch (req.getParameter("path")){
-                case "getAllProfessorForASubject":{
-                    if(daoT == null){
-                        out.println("dao is null -- Api Teaching doGet");
-                    }else{
-                        int i=0;
-                        ArrayList<String> professors = daoT.getAllProfessorForASubject(req.getParameter("subject"));
-                        out.println("[");
-                        for(String s : professors){
-                            out.println("\"" + s + "\"");
-                            if(i<professors.size()-1){
-                                i++;
-                                out.println(",");
+            String token = req.getHeader("Authorization");
+            if(token != null && TokenManager.verifyToken(token)){
+                switch (req.getParameter("path")){
+                    case "getAllProfessorForASubject":{
+                        if(daoT == null){
+                            out.println("dao is null -- Api Teaching doGet");
+                        }else{
+                            int i=0;
+                            ArrayList<String> professors = daoT.getAllProfessorForASubject(req.getParameter("subject"));
+                            out.println("[");
+                            for(String s : professors){
+                                out.println("\"" + s + "\"");
+                                if(i<professors.size()-1){
+                                    i++;
+                                    out.println(",");
+                                }
                             }
+                            out.println("]");
+                            out.flush();
                         }
-                        out.println("]");
-                        out.flush();
                     }
-                }
-                break;
-                case "getAllSubjectForAProfessor":{
-                    if(daoT == null){
-                        out.println("dao is null -- Api Teaching doGet");
-                    }else{
-                        int i=0;
-                        ArrayList<String> subject = daoT.getAllSubjectForAProfessor(req.getParameter("email"));
-                        out.println("[");
-                        for(String s : subject){
-                            out.println(s);
-                            if(i<subject.size()-1){
-                                i++;
-                                out.println(",");
+                    break;
+                    case "getAllSubjectForAProfessor":{
+                        if(daoT == null){
+                            out.println("dao is null -- Api Teaching doGet");
+                        }else{
+                            int i=0;
+                            ArrayList<String> subject = daoT.getAllSubjectForAProfessor(req.getParameter("email"));
+                            out.println("[");
+                            for(String s : subject){
+                                out.println(s);
+                                if(i<subject.size()-1){
+                                    i++;
+                                    out.println(",");
+                                }
                             }
+                            out.println("]");
+                            out.flush();
                         }
-                        out.println("]");
-                        out.flush();
                     }
+                    break;
                 }
-                break;
             }
         }
     }
@@ -71,41 +75,53 @@ public class ApiTeaching extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
-        Gson gson = new Gson();
         resp.setContentType("application/json");
         JsonObject jsonResponse = new JsonObject();
         if(req.getParameter("path") != null){
-            switch (req.getParameter("path")){
-                case "insertTeaching":{
-                    if(daoT == null){
-                        out.println("dao is null -- Api Teaching doPost -- insertTeaching");
-                    }else{
-                        try {
-                            daoT.insertSubjectForProfessor(req.getParameter("email"),req.getParameter("subject"));
-                        } catch (UserIsNotAProfessor e) {
-                            jsonResponse.addProperty("error", "Failed to insert, user is not a professor");
-                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        } catch (ProfessorCourseCoupleAlreadyExist e) {
-                            jsonResponse.addProperty("error","Failed to insert,association already exist");
-                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            String token = req.getHeader("Authorization");
+            if(token != null && TokenManager.verifyToken(token)){
+                if(daoT == null){
+                    out.println("dao is null -- Api Teaching doPost -- insertTeaching");
+                }else{
+                    try {
+                        BufferedReader reader = req.getReader();
+                        String body = "";
+                        String line;
+                        while((line=reader.readLine()) != null){
+                            body += line;
                         }
-                    }
-                }
-                break;
-                case "deleteAssociation":{
-                    if(daoT == null){
-                        out.println("dao is null -- Api Teaching doPost -- deleteTeaching");
-                    }else{
-                        try {
-                            daoT.deleteTeaching(req.getParameter("email"),req.getParameter("subject"));
-                        }catch (ProfessorCourseCoupleDoesNotExist e) {
-                            jsonResponse.addProperty("error","Failed to insert,association already exist");
-                            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        }
-                    }
-                }
-                break;
+                        Gson gson = new Gson();
+                        JsonObject jsonObject = gson.fromJson(body,JsonObject.class);
 
+                        daoT.insertSubjectForProfessor(jsonObject.get("email").getAsString(),jsonObject.get("course").getAsString());
+                    } catch (UserIsNotAProfessor e) {
+                        jsonResponse.addProperty("error", "Failed to insert, user is not a professor");
+                        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    } catch (ProfessorCourseCoupleAlreadyExist e) {
+                        jsonResponse.addProperty("error","Failed to insert,association already exist");
+                        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        PrintWriter out = resp.getWriter();
+        resp.setContentType("application/json");
+        JsonObject jsonResponse = new JsonObject();
+        String token = req.getHeader("Authorization");
+        if(token != null && TokenManager.verifyToken(token)){
+            if(daoT == null){
+                out.println("dao is null -- Api Teaching doPost -- deleteTeaching");
+            }else{
+                try {
+                    daoT.deleteTeaching(req.getParameter("email"),req.getParameter("subject"));
+                }catch (ProfessorCourseCoupleDoesNotExist e) {
+                    jsonResponse.addProperty("error","Failed to insert,association already exist");
+                    resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                }
             }
         }
     }

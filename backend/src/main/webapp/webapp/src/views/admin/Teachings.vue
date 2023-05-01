@@ -4,13 +4,13 @@
     <div class="insert-new-association">
       <div class="insert-professor">
         <label for="email-choice">Professore</label>
-        <select v-model="email" name="email-choice" required>
+        <select v-model="teaching.email" name="email-choice" required>
           <option v-for="professor in allProfessors" :value="professor.email">{{professor.email}}</option>
         </select>
       </div>
       <div class="insert-course">
         <label for="course-choice">Materia</label>
-        <select v-model="course" name="course-choice" required>
+        <select v-model="teaching.course" name="course-choice" required>
           <option v-for="course in allCourses" :value="course.name">{{course.name}}</option>
         </select>
       </div>
@@ -41,8 +41,10 @@ export default {
   components: {RowTeaching},
   data(){
     return{
-      email: "",
-      course: "",
+      teaching:{
+        email: "",
+        course: "",
+      },
       allCourses: [],
       selectedSubject: "francese",
       professors: [],
@@ -54,7 +56,7 @@ export default {
       this.getProfessors()
     },
     insertAssociation(){
-      insertTeaching(this.email,this.course).then(response =>{
+      insertTeaching(this.teaching).then(response =>{
 
       })
     },

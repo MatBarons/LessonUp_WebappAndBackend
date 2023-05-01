@@ -2,7 +2,7 @@
 import {store} from "@/apiCalls/User"
 
 import Layout from "@/views/user/Layout.vue";
-import Login from "@/views/user/Login.vue";
+import Login from "@/views/Login.vue";
 export default{
   name: 'App',
   components:{Login, Layout},

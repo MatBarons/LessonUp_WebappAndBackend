@@ -42,20 +42,14 @@ export default {
       logMeIn(this.email,this.password).then(response => {
         store.setData(response.data);
         store.setEmail(this.email);
-        console.log("Prova")
-        console.log(store.data.role)
         if(store.data.role === "student"){
           router.push('layout');
-          console.log("Prova1")
         }else if(store.data.role){
           router.push('layoutAdmin');
-          console.log("Prova2")
         }else{
           console.log("oh no")
         }
-        console.log("Prova3")
       }).catch(reason => {
-        console.log("male")
         this.response="Credenziali errate"
       })
 
@@ -81,7 +75,7 @@ export default {
       .left-side-login{
         width: 40%;
         height: 100%;
-        background-image: url("../../assets/images/2_sfondo.jpg") ;
+        background-image: url("../assets/images/2_sfondo.jpg") ;
         background-size: cover;
         h1{
           padding-top: 7rem;

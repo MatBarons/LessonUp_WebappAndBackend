@@ -12,10 +12,10 @@ import {parse_string_to_date, parse_string_to_time} from "@/utils/Utils";
 export default {
   name: "DeleteButton",
   props:{
-    date: null,
-    time: null,
-    professor: null,
-    subject: null
+    lesson:{
+      type: Object,
+      required: true
+    }
   },
   data(){
     return{
@@ -27,7 +27,15 @@ export default {
   },
   methods:{
     cancelBookedLecture(){
-      changeStatusAndStudent("free",null, parse_string_to_date(this.date), parse_string_to_time(this.time), this.professor, this.subject)
+      const lecture = {
+        date: parse_string_to_date(this.lesson.date),
+        time: parse_string_to_time(this.lesson.time),
+        professor: this.lesson.email,
+        subject: this.lesson.subject,
+        status: "free",
+        student: null
+      }
+      changeStatusAndStudent(lecture)
           .then(response => {
             this.message = "Prenotazione rimossa"
             this.icon = "check"

@@ -70,10 +70,16 @@ export default {
         this.icon = "close"
         this.message_color = "red"
       }else{
-        console.log("prova lectures:" + this.lectures.size)
         this.lectures.forEach(lecture => {
-          console.log("student: \n" + store.email + "date: \n" + parse_string_to_date(lecture.date) + "time: \n" + parse_string_to_time(lecture.time),"professor: \n " + lecture.email,"subject: \n" +lecture.subject)
-          changeStatusAndStudent("booked",store.email,parse_string_to_date(lecture.date),parse_string_to_time(lecture.time),lecture.email,lecture.subject).then(
+          const l = {
+            date: parse_string_to_date(lecture.date),
+            time: parse_string_to_time(lecture.time),
+            professor: lecture.email,
+            subject: lecture.subject,
+            status: "booked",
+            student: store.email
+          }
+          changeStatusAndStudent(l).then(
             response => {
               store.cart_list.clear()
               this.lectures = store.cart_list

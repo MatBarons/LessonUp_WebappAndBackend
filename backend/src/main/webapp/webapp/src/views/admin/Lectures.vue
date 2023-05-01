@@ -58,7 +58,7 @@
       </select>
     </div>
     <div class="all-lectures" v-for="lecture in lectures">
-      <RowLecture :lecture="lecture" :status="selectedStatusBottomPart" :distance_right="distance_right"/>
+      <RowLecture :lecture="lecture" :status="selectedStatusBottomPart" :distance_right="distance_right" @deleteLecture="deleteLecture"/>
       <hr>
     </div>
   </main>
@@ -66,7 +66,7 @@
 
 <script>
 import RowLecture from "@/components/admin/rows/RowLecture.vue";
-import {getAllLecturesByStatus} from "@/apiCalls/Lecture";
+import {deleteLecture, getAllLecturesByStatus, insertLecture} from "@/apiCalls/Lecture";
 import {getAllUsersByRole} from "@/apiCalls/User";
 import {getAllCourses} from "@/apiCalls/Subject";
 
@@ -94,10 +94,14 @@ export default {
   },
   methods:{
     insertLecture(){
+      insertLecture(this.lecture.date,this.lecture.time,this.lecture.professor,this.lecture.subject,this.lecture.status,this.lecture.student).then(response =>{
 
+      })
     },
-    deleteLecture(){
+    deleteLecture(lecture){
+      deleteLecture(lecture.date,lecture.time,lecture.professor,lecture.subject).then(response =>{
 
+      })
     },
     getLectures(){
       getAllLecturesByStatus(this.selectedStatusBottomPart).then(response =>{

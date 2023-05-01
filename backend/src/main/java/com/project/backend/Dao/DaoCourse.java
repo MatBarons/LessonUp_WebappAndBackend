@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class DaoCourse extends Dao{
     public static final String insertCourse = "INSERT INTO Course (name,isActive) Values(?,?);";
-    public static final String isActive = "SELECT isActive FROM Course WHERE name=?;";
     public static final String toggleCourse = "UPDATE Course SET isActive=? WHERE name = ?;";
     public static final String doesExist = "SELECT * FROM Course WHERE name=?;";
     public static final String getAllCourses = "SELECT * FROM Course;";
@@ -33,36 +32,16 @@ public class DaoCourse extends Dao{
             d.getStackTrace();
         }
     }
-    public void toggleCourse(String name,boolean activity) throws CourseDoesNotExist, CourseAlreadyNotActive {
+    public void toggleCourse(String name,boolean activity) throws CourseDoesNotExist{
         try{
             if(!doesExist(name)){
                 throw new CourseDoesNotExist("This course doesn't exist -- deactivateCourse");
-            }
-            if(!isActive(name)){
-                throw new CourseAlreadyNotActive("This course is already deactivated -- deactivateCourse");
             }
             launchUpdate(toggleCourse,activity,name);
         }catch (DaoExceptions d){
             System.out.println(d.getMessage());
             d.printStackTrace();
         }
-    }
-
-
-    private boolean isActive(String name){
-        boolean check = false;
-        try{
-            CachedRowSet rs = launchQuery(isActive,name);
-            if(rs.next())
-                check = rs.getBoolean("isActive");
-
-        }catch (SQLException e){
-            System.out.println("Exception caused by CachedRowSet");
-        }catch (DaoExceptions d){
-            System.out.println(d.getMessage());
-            d.printStackTrace();
-        }
-        return check;
     }
 
     private boolean doesExist(String name){

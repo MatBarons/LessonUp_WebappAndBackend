@@ -21,10 +21,10 @@
         <BuyButton :lesson="lesson"/>
       </div>
       <div v-else-if="this.context === 'booked'">
-        <DeleteButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
+        <DeleteButton :lesson="lesson"/>
       </div>
       <div v-else-if="this.context === 'completed'">
-        <ConfirmButton :date="lesson.date" :time="lesson.time" :professor="lesson.email" :subject="lesson.subject"/>
+        <ConfirmButton :lesson="lesson"/>
       </div>
       <div v-else-if="this.context=== 'ended'">
         <AlreadyConfirmedButton/>
