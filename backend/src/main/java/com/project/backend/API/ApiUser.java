@@ -53,6 +53,8 @@ public class ApiUser extends HttpServlet {
                             out.println("]");
                             out.flush();
                         }
+                    }else{
+                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     }
                 }
                 break;
@@ -84,6 +86,8 @@ public class ApiUser extends HttpServlet {
                             out.println("]");
                             out.flush();
                         }
+                    }else{
+                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     }
                 }
                 break;
@@ -103,6 +107,8 @@ public class ApiUser extends HttpServlet {
                             out.println("}");
                             out.flush();
                         }
+                    }else{
+                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     }
                 }
                 break;
@@ -130,6 +136,8 @@ public class ApiUser extends HttpServlet {
                             out.println("]");
                             out.flush();
                         }
+                    }else{
+                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     }
                 }
                 break;
@@ -196,6 +204,8 @@ public class ApiUser extends HttpServlet {
                         resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                 }
+            }else{
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }
@@ -270,6 +280,8 @@ public class ApiUser extends HttpServlet {
                     }
                     break;
                 }
+            }else{
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }

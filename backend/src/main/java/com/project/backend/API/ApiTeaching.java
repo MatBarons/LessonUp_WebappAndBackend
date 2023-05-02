@@ -68,6 +68,8 @@ public class ApiTeaching extends HttpServlet {
                     }
                     break;
                 }
+            }else{
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }
@@ -102,6 +104,8 @@ public class ApiTeaching extends HttpServlet {
                         resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                 }
+            }else{
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }
@@ -123,6 +127,8 @@ public class ApiTeaching extends HttpServlet {
                     resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 }
             }
+        }else{
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }

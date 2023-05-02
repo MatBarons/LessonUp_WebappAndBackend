@@ -254,6 +254,8 @@ public class ApiLecture extends HttpServlet {
                     }
                     break;
                 }
+            }else{
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }
@@ -358,6 +360,8 @@ public class ApiLecture extends HttpServlet {
                     }
                     break;
                 }
+            }else{
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }
@@ -397,6 +401,8 @@ public class ApiLecture extends HttpServlet {
                         resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                 }
+            }else{
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }
