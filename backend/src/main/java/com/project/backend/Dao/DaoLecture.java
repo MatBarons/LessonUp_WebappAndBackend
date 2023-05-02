@@ -19,7 +19,7 @@ public class DaoLecture extends Dao{
     public static final String doesExist = "SELECT * FROM Lecture WHERE professor=? AND date=? AND time=? AND subject=?;";
     public static final String changeStatusAndStudent = "UPDATE Lecture SET student=?,status=? WHERE date=? AND time=? AND professor=? AND subject=?;";
     public static final String changeStatus = "UPDATE Lecture SET status=? WHERE date=? AND time=? AND professor=? AND subject=?;";
-    public static final String getLecturesBySubjectAndStatusAndDate = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.subject=? AND l.status=? AND l.date=?;";
+    public static final String getLecturesBySubjectAndStatusAndDate = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.subject=? AND l.status=? AND l.date=? AND u.isActive=\"1\"";
     public static final String getLecturesByStudentAndStatus = "SELECT l.date,l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=?;";
     public static final String getLecturesByStudentAndStatusAndDateAndSubject = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=? AND l.date=? AND l.subject=?;";
     public static final String getLecturesByStatus = "SELECT * FROM Lecture WHERE status=?";

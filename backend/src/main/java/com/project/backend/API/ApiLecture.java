@@ -1,13 +1,10 @@
 
 package com.project.backend.API;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.project.backend.Dao.DaoLecture;
 import com.project.backend.Exceptions.LectureExceptions.LectureAlreadyExist;
 import com.project.backend.Exceptions.LectureExceptions.LectureDoesNotExist;
 import com.project.backend.Model.Lecture;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,7 +54,6 @@ public class ApiLecture extends HttpServlet {
                         }else{
                             int i=0;
                             ArrayList<Lecture> list = dao.getLecturesBySubjectAndStatusAndDate(subject,status,date);
-                            Gson g = new GsonBuilder().setPrettyPrinting().create();
                             Date comodo;
                             try {
                                 comodo = format.parse(d);
@@ -196,6 +192,8 @@ public class ApiLecture extends HttpServlet {
                     }
                     break;
                 }
+            }else{
+                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }
@@ -316,7 +314,12 @@ public class ApiLecture extends HttpServlet {
                             body += line;
                         }
                         Gson gson = new Gson();
-                        JsonObject jsonObject = gson.fromJson(body,JsonObject.class);
+                        JsonObject jsonObject;
+                        try{
+                            jsonObject = gson.fromJson(body,JsonObject.class);
+                        }catch (JsonSyntaxException e){
+                            jsonObject = gson.fromJson(body, JsonPrimitive.class).getAsJsonObject();
+                        }
 
                         String d = jsonObject.get("date").getAsString();
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -338,7 +341,12 @@ public class ApiLecture extends HttpServlet {
                         }else{
                             try {
                                 String status = jsonObject.get("status").getAsString();
-                                String student = String.valueOf(jsonObject.get("student").getAsJsonNull());
+                                String student;
+                                try{
+                                    student = jsonObject.get("student").getAsString();
+                                }catch (JsonSyntaxException e){
+                                    student = String.valueOf(jsonObject.get("student").getAsJsonNull());
+                                }
                                 dao.changeStatusAndStudent(lecture,status,student);
                                 jsonResponse.addProperty("message", "Lecture status and student changed successfully");
                                 resp.setStatus(HttpServletResponse.SC_OK);
