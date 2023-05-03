@@ -5,19 +5,19 @@
     <h3>Menu</h3>
     <div class="menu">
       <router-link to="/lectures" class="button">
-        <span class="material-icons">home</span>
+        <span class="material-icons">psychology</span>
         <span class="text">Lezioni</span>
       </router-link>
       <router-link to="/courses" class="button">
-        <span class="material-icons">shopping_cart</span>
+        <span class="material-icons">menu_book</span>
         <span class="text">Corsi</span>
       </router-link>
       <router-link to="/users" class="button">
-        <span class="material-icons">person</span>
+        <span class="material-icons">group</span>
         <span class="text">Utenti</span>
       </router-link>
       <router-link to="/teachings" class="button">
-        <span class="material-icons">person</span>
+        <span class="material-icons">school</span>
         <span class="text">Docenza</span>
       </router-link>
     </div>

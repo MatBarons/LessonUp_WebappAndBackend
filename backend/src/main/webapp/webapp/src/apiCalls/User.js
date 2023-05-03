@@ -7,7 +7,9 @@ export async function logMeIn(email,password){
 
 export async function changePassword(email,oldPassword,newPassword){
     return await axios.put(
-        'http://localhost:8080/backend/api/user?path=changePassword&email='+ email + "&oldPassword=" + oldPassword + "&newPassword=" + newPassword,{},{
+        'http://localhost:8080/backend/api/user?path=changePassword&email='+ email + "&oldPassword=" + oldPassword + "&newPassword=" + newPassword,{
+
+        },{
             headers: {
                 'Authorization' : store.data.token
             }
