@@ -7,7 +7,6 @@ import com.project.backend.Exceptions.TeachingExceptions.ProfessorCourseCoupleAl
 import com.project.backend.Exceptions.TeachingExceptions.ProfessorCourseCoupleDoesNotExist;
 import com.project.backend.Exceptions.TeachingExceptions.UserIsNotAProfessor;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,7 @@ public class ApiTeaching extends HttpServlet {
     public DaoTeaching daoT = new DaoTeaching();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         if(req.getParameter("path")!=null){
@@ -75,7 +74,7 @@ public class ApiTeaching extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         JsonObject jsonResponse = new JsonObject();

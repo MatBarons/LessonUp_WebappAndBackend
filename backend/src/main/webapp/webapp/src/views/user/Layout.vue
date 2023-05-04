@@ -19,12 +19,7 @@ export default {
     }
   },
   beforeCreate() {
-    if(store.email === null){
-      router.push('/')
-    }else{
-      router.push('/home')
-    }
-
+    router.push('/home')
   }
 }
 </script>
@@ -34,6 +29,5 @@ export default {
   display: flex;
   height: 100%;
   width: 100%;
-
 }
 </style>

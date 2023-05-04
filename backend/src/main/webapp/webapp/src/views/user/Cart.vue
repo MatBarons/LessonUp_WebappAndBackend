@@ -43,6 +43,7 @@ import CardLesson from "@/components/user/cards/CardLesson.vue";
 import {store} from "@/apiCalls/User"
 import {changeStatusAndStudent} from "@/apiCalls/Lecture";
 import {parse_string_to_date, parse_string_to_time} from "@/utils/Utils";
+import router from "@/router";
 
 export default {
   name: "Cart",
@@ -70,32 +71,35 @@ export default {
         this.icon = "close"
         this.message_color = "red"
       }else{
-        this.lectures.forEach(lecture => {
-          const l = {
-            date: parse_string_to_date(lecture.date),
-            time: parse_string_to_time(lecture.time),
-            professor: lecture.email,
-            subject: lecture.subject,
-            status: "booked",
-            student: store.email
-          }
-          changeStatusAndStudent(l).then(
-            response => {
-              store.cart_list.clear()
-              this.lectures = store.cart_list
-              this.message = "Grazie per aver acquistato"
-              this.icon = "check"
-              this.message_color = "#009b4d"
+        if(store.data.token === ''){
+          router.push("/")
+        }else{
+          this.lectures.forEach(lecture => {
+            const l = {
+              date: parse_string_to_date(lecture.date),
+              time: parse_string_to_time(lecture.time),
+              professor: lecture.email,
+              subject: lecture.subject,
+              status: "booked",
+              student: store.email
             }
-          ).catch(
-            reason => {
-              this.message = "Errore durante l'acquisto"
-              this.icon = "remove"
-              this.message_color = "red"
-            }
-          )
-        })
-
+            changeStatusAndStudent(l).then(
+                response => {
+                  store.cart_list.clear()
+                  this.lectures = store.cart_list
+                  this.message = "Grazie per aver acquistato"
+                  this.icon = "check"
+                  this.message_color = "#009b4d"
+                }
+            ).catch(
+                reason => {
+                  this.message = "Errore durante l'acquisto"
+                  this.icon = "remove"
+                  this.message_color = "red"
+                }
+            )
+          })
+        }
       }
     }
   },

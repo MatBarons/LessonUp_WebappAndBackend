@@ -25,23 +25,23 @@ public class ApiCourse extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
-        if(req.getParameter("path")!= null){
-            String token = req.getHeader("Authorization");
-            if(token != null && TokenManager.verifyToken(token)){
-                switch (req.getParameter("path")){
-                    case "getAllCourses":{
-                        if(dao == null){
+        if (req.getParameter("path") != null) {
+            switch (req.getParameter("path")) {
+                case "getAllCourses": {
+                    String token = req.getHeader("Authorization");
+                    if (token != null && TokenManager.verifyToken(token)) {
+                        if (dao == null) {
                             out.println("dao is null -- API Courses doGet");
-                        }else{
-                            int i=0;
+                        } else {
+                            int i = 0;
                             ArrayList<Course> list = dao.getAllCourses();
                             out.println("[");
-                            for(Course c : list){
+                            for (Course c : list) {
                                 out.println("{");
                                 out.println("\"name\"" + ":" + "\"" + c.getName() + "\"" + ",");
                                 out.println("\"isActive\"" + ":" + "\"" + c.isActive() + "\"");
                                 out.println("}");
-                                if(i<list.size()-1){
+                                if (i < list.size() - 1) {
                                     i++;
                                     out.println(",");
                                 }
@@ -50,27 +50,26 @@ public class ApiCourse extends HttpServlet {
                             out.flush();
                         }
                     }
-                    break;
-                    case "getAllCoursesByActivity":{
-                        boolean isActive = Boolean.parseBoolean(req.getParameter("isActive"));
-                        if (dao == null) {
-                            out.println("dao is null -- API Courses doGet");
-                        }else{
-                            Gson g = new GsonBuilder().setPrettyPrinting().create();
-                            String json = g.toJson(dao.getAllCoursesByActivity(isActive));
-                            JsonElement je = JsonParser.parseString(json);
-                            out.println(g.toJson(je));
-                            out.flush();
-                        }
+
+                }
+                break;
+                case "getAllCoursesByActivity": {
+                    boolean isActive = Boolean.parseBoolean(req.getParameter("isActive"));
+                    if (dao == null) {
+                        out.println("dao is null -- API Courses doGet");
+                    } else {
+                        Gson g = new GsonBuilder().setPrettyPrinting().create();
+                        String json = g.toJson(dao.getAllCoursesByActivity(isActive));
+                        JsonElement je = JsonParser.parseString(json);
+                        out.println(g.toJson(je));
+                        out.flush();
                     }
                     break;
                 }
-            }else{
-                System.out.println("siamo QUi purtroppo");
-                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

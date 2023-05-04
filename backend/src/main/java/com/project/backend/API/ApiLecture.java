@@ -33,59 +33,59 @@ public class ApiLecture extends HttpServlet {
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         if(req.getParameter("path")!= null){
-            String token = req.getHeader("Authorization");
-            if(token != null && TokenManager.verifyToken(token)){
-                switch (req.getParameter("path")){
-                    case "getAllLecturesBySubjectAndStatusAndDate":{
-                        String subject = req.getParameter("subject");
-                        String status = req.getParameter("status");
-                        String d = req.getParameter("date");
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        Date date = null;
-                        System.out.println(d);
+            switch (req.getParameter("path")){
+                case "getAllLecturesBySubjectAndStatusAndDate":{
+                    String subject = req.getParameter("subject");
+                    String status = req.getParameter("status");
+                    String d = req.getParameter("date");
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = null;
+                    System.out.println(d);
+                    try {
+                        date = format.parse(d);
+                    } catch (ParseException e) {
+                        System.out.println("wrong date format, please use yyyy-MM-dd");
+                        throw new RuntimeException(e);
+                    }
+                    if(dao == null){
+                        out.println("dao is null -- API Lecture doGet");
+                    }else{
+                        int i=0;
+                        ArrayList<Lecture> list = dao.getLecturesBySubjectAndStatusAndDate(subject,status,date);
+                        Date comodo;
                         try {
-                            date = format.parse(d);
+                            comodo = format.parse(d);
                         } catch (ParseException e) {
-                            System.out.println("wrong date format, please use yyyy-MM-dd");
                             throw new RuntimeException(e);
                         }
-                        if(dao == null){
-                            out.println("dao is null -- API Lecture doGet");
-                        }else{
-                            int i=0;
-                            ArrayList<Lecture> list = dao.getLecturesBySubjectAndStatusAndDate(subject,status,date);
-                            Date comodo;
-                            try {
-                                comodo = format.parse(d);
-                            } catch (ParseException e) {
-                                throw new RuntimeException(e);
+                        format.applyPattern("dd/MM/yyyy");
+                        d = format.format(comodo);
+                        out.println("[");
+                        for(Lecture l : list){
+                            out.println("{");
+                            out.println("\"date\"" + ":" + "\"" + d + "\"" + ",");
+                            out.println("\"time\"" + ":" + "\"" + l.getTime().toString().substring(0,5)+ "\"" + ",");
+                            out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
+                            out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");
+                            out.println("\"email\"" + ":" + "\"" + l.getProfessor()+ "\"" + ",");
+                            out.println("\"subject\"" + ":" + "\"" + l.getSubject() + "\"");
+                            out.println("}");
+                            if(i<list.size()-1){
+                                i++;
+                                out.println(",");
                             }
-                            format.applyPattern("dd/MM/yyyy");
-                            d = format.format(comodo);
-                            out.println("[");
-                            for(Lecture l : list){
-                                out.println("{");
-                                out.println("\"date\"" + ":" + "\"" + d + "\"" + ",");
-                                out.println("\"time\"" + ":" + "\"" + l.getTime().toString().substring(0,5)+ "\"" + ",");
-                                out.println("\"name\"" + ":" + "\"" + l.getProfName()+ "\"" + ",");
-                                out.println("\"surname\"" + ":" + "\"" + l.getProfSurname()+ "\"" + ",");
-                                out.println("\"email\"" + ":" + "\"" + l.getProfessor()+ "\"" + ",");
-                                out.println("\"subject\"" + ":" + "\"" + l.getSubject() + "\"");
-                                out.println("}");
-                                if(i<list.size()-1){
-                                    i++;
-                                    out.println(",");
-                                }
-                            }
-                            out.println("]");
-                            out.flush();
                         }
+                        out.println("]");
+                        out.flush();
                     }
-                    break;
-                    case "getAllLecturesByStudentAndStatus":{
+
+                }
+                break;
+                case "getAllLecturesByStudentAndStatus":{
+                    String token = req.getHeader("Authorization");
+                    if(token != null && TokenManager.verifyToken(token)){
                         String student = req.getParameter("student");
                         String status = req.getParameter("status");
-                        Gson g = new GsonBuilder().setPrettyPrinting().create();
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                         if(dao == null){
                             out.println("dao is null -- API Lecture doGet");
@@ -113,12 +113,13 @@ public class ApiLecture extends HttpServlet {
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
-
-
                         }
                     }
-                    break;
-                    case "getAllLecturesByStudentAndStatusAndDateAndSubject":{
+                }
+                break;
+                case "getAllLecturesByStudentAndStatusAndDateAndSubject":{
+                    String token = req.getHeader("Authorization");
+                    if(token != null && TokenManager.verifyToken(token)){
                         String student = req.getParameter("student");
                         String status = req.getParameter("status");
                         String subject = req.getParameter("subject");
@@ -163,8 +164,11 @@ public class ApiLecture extends HttpServlet {
                             out.flush();
                         }
                     }
-                    break;
-                    case "getAllLecturesByStatus":{
+                }
+                break;
+                case "getAllLecturesByStatus":{
+                    String token = req.getHeader("Authorization");
+                    if(token != null && TokenManager.verifyToken(token)){
                         String status = req.getParameter("status");
                         if(dao == null){
                             out.println("dao is null -- API Lecture doGet");
@@ -190,10 +194,8 @@ public class ApiLecture extends HttpServlet {
                             out.flush();
                         }
                     }
-                    break;
                 }
-            }else{
-                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                break;
             }
         }
     }

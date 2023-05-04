@@ -11,10 +11,18 @@
         <span class="material-icons">shopping_cart</span>
         <span class="text">Cart</span>
       </router-link>
-      <router-link to="/profile" class="button">
-        <span class="material-icons">person</span>
-        <span class="text">You</span>
-      </router-link>
+      <div v-if="store.data.token !== ''">
+        <router-link to="/profile" class="button">
+          <span class="material-icons">person</span>
+          <span class="text">You</span>
+        </router-link>
+      </div>
+      <div v-else>
+        <router-link to="/" class="button">
+          <span class="material-icons">person</span>
+          <span class="text">Login</span>
+        </router-link>
+      </div>
     </div>
     <div class="logo">
       <img src="../../assets/images/logo.png" alt="logo" />
@@ -23,8 +31,15 @@
 </template>
 
 <script>
+import {store} from "@/apiCalls/User";
+
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  computed: {
+    store() {
+      return store
+    }
+  }
 }
 /*
 

@@ -19,6 +19,7 @@
       </form>
       <a href="url">Non hai un account? Registrati!</a>
       <div class="response-error">{{response}}</div>
+      <button type="submit" class="btn-unregistered" @click="unregistered">Ospite</button>
     </div>
   </div>
 </main>
@@ -52,8 +53,10 @@ export default {
       }).catch(reason => {
         this.response="Credenziali errate"
       })
-
     },
+    unregistered(){
+      router.push('layout');
+    }
   }
 }
 </script>
@@ -138,6 +141,16 @@ export default {
         }
         .response-error{
           color: red;
+        }
+        .btn-unregistered{
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+          width: 30%;
+          color: white;
+          background-color: grey;
+          margin-top: 2rem;
+          margin-left: 3rem;
+          margin-bottom: 2rem;
         }
       }
     }
