@@ -4,23 +4,24 @@
     <div class="insert-new-association">
       <div class="insert-professor">
         <label for="email-choice">Professore</label>
-        <select v-model="teaching.email" name="email-choice" required>
-          <option v-for="professor in allProfessors" :value="professor.email">{{professor.email}}</option>
+        <select v-model="teaching.email" name="email-choice" @click="getAllSubjectWithoutProfessor" required>
+          <option v-for="professor in allProfessors" :value="professor">{{professor }}</option>
         </select>
       </div>
       <div class="insert-course">
         <label for="course-choice">Materia</label>
-        <select v-model="teaching.course" name="course-choice" required>
-          <option v-for="course in allCourses" :value="course.name">{{course.name}}</option>
+        <select v-model="teaching.course" name="course-choice" required @click="getAllProfessorWithoutSubject">
+          <option v-for="course in allCourses" :value="course">{{course}}</option>
         </select>
       </div>
       <button @click="insertAssociation">Invia</button>
     </div>
+    <h2 class="response">{{insertMessage}}</h2>
     <div class="association-variables">
       <h3 class="email-variable">Email</h3>
       <h3 class="subject-variable">Materia</h3>
-      <select v-model="selectedSubject" name="status-choice" @change="handleSubjectChange">
-        <option v-for="course in allCourses" :value="course.name">{{ course.name }}</option>
+      <select v-model="selectedSubject" name="status-choice" @click="handleSubjectChange">
+        <option v-for="course in selectableCourses" :value="course">{{course}}</option>
       </select>
     </div>
     <div class="all-associations" v-for="professor in professors">
@@ -32,7 +33,13 @@
 
 <script>
 import {getAllUsersByRole} from "@/apiCalls/User";
-import {deleteTeaching, getProfessorsBySubject, insertTeaching} from "@/apiCalls/Teaching"
+import {
+  deleteTeaching, getAllProfessor,
+  getAllProfessorRemainingForASubject, getAllSubject,
+  getAllSubjectRemainingForAProfessor,
+  getProfessorsBySubject,
+  insertTeaching
+} from "@/apiCalls/Teaching"
 import {getAllCourses} from "@/apiCalls/Subject";
 import RowTeaching from "@/components/admin/rows/RowTeaching.vue";
 
@@ -46,9 +53,12 @@ export default {
         course: "",
       },
       allCourses: [],
+      selectableCourses: [],
       selectedSubject: "francese",
       professors: [],
       allProfessors: [],
+      insertMessage: "",
+      insertMessageColor: "",
     }
   },
   methods:{
@@ -56,9 +66,15 @@ export default {
       this.getProfessors()
     },
     insertAssociation(){
-      insertTeaching(this.teaching).then(response =>{
-
-      })
+      if(this.teaching.course !== "" && this.teaching.email !== ""){
+        insertTeaching(this.teaching).then(response =>{
+          this.insertMessage = "Associazione inserita correttamente"
+          this.insertMessageColor = "green"
+        })
+      }else{
+        this.insertMessage = "Inserisci tutti i parametri"
+        this.insertMessageColor = "red"
+      }
     },
     deleteTeaching(professor,subject){
       deleteTeaching(professor,subject).then(response =>{
@@ -71,20 +87,46 @@ export default {
       })
     },
     getAllCourses(){
-      getAllCourses().then(response =>{
+      getAllSubject().then(response =>{
+        this.selectableCourses = response.data
         this.allCourses = response.data
+        this.allCourses.push("")
       })
     },
     getAllProfessors(){
-      getAllUsersByRole("professor").then(response =>{
+      getAllProfessor().then(response =>{
         this.allProfessors = response.data
+        this.allProfessors.push("")
       })
+    },
+    getAllProfessorWithoutSubject(){
+      if(this.allCourses === ""){
+        this.getAllProfessors()
+      }else {
+        getAllProfessorRemainingForASubject(this.teaching.course).then(response => {
+          this.allProfessors = response.data
+          this.allProfessors.push("")
+          console.log("SIAMO PROPRIO QUI2 :" + response.data)
+        })
+      }
+    },
+    getAllSubjectWithoutProfessor() {
+      if (this.allProfessors === "") {
+        this.getAllCourses()
+      } else {
+        getAllSubjectRemainingForAProfessor(this.teaching.email).then(response => {
+          this.allCourses = response.data
+          this.allCourses.push("")
+          console.log("SIAMO PROPRIO QUI1:" + response.data)
+        })
+      }
     }
   },
   beforeMount() {
     this.getProfessors()
     this.getAllCourses()
     this.getAllProfessors()
+
   }
 }
 </script>
@@ -138,6 +180,13 @@ export default {
       border-radius: 0.5rem;
       margin-left: 20rem;
     }
+  }
+  .response{
+    color: v-bind(insertMessageColor);
+    padding-top: 2rem;
+    font-weight: bold;
+    font-size: 25px;
+    padding-left: 40%;
   }
   .association-variables{
     display: flex;

@@ -28,6 +28,44 @@ public class ApiTeaching extends HttpServlet {
             String token = req.getHeader("Authorization");
             if(token != null && TokenManager.verifyToken(token)){
                 switch (req.getParameter("path")){
+                    case "getAllProfessors":{
+                        if(daoT == null){
+                            out.println("dao is null -- Api Teaching doGet");
+                        }else{
+                            int i=0;
+                            ArrayList<String> professors = daoT.getAllProfessors();
+                            out.println("[");
+                            for(String s : professors){
+                                out.println("\"" + s + "\"");
+                                if(i<professors.size()-1){
+                                    i++;
+                                    out.println(",");
+                                }
+                            }
+                            out.println("]");
+                            out.flush();
+                        }
+                    }
+                    break;
+                    case "getAllCourses":{
+                        if(daoT == null){
+                            out.println("dao is null -- Api Teaching doGet");
+                        }else{
+                            int i=0;
+                            ArrayList<String> courses = daoT.getAllSubjects();
+                            out.println("[");
+                            for(String s : courses){
+                                out.println("\"" + s + "\"");
+                                if(i<courses.size()-1){
+                                    i++;
+                                    out.println(",");
+                                }
+                            }
+                            out.println("]");
+                            out.flush();
+                        }
+                    }
+                    break;
                     case "getAllProfessorForASubject":{
                         if(daoT == null){
                             out.println("dao is null -- Api Teaching doGet");
@@ -56,6 +94,44 @@ public class ApiTeaching extends HttpServlet {
                             out.println("[");
                             for(String s : subject){
                                 out.println(s);
+                                if(i<subject.size()-1){
+                                    i++;
+                                    out.println(",");
+                                }
+                            }
+                            out.println("]");
+                            out.flush();
+                        }
+                    }
+                    break;
+                    case "getAllProfessorWithoutASubject":{
+                        if(daoT == null){
+                            out.println("dao is null -- Api Teaching doGet");
+                        }else{
+                            int i=0;
+                            ArrayList<String> professor = daoT.getAllProfessorWithoutASubject(req.getParameter("subject"));
+                            out.println("[");
+                            for(String s : professor){
+                                out.println("\"" + s + "\"");
+                                if(i<professor.size()-1){
+                                    i++;
+                                    out.println(",");
+                                }
+                            }
+                            out.println("]");
+                            out.flush();
+                        }
+                    }
+                    break;
+                    case "getAllSubjectWithoutAProfessor":{
+                        if(daoT == null){
+                            out.println("dao is null -- Api Teaching doGet");
+                        }else{
+                            int i=0;
+                            ArrayList<String> subject = daoT.getAllSubjectWithoutAProfessor(req.getParameter("email"));
+                            out.println("[");
+                            for(String s : subject){
+                                out.println("\"" + s + "\"");
                                 if(i<subject.size()-1){
                                     i++;
                                     out.println(",");
