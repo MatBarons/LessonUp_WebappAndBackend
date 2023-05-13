@@ -93,7 +93,7 @@ public class ApiTeaching extends HttpServlet {
                             ArrayList<String> subject = daoT.getAllSubjectForAProfessor(req.getParameter("email"));
                             out.println("[");
                             for(String s : subject){
-                                out.println(s);
+                                out.println("\"" + s + "\"");
                                 if(i<subject.size()-1){
                                     i++;
                                     out.println(",");

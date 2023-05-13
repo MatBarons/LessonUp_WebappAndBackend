@@ -20,6 +20,15 @@ export async function deleteTeaching(teaching){
         }
     )
 }
+export async function getSubjectsByProfessor(professor){
+    return await axios.get(
+        'http://localhost:8080/backend/api/teaching?path=getAllSubjectForAProfessor&email='+professor,{
+            headers:{
+                'Authorization': store.data.token
+            }
+        }
+    )
+}
 
 export async function getProfessorsBySubject(subject){
     return await axios.get(

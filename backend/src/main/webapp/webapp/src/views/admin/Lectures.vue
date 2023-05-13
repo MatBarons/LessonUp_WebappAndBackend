@@ -4,22 +4,25 @@
     <div class="insert-new-lecture">
       <div class="insert-date">
         <label for="date">Data</label>
-        <input v-model="lecture.date" name="date" required/>
+        <DatePicker v-model="lecture.date" color="green" @click="log"/>
+        <!--<input v-model="lecture.date" name="date" required/> -->
       </div>
       <div class="insert-time">
         <label for="time">Ora</label>
-        <input v-model="lecture.time" name="time" required/>
+        <select v-model="lecture.time" name="time" required >
+          <option v-for="hour in hours"  :value="hour">{{hour}}</option>
+        </select>
       </div>
       <div class="insert-prof">
         <label for="professor">Professore</label>
-        <select v-model="lecture.professor" name="status" required @change="changeDisplayedStudentsValue">
-          <option v-for="professor in professors"  :value="professor">{{professor.email}}</option>
+        <select v-model="lecture.professor" name="professor" required @click="getSubjects">
+          <option v-for="professor in professors"  :value="professor">{{professor}}</option>
         </select>
       </div>
       <div class="insert-subject">
         <label for="subject">Materia</label>
-        <select v-model="lecture.subject" name="status" required @change="changeDisplayedStudentsValue">
-          <option v-for="subject in subjects" :value="subject">{{ subject.name }}</option>
+        <select v-model="lecture.subject" name="subject" required @click="getProfessors">
+          <option v-for="subject in subjects" :value="subject">{{subject}}</option>
         </select>
       </div>
       <div class="insert-status">
@@ -32,13 +35,13 @@
         </select>
       </div>
       <div class="insert-student-free" v-if="showStudentList === false" >
-        <label for="student">Studente</label>
-        <input v-model="lecture.student" name="student" required/>
+        <label>Studente</label>
+        <h2>null</h2><!-- Modifica qui per rimuovere l'inserimento -->
       </div>
       <div class="insert-student-other" v-else>
         <label for="student">Studente</label>
         <select v-model="lecture.student" required>
-          <option v-for="student in students" :value="student">{{student.email}}</option>
+          <option v-for="student in students" :value="student.email">{{student.email}}</option>
         </select>
       </div>
       <button @click="insertLecture">Invia</button>
@@ -68,22 +71,29 @@
 import RowLecture from "@/components/admin/rows/RowLecture.vue";
 import {deleteLecture, getAllLecturesByStatus, insertLecture} from "@/apiCalls/Lecture";
 import {getAllUsersByRole} from "@/apiCalls/User";
-import {getAllCourses} from "@/apiCalls/Subject";
+import {
+  getAllProfessor,
+  getAllSubject,
+  getProfessorsBySubject, getSubjectsByProfessor
+} from "@/apiCalls/Teaching";
+import {Calendar, DatePicker} from "v-calendar";
+import {format_date, parse_string_to_date, parse_string_to_time} from "@/utils/Utils";
 
 export default {
   name: "Lectures",
-  components: {RowLecture},
+  components: {DatePicker, Calendar, RowLecture},
   data(){
     return{
       lectures: [],
       students: [],
       subjects: [],
       professors: [],
+      hours: ["14:00","15:00","16:00","17:00","18:00"],
       lecture: {
         date: "",
         time: "",
         professor: "",
-        subject: "francese",
+        subject: "",
         status: "free",
         student: "",
       },
@@ -94,15 +104,17 @@ export default {
   },
   methods:{
     insertLecture(){
-      const lecture = {
-        date: this.lecture.date,
-        time: this.lecture.time,
+      let newDate = format_date(this.lecture.date)
+      let newTime = parse_string_to_time(this.lecture.time)
+      const newLecture = {
+        date: newDate,
+        time: newTime,
         professor: this.lecture.professor,
         subject: this.lecture.subject,
         status: this.lecture.status,
-        student: this.lecture.student,
+        student: this.lecture.student
       }
-      insertLecture(lecture).then(response =>{
+      insertLecture(newLecture).then(response =>{
 
       })
     },
@@ -122,14 +134,30 @@ export default {
       })
     },
     getSubjects(){
-      getAllCourses().then(response => {
-        this.subjects = response.data
-      })
+      if(this.lecture.professor === ""){
+        getAllSubject().then(response =>{
+          this.subjects = response.data
+          this.subjects.push("")
+        })
+      }else {
+        getSubjectsByProfessor(this.lecture.professor).then(response =>{
+          this.subjects = response.data
+          this.subjects.push("")
+        })
+      }
     },
     getProfessors(){
-      getAllUsersByRole("professor").then(response =>{
-        this.professors = response.data
-      })
+      if(this.lecture.subject === ""){
+        getAllProfessor().then(response =>{
+          this.professors = response.data
+          this.professors.push("")
+        })
+      }else {
+        getProfessorsBySubject(this.lecture.subject).then(response =>{
+          this.professors = response.data
+          this.professors.push("")
+        })
+      }
     },
     handleChangeStatus(){
       this.getLectures()
@@ -174,30 +202,30 @@ export default {
     flex-direction: row;
     background: white;
     align-self: center;
-    margin-left: 9rem;
+    margin-left: 6rem;
     padding-top: 2rem;
     padding-right: 1rem;
     padding-bottom: 3rem;
     .insert-date{
       display: flex;
       flex-direction: column;
-      margin-left: 2rem;
-      input{
-        height: 2.5rem;
-      }
+      margin-left: 4.5rem;
     }
     .insert-time{
       display: flex;
       flex-direction: column;
-      margin-left: 2rem;
-      input{
+      margin-left: 4rem;
+      align-self: center;
+      select{
         height: 2.5rem;
+        width: 5rem;
       }
     }
     .insert-prof{
       display: flex;
       flex-direction: column;
-      margin-left: 2rem;
+      margin-left: 4rem;
+      align-self: center;
       select{
         height: 2.5rem;
       }
@@ -205,7 +233,8 @@ export default {
     .insert-subject{
       display: flex;
       flex-direction: column;
-      margin-left: 2rem;
+      margin-left: 4.5rem;
+      align-self: center;
       select{
         height: 2.5rem;
       }
@@ -213,8 +242,8 @@ export default {
     .insert-status{
       display: flex;
       flex-direction: column;
-      margin-left: 2rem;
-      margin-bottom: 1.1rem;
+      margin-left: 4rem;
+      align-self: center;
       select{
         height: 2.5rem;
       }
@@ -222,17 +251,18 @@ export default {
     .insert-student-free{
       display: flex;
       flex-direction: column;
-      margin-left: 2rem;
-      input{
-        height: 2.5rem;
-      }
+      margin-left: 4rem;
+      align-self: center;
+      width: 8rem;
     }
     .insert-student-other{
       display: flex;
       flex-direction: column;
-      margin-left: 2rem;
+      margin-left: 4rem;
+      align-self: center;
       select{
         height: 2.5rem;
+        width: 8rem;
       }
     }
     button{
@@ -241,8 +271,10 @@ export default {
       background: #009b4d;
       color: white;
       border-radius: 0.5rem;
-      margin-left: 2rem;
+      margin-right: 3rem;
+      margin-left: 3rem;
       margin-top: 1.2rem;
+      align-self: center;
     }
   }
   .lecture-variables{

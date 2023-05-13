@@ -14,7 +14,7 @@ import java.util.Date;
 import com.project.backend.Dao.DaoUser;
 
 public class DaoLecture extends Dao{
-    public static final String insertLecture = "INSERT INTO Lecture (date,time,professor,subject,status,student) Values(null,?,?,?,?,?);";
+    public static final String insertLecture = "INSERT INTO Lecture (date,time,professor,subject,status,student) Values(?,?,?,?,?,?);";
     public static final String deleteLecture = "DELETE FROM Lecture WHERE professor=? AND date=? AND time=? AND subject=?;";
     public static final String doesExist = "SELECT * FROM Lecture WHERE professor=? AND date=? AND time=? AND subject=?;";
     public static final String changeStatusAndStudent = "UPDATE Lecture SET student=?,status=? WHERE date=? AND time=? AND professor=? AND subject=?;";
@@ -23,7 +23,7 @@ public class DaoLecture extends Dao{
     public static final String getLecturesByStudentAndStatus = "SELECT l.date,l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=?;";
     public static final String getLecturesByStudentAndStatusAndDateAndSubject = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=? AND l.date=? AND l.subject=?;";
     public static final String getLecturesByStatus = "SELECT * FROM Lecture WHERE status=?";
-
+    public static final String getLecturesByDateAndTimeAndProf = "SELECT * FROM Lecture WHERE date=? AND time=? AND prof=?";
     public DaoLecture() {
         super();
     }
@@ -166,6 +166,26 @@ public class DaoLecture extends Dao{
                 String subject = rs.getString("subject");
                 String student = rs.getString("student");
                 lectures.add(new Lecture(date, time, email, subject,student));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("Exception caused by CachedRowSet");
+            System.out.println(e.getMessage());
+        }catch (DaoExceptions e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return lectures;
+    }
+
+    public ArrayList<Lecture> getLecturesByDateAndTimeAndProf(Date date,Time time,String professor){
+        ArrayList<Lecture> lectures = new ArrayList<>();
+        try {
+            CachedRowSet rs = launchQuery(getLecturesByDateAndTimeAndProf, date,time,professor);
+            while (rs.next()) {
+                String subject = rs.getString("subject");
+                String student = rs.getString("student");
+                lectures.add(new Lecture(date, time.toLocalTime(), professor, subject,student));
             }
         }catch (SQLException e){
             e.printStackTrace();

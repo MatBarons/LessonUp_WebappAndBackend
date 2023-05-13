@@ -255,6 +255,9 @@ public class ApiLecture extends HttpServlet {
                         }
                     }
                     break;
+                    default:{
+                        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    }
                 }
             }else{
                 resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -350,6 +353,20 @@ public class ApiLecture extends HttpServlet {
                                     student = jsonObject.get("student").getAsString();
                                 }catch (JsonSyntaxException e){
                                     student = String.valueOf(jsonObject.get("student").getAsJsonNull());
+                                }
+                                if(status.equals("free")){
+                                    ArrayList<Lecture> list = dao.getLecturesByDateAndTimeAndProf(date,time,professor);
+                                    for(Lecture l : list){
+                                        dao.changeStatus(l,"free");
+                                    }
+                                    //find same date-time-professor lectures and change it to unavailable
+                                }else if(status.equals("booked")){
+                                    ArrayList<Lecture> list = dao.getLecturesByDateAndTimeAndProf(date,time,professor);
+                                    for(Lecture l : list){
+                                        dao.changeStatus(l,"unavailable");
+                                    }
+                                }else{
+
                                 }
                                 dao.changeStatusAndStudent(lecture,status,student);
                                 jsonResponse.addProperty("message", "Lecture status and student changed successfully");

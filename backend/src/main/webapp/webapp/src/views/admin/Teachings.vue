@@ -32,15 +32,15 @@
 </template>
 
 <script>
-import {getAllUsersByRole} from "@/apiCalls/User";
 import {
-  deleteTeaching, getAllProfessor,
-  getAllProfessorRemainingForASubject, getAllSubject,
+  deleteTeaching,
+  getAllProfessor,
+  getAllProfessorRemainingForASubject,
+  getAllSubject,
   getAllSubjectRemainingForAProfessor,
   getProfessorsBySubject,
   insertTeaching
 } from "@/apiCalls/Teaching"
-import {getAllCourses} from "@/apiCalls/Subject";
 import RowTeaching from "@/components/admin/rows/RowTeaching.vue";
 
 export default {
