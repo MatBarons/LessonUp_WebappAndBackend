@@ -23,7 +23,7 @@ public class DaoLecture extends Dao{
     public static final String getLecturesByStudentAndStatus = "SELECT l.date,l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=?;";
     public static final String getLecturesByStudentAndStatusAndDateAndSubject = "SELECT l.time,l.subject,l.professor,u.name,u.surname FROM Lecture l JOIN User u ON(l.professor = u.email) WHERE l.student=? AND l.status=? AND l.date=? AND l.subject=?;";
     public static final String getLecturesByStatus = "SELECT * FROM Lecture WHERE status=?";
-    public static final String getLecturesByDateAndTimeAndProf = "SELECT * FROM Lecture WHERE date=? AND time=? AND prof=?";
+    public static final String getLecturesByDateAndTimeAndProf = "SELECT * FROM Lecture WHERE date=? AND time=? AND professor=?";
     public DaoLecture() {
         super();
     }

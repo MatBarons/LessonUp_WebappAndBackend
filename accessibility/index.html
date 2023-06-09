@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrazione utente</title>
+
+    <!-- style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Registrazione utente</h1>
+    </header>
+    <main>
+        <form id="form-section" aria-labelledby="form-title" action="./thanks.html">
+            <h2 id="form-title">Informazioni personali</h2>
+
+            <div>
+                <fieldset>
+                    <legend id="nome-desc">Inserisci il tuo nome</legend>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" aria-required="true" aria-describedby="nome-desc" required>
+                </fieldset>
+
+                <fieldset>
+                    <legend id="cognome-desc">Inserisci il tuo cognome</legend>
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" aria-required="true" aria-describedby="cognome-desc" required>
+                </fieldset>
+            </div>
+
+            <fieldset>
+                <legend id="sesso-desc">Sesso</legend>
+                <label for="sesso">Sesso:</label>
+                <select id="sesso" name="sesso" aria-required="true" aria-describedby="sesso-desc" required>
+                    <option value="maschio">Maschio</option>
+                    <option value="femmina">Femmina</option>
+                    <option value="altro">Altro</option>
+                </select>
+            </fieldset>
+
+            <div>
+                <fieldset>
+                    <legend id="username-desc">Inserisci il tuo username</legend>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" aria-required="true" aria-describedby="username-desc" required>
+                </fieldset>
+                <fieldset>
+                    <legend id="email-desc">Inserisci la tua email</legend>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" aria-required="true" aria-describedby="email-desc" required>
+                </fieldset>
+            </div>
+
+            <fieldset>
+                <legend id="psw-desc">Inserisci la tua password</legend>
+                <label for="psw">Password:</label>
+                <input type="password" id="psw" name="psw" aria-required="true" aria-describedby="psw-desc" required>
+            </fieldset>
+
+            <fieldset>
+                <legend id="data-nascita-desc">Inserisci la tua data di nascita</legend>
+                <label for="data-nascita">Data di nascita:</label>
+                <input type="date" id="data-nascita" name="data-nascita" aria-describedby="data-nascita-desc" aria-required="true" required>
+            </fieldset>
+
+            <fieldset>
+                <legend id="indirizzo-desc">Inserisci il tuo indirizzo di residenza</legend>
+                <label for="indirizzo">Indirizzo di residenza:</label>
+                <input type="text" id="indirizzo" name="indirizzo" aria-describedby="indirizzo-desc" aria-required="true" required>
+            </fieldset>
+            <fieldset>
+                <legend id="scuola-desc">Inserisci la scuola che frequenti</legend>
+                <label for="scuola">Scuola frequentata:</label>
+                <input type="text" id="scuola" name="scuola" aria-describedby="scuola-desc" aria-required="true" required>
+            </fieldset>
+            <br>
+            <br>
+            <button type="submit">Invia</button>
+        </form>
+    </main>
+    <footer>
+        <p>Copyright &copy; Matteo Barone</p>
+    </footer>
+</body>

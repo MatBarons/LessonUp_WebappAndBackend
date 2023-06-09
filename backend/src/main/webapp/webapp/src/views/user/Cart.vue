@@ -26,7 +26,7 @@
           <h4>{{this.lectures.size * 15}}</h4>
         </div>
         <button class="btn-buy" @click="buyLessons">
-          Prova
+          Compra
         </button>
         <div class="bottom-message">
           <i class="material-icons">{{icon}}</i>

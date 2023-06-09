@@ -240,12 +240,12 @@ public class ApiLecture extends HttpServlet {
                             try {
                                 String status = jsonObject.get("status").getAsString();
                                 String student;
-                                if(status.equals("free")){
+                                if(status.equals("free") || status.equals("unavailable")){
                                     student = String.valueOf(jsonObject.get("student").getAsJsonNull());
                                 }else{
                                     student = jsonObject.get("student").getAsString();
                                 }
-                                dao.insertLecture(lecture,status,student);
+                                dao.insertLecture(lecture,student,status);
                                 jsonResponse.addProperty("message", "Lecture registered successfully");
                                 resp.setStatus(HttpServletResponse.SC_OK);
                             } catch (LectureAlreadyExist e) {
@@ -349,9 +349,9 @@ public class ApiLecture extends HttpServlet {
                             try {
                                 String status = jsonObject.get("status").getAsString();
                                 String student;
-                                try{
+                                if(status.equals("booked")){
                                     student = jsonObject.get("student").getAsString();
-                                }catch (JsonSyntaxException e){
+                                }else{
                                     student = String.valueOf(jsonObject.get("student").getAsJsonNull());
                                 }
                                 if(status.equals("free")){

@@ -32,6 +32,7 @@
           <option value="booked">Prenotata</option>
           <option value="completed">Completata</option>
           <option value="ended">Confermata</option>
+          <option value="unavailable">Non Disponibile</option>
         </select>
       </div>
       <div class="insert-student-free" v-if="showStudentList === false" >
@@ -112,7 +113,7 @@ export default {
         professor: this.lecture.professor,
         subject: this.lecture.subject,
         status: this.lecture.status,
-        student: this.lecture.student
+        student: this.showStudentList === false ? null : this.lecture.student
       }
       insertLecture(newLecture).then(response =>{
 
@@ -168,7 +169,7 @@ export default {
       }
     },
     changeDisplayedStudentsValue(){
-      if(this.lecture.status === "free"){
+      if(this.lecture.status === "free" || this.lecture.status === "unavailable"){
         this.showStudentList = false;
         this.lecture.student = null;
       }else{

@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  maria_db:
+    container_name: db_container_mariaDB
+    image: mariadb:10.6.13
+    restart: always
+    volumes:
+      - ".:/var/lib/mysql"
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+
+  api:
+    container_name: api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - maria_db
+    networks:
+      - backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+networks:
+  backend:
+    name: backend
+
+volumes:
+  maria_db: {}
