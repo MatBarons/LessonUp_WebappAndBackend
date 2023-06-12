@@ -77,6 +77,8 @@ export default {
       }
     },
     deleteTeaching(professor,subject){
+      console.log("professor: " + professor)
+      console.log("subject: " + subject)
       deleteTeaching(professor,subject).then(response =>{
 
       })

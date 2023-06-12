@@ -6,11 +6,12 @@ body {
 
 button {
     background-color: white;
-    color: #526799;
+    color: #326A31;
     padding: .5em 1.5em;
     border: 1px solid #326A31;
     border-radius: .5em;
     font-size: 1em;
+    font-weight: bold;
     transition: all .2s ease-in-out;
 }
 
@@ -34,7 +35,7 @@ h3,
 h4,
 h5,
 h6 {
-    color: #526799;
+    color: #326A31;
 }
 
 main {

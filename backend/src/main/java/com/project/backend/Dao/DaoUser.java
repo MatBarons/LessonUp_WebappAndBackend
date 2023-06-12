@@ -7,6 +7,9 @@ import com.project.backend.Model.User;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import org.apache.commons.codec.digest.DigestUtils;
+
+
 
 public class DaoUser extends Dao{
 
@@ -18,11 +21,9 @@ public class DaoUser extends Dao{
     public static final String getUserData = "SELECT * FROM User WHERE email=?;";
     public static final String getUsersByRole = "SELECT * FROM User WHERE role=?;";
     public static final String getProfessorsBySubject = "SELECT u.email,u.name,u.surname FROM Teaching t JOIN User u ON(t.emailProf = u.email) WHERE t.nomeCorso=? AND u.isActive=?;";
-    public static final String checkAuth = "SELECT * FROM User WHERE email=? AND role=?;";
     public DaoUser() {
         super();
     }
-
 
 
     public void insertUser(User user) throws UserAlreadyExist{
@@ -159,20 +160,13 @@ public class DaoUser extends Dao{
         }
         return professors;
     }
-
-    public boolean checkAuth(String email,String role){
-        boolean check=false;
-        try{
-            CachedRowSet rs = launchQuery(checkAuth,email,role);
-            check = rs.next();
-        }catch(SQLException e){
-            System.out.println("Exception caused by CachedRowSet");
-            check = false;
-        }catch(DaoExceptions e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            check = false;
-        }
-        return check;
+    public static String encryptMD5(String clearText){
+        return DigestUtils.md5Hex(clearText).toUpperCase();
+    }
+    public static String decryptMD5(String encryptedText){
+        return DigestUtils.md5Hex(encryptedText).toUpperCase();
+    }
+    public static boolean checkMD5(String password, String clearText){
+        return password.equals(encryptMD5(clearText).toUpperCase());
     }
 }

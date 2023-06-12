@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class DaoTeaching extends Dao{
 
     public static final String insertSubjectForProfessor = "INSERT INTO Teaching (emailProf,nomeCorso) Values(?,?)";
-    public static final String deleteAssociation = "DELETE FROM Teaching  WHERE emailProf=? AND nomeCorso=?";
+    public static final String deleteAssociation = "DELETE FROM Teaching WHERE emailProf=? AND nomeCorso=?";
     public static final String getAllProfessors ="SELECT DISTINCT emailProf FROM Teaching";
     public static final String getAllSubject ="SELECT DISTINCT nomeCorso FROM Teaching";
     public static final String getAllProfessorForASubject = "SELECT emailProf FROM Teaching WHERE nomeCorso=?";

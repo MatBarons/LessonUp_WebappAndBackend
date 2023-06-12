@@ -11,9 +11,9 @@ export async function insertTeaching(teaching){
     )
 }
 
-export async function deleteTeaching(teaching){
+export async function deleteTeaching(professor,subject){
     return await axios.delete(
-        'http://localhost:8080/backend/api/teaching?path=deleteTeaching&email='+teaching.email + '&subject=' +teaching.course,{
+        'http://localhost:8080/backend/api/teaching?path=deleteTeaching&email='+professor + '&subject=' +subject,{
             headers:{
                 'Authorization': store.data.token
             }
