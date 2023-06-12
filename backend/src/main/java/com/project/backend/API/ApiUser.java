@@ -148,7 +148,7 @@ public class ApiUser extends HttpServlet {
                         String email = req.getParameter("email");
                         String password = req.getParameter("password");
                         User user = daoU.getUserData(email);
-                        if(user.getPassword().equals(password) && !user.getRole().equals("professor")){
+                        if(daoU.checkMD5(user.getPassword(),password) && !user.getRole().equals("professor")){
                             String token = TokenManager.generateToken(email);
                             out.println("{");
                             out.println("\"name\"" + ":" + "\"" + user.getName() + "\"" + ",");
@@ -253,7 +253,7 @@ public class ApiUser extends HttpServlet {
                     break;
                     case "toggleUser":{
                         if(daoU == null){
-                            out.println("dao is null -- API User doDelete -- deleteUser");
+                            out.println("dao is null -- API User doPut -- toggleUser");
                         }else{
                             try{
 
@@ -276,6 +276,14 @@ public class ApiUser extends HttpServlet {
                                 jsonResponse.addProperty("error", "Failed to delete user, user doesn't exist");
                                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                             }
+                        }
+                    }
+                    break;
+                    case "updateAllPasswords":{
+                        if(daoU == null){
+                            out.println("dao is null -- API User doPut -- updateAllPasswords");
+                        }else{
+                            daoU.updateAllPassword();
                         }
                     }
                     break;

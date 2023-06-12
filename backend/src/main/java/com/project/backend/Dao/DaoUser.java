@@ -163,10 +163,19 @@ public class DaoUser extends Dao{
     public static String encryptMD5(String clearText){
         return DigestUtils.md5Hex(clearText).toUpperCase();
     }
-    public static String decryptMD5(String encryptedText){
-        return DigestUtils.md5Hex(encryptedText).toUpperCase();
-    }
-    public static boolean checkMD5(String password, String clearText){
+    public boolean checkMD5(String password, String clearText){
         return password.equals(encryptMD5(clearText).toUpperCase());
+    }
+
+    public void updateAllPassword(){
+        try{
+            ArrayList<User> users = getAllUsers();
+            for(User user : users){
+                launchUpdate(updatePassword,encryptMD5(user.getPassword()),user.getEmail());
+            }
+        }catch(DaoExceptions e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
