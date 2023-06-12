@@ -3,7 +3,6 @@
     <h3 class="user-name">{{ user.name }}</h3>
     <h3 class="user-surname">{{ user.surname }}</h3>
     <h3 class="user-email">{{ user.email }}</h3>
-    <h3 class="user-password">{{ user.password }}</h3>
     <h3 class="user-role">{{ user.role }}</h3>
     <h3 class="user-activity">{{user.isActive}}</h3>
     <button @click="toggleUser">Cambia stato</button>
@@ -37,23 +36,19 @@ export default {
   width: 100%;
   align-items: center;
   .user-name{
-    left: 8%;
+    left: 12%;
     position: absolute;
   }
   .user-surname{
-    left: 22%;
+    left: 28%;
     position: absolute;
   }
   .user-email{
-    left: 33%;
-    position: absolute;
-  }
-  .user-password{
-    right: 43%;
+    left: 40%;
     position: absolute;
   }
   .user-role{
-    right: 28%;
+    right: 32%;
     position: absolute;
   }
   .user-activity{

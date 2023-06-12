@@ -39,7 +39,6 @@
       <h3>Nome</h3>
       <h3>Cognome</h3>
       <h3>Email</h3>
-      <h3>Password</h3>
       <h3>Ruolo</h3>
       <h3>Attivo</h3>
       <select v-model="selectedRole" name="role-choice" @change="getUsersByRole">
@@ -186,7 +185,7 @@ export default {
     margin-top: 2rem;
     h3{
       padding-top: 1rem;
-      padding-left: 10rem;
+      padding-left: 13rem;
       font-weight: bold;
       font-size: 20px;
       padding-bottom: 3rem;
