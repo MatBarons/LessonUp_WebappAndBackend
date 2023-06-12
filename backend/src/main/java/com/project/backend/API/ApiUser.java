@@ -148,7 +148,7 @@ public class ApiUser extends HttpServlet {
                         String email = req.getParameter("email");
                         String password = req.getParameter("password");
                         User user = daoU.getUserData(email);
-                        if(daoU.checkMD5(user.getPassword(),password) && !user.getRole().equals("professor")){
+                        if(daoU.checkMD5(user.getPassword(),password) && !user.getRole().equals("professor")  && user.isActive()){
                             String token = TokenManager.generateToken(email);
                             out.println("{");
                             out.println("\"name\"" + ":" + "\"" + user.getName() + "\"" + ",");
