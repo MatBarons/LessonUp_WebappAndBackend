@@ -19,6 +19,7 @@
       <h2>{{this.numberOfLectures}}</h2>
     </div>
   </div>
+  <button class="logout-button" type="submit" @click="logout">Logout</button>
   <button class="change-password" @click="showChangePasswordForm">Cambia password</button>
   <div class="new-password-form" v-if="showChangePassword">
     <form @submit.prevent>
@@ -38,13 +39,15 @@
 
   </div>
   <div v-else></div>
+
 </main>
 </template>
 
 <script>
-import {store} from "@/apiCalls/User";
+import {logout, store} from "@/apiCalls/User";
 import {getLecturesByStudentAndStatus} from "@/apiCalls/Lecture";
 import {changePassword} from "@/apiCalls/User";
+import router from "@/router";
 
 export default {
   name: "Profile",
@@ -92,6 +95,11 @@ export default {
         this.changePasswordMessageColor = "red"
       })
 
+    },
+    logout(){
+      logout(store.email).then(response =>{
+        router.push('/');
+      })
     }
   },
   beforeMount() {
@@ -242,6 +250,15 @@ export default {
         color: v-bind(changePasswordMessageColor);
       }
     }
+  }
+  .logout-button{
+    margin-top: 1rem;
+    margin-left: 10rem;
+    width: 15%;
+    height: 3rem;
+    background: #009b4d;
+    border-radius: 0.5rem;
+
   }
 }
 

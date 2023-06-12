@@ -5,6 +5,14 @@ export async function logMeIn(email,password){
     return await axios.get('http://localhost:8080/backend/api/user?path=logMeIn&email='+email+'&password='+password)
 }
 
+export async function logout(email){
+    return await axios.get('http://localhost:8080/backend/api/user?path=logout&email=' + email,{
+        headers:{
+            'Authorization' : store.data.token
+        }
+    })
+}
+
 export async function changePassword(email,oldPassword,newPassword){
     return await axios.put(
         'http://localhost:8080/backend/api/user?path=changePassword&email='+ email + "&oldPassword=" + oldPassword + "&newPassword=" + newPassword,{

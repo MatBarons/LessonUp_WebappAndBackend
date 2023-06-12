@@ -163,6 +163,25 @@ public class ApiUser extends HttpServlet {
                     }
                 }
                 break;
+                case "logout":{
+                    String token = req.getHeader("Authorization");
+                    if(token != null && TokenManager.verifyToken(token)){
+                        if(daoU == null){
+                            out.println("dao is null -- API User doGet");
+                        }else{
+                            String email = req.getParameter("email");
+                            if(TokenManager.getUsernameFromToken(token).equals(email)){
+                                TokenManager.removeToken(token,email);
+                                resp.setStatus(HttpServletResponse.SC_OK);
+                            }else{
+                                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                            }
+                        }
+                    }else{
+                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    }
+                }
+                break;
             }
         }
     }

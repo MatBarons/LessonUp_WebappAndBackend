@@ -23,4 +23,8 @@ public class TokenManager {
     public static String getUsernameFromToken(String token) {
         return tokenMap.get(token);
     }
+
+    public static boolean removeToken(String token,String username){
+        return tokenMap.remove(token,username);
+    }
 }
